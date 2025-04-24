@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart - Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-800 leading-relaxed">
+
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sign Up Section -->
+  <div class="flex items-center justify-center min-h-screen px-4 py-10">
+    <div class="bg-white shadow-lg rounded-lg flex flex-col md:flex-row w-full max-w-4xl overflow-hidden">
+
+      <!-- Left Info Section -->
+      <div class="hidden md:flex flex-col justify-center items-center bg-blue-600 text-white w-1/2 p-10">
+        <h2 class="text-3xl font-bold mb-4">Sign Up</h2>
+        <p class="text-lg text-center leading-relaxed">Join CampusCart to buy, sell, and stay connected.</p>
+        <img src="https://cdn-icons-png.flaticon.com/512/4206/4206340.png" alt="Signup illustration" class="w-48 mt-6">
+      </div>
+
+      <!-- Right Form Section -->
+      <div class="w-full md:w-1/2 p-8">
+        <h2 class="text-2xl font-bold mb-6 text-center">Create Your CampusCart Account</h2>
+
+        <form action="#" method="POST" class="space-y-5">
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium mb-1">Full Name</label>
+            <input type="text" id="name" name="name" required placeholder="John Doe"
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium mb-1">Email</label>
+            <input type="email" id="email" name="email" required placeholder="email@example.com"
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium mb-1">Password</label>
+            <input type="password" id="password" name="password" required placeholder="••••••••"
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label for="confirm-password" class="block text-sm font-medium mb-1">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" required placeholder="••••••••"
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          </div>
+
+          <!-- Sign Up Button -->
+          <button type="submit"
+            class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-md shadow transition">
+            Sign Up
+          </button>
+        </form>
+
+        <!-- Sign In Prompt -->
+        <p class="text-sm text-center text-gray-600 mt-6">
+          Already have an account?
+          <a href="login.html" class="text-blue-600 font-medium hover:underline">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

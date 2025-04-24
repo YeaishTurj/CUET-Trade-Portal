@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sell Used Product - CampusCart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="py-16 px-6 max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6 text-center">Sell a Used Product (Bidding)</h2>
+    <form class="bg-white shadow rounded-xl p-8 space-y-6" action="#" method="POST">
+      <div>
+        <label for="title" class="block text-sm font-medium mb-1">Product Title</label>
+        <input type="text" id="title" name="title" required placeholder="e.g., Used Guitar"
+          class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <div>
+        <label for="startingBid" class="block text-sm font-medium mb-1">Starting Bid (USD)</label>
+        <input type="number" id="startingBid" name="startingBid" required placeholder="e.g., 50"
+          class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <div>
+        <label for="endTime" class="block text-sm font-medium mb-1">Bidding Deadline</label>
+        <input type="datetime-local" id="endTime" name="endTime" required
+          class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium mb-1">Description</label>
+        <textarea id="description" name="description" rows="4" placeholder="Describe the condition, accessories, etc."
+          class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400"></textarea>
+      </div>
+
+      <div>
+        <label for="image" class="block text-sm font-medium mb-1">Upload Product Image</label>
+        <input type="file" id="image" name="image"
+          class="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:ring-2 focus:ring-blue-400"/>
+      </div>
+
+      <div class="text-right">
+        <button type="submit"
+          class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-md shadow">
+          Start Bidding
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+
+</body>
+</html>

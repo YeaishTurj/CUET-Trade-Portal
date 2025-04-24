@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart - Product Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+  <!-- Navbar -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Section -->
+  <section class="py-24 px-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <!-- Image Column -->
+    <div class="flex gap-6">
+      <div class="flex flex-col gap-4">
+        <img src="https://picsum.photos/80?1" alt="Thumbnail 1" class="rounded border cursor-pointer hover:shadow" />
+        <img src="https://picsum.photos/80?2" alt="Thumbnail 2" class="rounded border cursor-pointer hover:shadow" />
+        <img src="https://picsum.photos/80?3" alt="Thumbnail 3" class="rounded border cursor-pointer hover:shadow" />
+      </div>
+      <img src="https://picsum.photos/400?main" alt="Main product" class="rounded-xl shadow-lg object-cover w-[400px] h-[500px]" />
+    </div>
+
+    <!-- Info Column -->
+    <div>
+      <h1 class="text-4xl font-bold mb-3">One Life Graphic T-Shirt</h1>
+      <p class="text-yellow-500 mb-2 text-sm">★★★★☆ 4.5/5</p>
+      <p class="text-3xl font-bold">$260 
+        <span class="line-through text-gray-400 text-lg ml-2">$300</span>
+        <span class="text-pink-500 ml-2 text-lg">-40%</span>
+      </p>
+
+      <p class="text-gray-600 mt-6 mb-8 text-lg">
+        This graphic t-shirt is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and timeless style.
+      </p>
+
+      <!-- Colors -->
+      <div class="mb-6">
+        <p class="font-medium mb-2">Select Color</p>
+        <div class="flex space-x-3">
+          <div class="w-6 h-6 rounded-full bg-green-900 border-2 border-gray-400 cursor-pointer hover:ring-2 ring-offset-1"></div>
+          <div class="w-6 h-6 rounded-full bg-green-600 border-2 border-gray-200 cursor-pointer hover:ring-2 ring-offset-1"></div>
+          <div class="w-6 h-6 rounded-full bg-gray-800 border-2 border-gray-200 cursor-pointer hover:ring-2 ring-offset-1"></div>
+        </div>
+      </div>
+
+      <!-- Sizes -->
+      <div class="mb-6">
+        <p class="font-medium mb-2">Choose Size</p>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 border rounded-full text-sm hover:bg-gray-100">S</button>
+          <button class="px-4 py-2 border rounded-full text-sm hover:bg-gray-100">M</button>
+          <button class="px-4 py-2 border rounded-full text-sm bg-black text-white">L</button>
+          <button class="px-4 py-2 border rounded-full text-sm hover:bg-gray-100">XL</button>
+        </div>
+      </div>
+
+      <!-- Quantity + Cart -->
+      <div class="flex items-center gap-6 mb-8">
+        <div class="flex items-center border rounded-full overflow-hidden">
+          <button class="px-4 py-2 text-lg font-bold hover:bg-gray-200">-</button>
+          <span class="px-5 py-2">1</span>
+          <button class="px-4 py-2 text-lg font-bold hover:bg-gray-200">+</button>
+        </div>
+        <button class="px-6 py-3 bg-black text-white rounded-full hover:bg-gray-900 transition">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+
+</body>
+</html>

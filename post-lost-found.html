@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Lost/Found Item - CampusCart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Form Section -->
+  <section class="py-16 px-6 max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center">Post Lost/Found Item</h2>
+
+    <form action="#" method="POST" enctype="multipart/form-data" class="bg-white shadow rounded-lg p-8 space-y-6">
+      
+      <!-- Type -->
+      <div>
+        <label class="block mb-1 font-medium text-sm">Item Type</label>
+        <select name="type" required class="w-full border border-gray-300 rounded-md px-4 py-2">
+          <option value="">Select</option>
+          <option value="lost">Lost</option>
+          <option value="found">Found</option>
+        </select>
+      </div>
+
+      <!-- Title -->
+      <div>
+        <label for="title" class="block mb-1 font-medium text-sm">Item Title</label>
+        <input type="text" id="title" name="title" required placeholder="E.g. Lost Black Wallet"
+               class="w-full border border-gray-300 rounded-md px-4 py-2">
+      </div>
+
+      <!-- Location -->
+      <div>
+        <label for="location" class="block mb-1 font-medium text-sm">Location</label>
+        <input type="text" id="location" name="location" required placeholder="E.g. CUET Cafeteria"
+               class="w-full border border-gray-300 rounded-md px-4 py-2">
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label for="description" class="block mb-1 font-medium text-sm">Description</label>
+        <textarea id="description" name="description" rows="4" required placeholder="Brief details about the item..."
+                  class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
+      </div>
+
+      <!-- Image Upload -->
+      <div>
+        <label class="block mb-1 font-medium text-sm">Upload Photo (optional)</label>
+        <input type="file" name="photo" accept="image/*"
+               class="w-full border border-gray-300 rounded-md px-4 py-2 bg-white">
+      </div>
+
+      <!-- Contact Info -->
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label for="contactName" class="block mb-1 font-medium text-sm">Your Name</label>
+          <input type="text" id="contactName" name="contactName" required placeholder="John Doe"
+                 class="w-full border border-gray-300 rounded-md px-4 py-2">
+        </div>
+        <div>
+          <label for="contactPhone" class="block mb-1 font-medium text-sm">Phone or Email</label>
+          <input type="text" id="contactPhone" name="contactPhone" required placeholder="+8801XXXXXXXXX / your@email.com"
+                 class="w-full border border-gray-300 rounded-md px-4 py-2">
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-right">
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md shadow">
+          Submit Post
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+
+</body>
+</html>

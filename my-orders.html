@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCart - My Orders</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="py-12 px-6 max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center">My Orders</h2>
+
+    <div class="space-y-6">
+      <!-- Order Item -->
+      <div class="bg-white p-6 rounded-xl shadow flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <img src="https://picsum.photos/100?1" class="rounded w-20 h-20 object-cover">
+          <div>
+            <h3 class="font-semibold text-lg">Bluetooth Headphones</h3>
+            <p class="text-sm text-gray-500">Ordered on: Mar 12, 2025</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">Delivered</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <img src="https://picsum.photos/100?2" class="rounded w-20 h-20 object-cover">
+          <div>
+            <h3 class="font-semibold text-lg">Laptop Stand</h3>
+            <p class="text-sm text-gray-500">Ordered on: Mar 18, 2025</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="text-sm bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">In Progress</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <img src="https://picsum.photos/100?3" class="rounded w-20 h-20 object-cover">
+          <div>
+            <h3 class="font-semibold text-lg">Graphic T-shirt</h3>
+            <p class="text-sm text-gray-500">Ordered on: Feb 22, 2025</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-full">Cancelled</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+
+</body>
+</html>

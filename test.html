@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCart - Your Campus Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700" aria-label="CampusCart Home">CAMPUS.CART</a>
+
+      <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-700" aria-label="Main Navigation">
+        <a href="new-products.html" class="hover:text-blue-600">Shop New</a>
+        <a href="bidding.html" class="hover:text-blue-600">Pre-owned Deals</a>
+        <a href="lost-found.html" class="hover:text-blue-600">Lost & Found</a>
+      </nav>
+
+      <div class="flex items-center space-x-4 text-sm font-medium">
+        <a href="cart.html" class="flex items-center text-gray-700 hover:text-blue-600" aria-label="View Cart">
+          <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
+          </svg>
+          <span>Cart</span>
+        </a>
+        <a href="login.html" class="flex items-center text-gray-700 hover:text-blue-600" aria-label="Sign In">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 15c2.964 0 5.713.96 7.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>Sign In</span>
+        </a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-1 rounded-full shadow font-semibold" aria-label="Sign Up">
+          Sign Up
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-white py-16 px-6 max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between">
+    <div class="max-w-xl text-center md:text-left">
+      <h1 class="text-5xl font-extrabold leading-tight mb-6">DISCOVER CAMPUS ESSENTIALS<br>TAILORED FOR YOU</h1>
+      <p class="text-gray-600 mb-6">Shop the latest fashion, find pre-loved deals, and reconnect with lost treasures — all in one place.</p>
+      <a href="new-products.html" class="inline-block bg-black text-white px-6 py-3 rounded-full text-sm font-medium">Explore Now</a>
+    </div>
+    <img src="https://picsum.photos/400/500" class="w-80 rounded-xl mb-8 md:mb-0" alt="Student showcasing clothing">
+  </section>
+
+  <!-- Stats Section -->
+  <section class="bg-gray-100 py-10 px-6">
+    <div class="flex flex-col md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-16 text-center text-lg font-medium">
+      <div><span class="text-2xl font-bold">200+</span><br>Global Brands</div>
+      <div><span class="text-2xl font-bold">2,000+</span><br>Top-Tier Products</div>
+      <div><span class="text-2xl font-bold">30,000+</span><br>Satisfied Students</div>
+    </div>
+  </section>
+
+  <!-- New Arrivals -->
+  <section class="py-16 px-6 max-w-7xl mx-auto">
+    <h2 class="text-3xl font-extrabold mb-10">Latest Arrivals</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="bg-white rounded-lg p-4 shadow text-center">
+        <img src="https://picsum.photos/200?1" alt="T-shirt with Tape Details" class="mx-auto rounded mb-3">
+        <p class="font-semibold">T-shirt with Tape Details</p>
+        <p class="text-yellow-500 text-sm">★★★★★ 4.5/5</p>
+        <p class="mt-1 font-bold">$120</p>
+      </div>
+    </div>
+    <div class="text-center mt-10">
+      <a href="new-products.html" class="px-6 py-2 border border-black text-black rounded-full">Browse More</a>
+    </div>
+  </section>
+
+  <!-- Top Selling -->
+  <section class="py-16 px-6 max-w-7xl mx-auto">
+    <h2 class="text-3xl font-extrabold mb-10">Best Sellers</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="bg-white rounded-lg p-4 shadow text-center">
+        <img src="https://picsum.photos/200?5" alt="Vertical Striped Shirt" class="mx-auto rounded mb-3">
+        <p class="font-semibold">Vertical Striped Shirt</p>
+        <p class="text-yellow-500 text-sm">★★★★★ 5.0/5</p>
+        <p class="mt-1 font-bold">$212 <span class="line-through text-gray-400 text-sm">$232</span> <span class="text-pink-500 text-sm">-20%</span></p>
+      </div>
+    </div>
+    <div class="text-center mt-10">
+      <a href="bidding.html" class="px-6 py-2 border border-black text-black rounded-full">See All Deals</a>
+    </div>
+  </section>
+
+  <!-- Dress Style Browse -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-extrabold mb-10 text-center">Shop by Style</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <a href="new-products.html?style=casual" class="block">
+        <img src="https://picsum.photos/400/250?1" alt="Casual Wear" class="rounded-lg w-full mb-2">
+        <p class="text-center font-semibold">Casual</p>
+      </a>
+      <a href="new-products.html?style=formal" class="block">
+        <img src="https://picsum.photos/400/250?2" alt="Formal Wear" class="rounded-lg w-full mb-2">
+        <p class="text-center font-semibold">Formal</p>
+      </a>
+      <a href="new-products.html?style=party" class="block">
+        <img src="https://picsum.photos/400/250?3" alt="Party Wear" class="rounded-lg w-full mb-2">
+        <p class="text-center font-semibold">Party</p>
+      </a>
+      <a href="new-products.html?style=gym" class="block">
+        <img src="https://picsum.photos/400/250?4" alt="Gym Wear" class="rounded-lg w-full mb-2">
+        <p class="text-center font-semibold">Gym</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    &copy; 2025 CampusCart. Empowering your campus lifestyle.
+  </footer>
+
+</body>
+</html>

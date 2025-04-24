@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Login Section -->
+  <div class="flex items-center justify-center min-h-screen px-4 py-10">
+    <div class="bg-white shadow-lg rounded-lg flex flex-col md:flex-row w-full max-w-4xl overflow-hidden">
+
+      <!-- Left Side Image & Text -->
+      <div class="hidden md:flex flex-col justify-center items-center bg-blue-600 text-white w-1/2 p-10">
+        <h2 class="text-3xl font-bold mb-4">Login</h2>
+        <p class="text-lg text-center leading-relaxed">Access your orders, wishlist, and personalized recommendations.</p>
+        <img src="https://cdn-icons-png.flaticon.com/512/4206/4206330.png" alt="Login illustration" class="w-48 mt-6">
+      </div>
+
+      <!-- Right Side Form -->
+      <div class="w-full md:w-1/2 p-8">
+        <h2 class="text-2xl font-bold mb-6 text-center">Welcome back to CampusCart</h2>
+
+        <form action="#" method="POST" class="space-y-5">
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="block text-sm font-medium mb-1">Email or Mobile Number</label>
+            <input type="text" id="email" name="email" placeholder="example@email.com" required
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <label for="password" class="block text-sm font-medium mb-1">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div class="text-right mt-1">
+              <a href="#" class="text-sm text-blue-500 hover:underline">Forgot password?</a>
+            </div>
+          </div>
+
+          <!-- Login Button -->
+          <button type="submit"
+            class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-md shadow transition">Login</button>
+
+          <!-- Divider -->
+          <div class="text-center text-sm text-gray-500 pt-2">or login with</div>
+
+          <!-- Social Logins -->
+          <div class="flex justify-center space-x-4">
+            <button type="button"
+              class="bg-white border px-4 py-2 rounded-md flex items-center gap-2 shadow hover:bg-gray-50">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+              <span class="text-sm text-gray-700">Google</span>
+            </button>
+            <button type="button"
+              class="bg-white border px-4 py-2 rounded-md flex items-center gap-2 shadow hover:bg-gray-50">
+              <img src="https://www.svgrepo.com/show/349535/facebook.svg" class="w-5 h-5" alt="Facebook">
+              <span class="text-sm text-gray-700">Facebook</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Sign up Prompt -->
+        <p class="text-sm text-center text-gray-600 mt-6">
+          Don't have an account?
+          <a href="signup.html" class="text-blue-600 font-medium hover:underline">Sign up</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

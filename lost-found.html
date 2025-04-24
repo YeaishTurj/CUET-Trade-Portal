@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart - Lost & Found</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+  <!-- Navbar -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Heading -->
+  <section class="py-20 px-8 max-w-7xl mx-auto text-center">
+    <h1 class="text-4xl font-extrabold mb-4">🔎 Lost & Found</h1>
+    <p class="text-lg text-gray-600">Report or check for lost and found items on campus. Help reunite belongings with their owners.</p>
+  </section>
+
+  <!-- Recent Lost & Found Posts -->
+  <section class="py-16 px-8 max-w-7xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-bold">📋 Recent Posts</h2>
+      <a href="post-lost-found.html" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full shadow transition">+ Post Lost/Found</a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <a href="lost-item.html" class="block bg-white p-5 shadow rounded-xl text-center hover:shadow-lg transition group">
+        <img src="https://picsum.photos/200?41" alt="Lost Wallet" class="mx-auto rounded mb-4 object-cover h-48 w-full group-hover:scale-105 transition-transform duration-300" />
+        <p class="font-semibold text-lg">Lost Wallet - Black</p>
+        <p class="text-sm text-gray-500">📍 Found at Cafeteria</p>
+      </a>
+
+      <a href="lost-item.html" class="block bg-white p-5 shadow rounded-xl text-center hover:shadow-lg transition group">
+        <img src="https://picsum.photos/200?42" alt="CUET Student ID" class="mx-auto rounded mb-4 object-cover h-48 w-full group-hover:scale-105 transition-transform duration-300" />
+        <p class="font-semibold text-lg">CUET Student ID</p>
+        <p class="text-sm text-gray-500">📍 Lost near Library</p>
+      </a>
+
+      <a href="lost-item.html" class="block bg-white p-5 shadow rounded-xl text-center hover:shadow-lg transition group">
+        <img src="https://picsum.photos/200?43" alt="Lost Earbuds" class="mx-auto rounded mb-4 object-cover h-48 w-full group-hover:scale-105 transition-transform duration-300" />
+        <p class="font-semibold text-lg">Lost Earbuds</p>
+        <p class="text-sm text-gray-500">📍 Found in EEE Building</p>
+      </a>
+
+      <a href="lost-item.html" class="block bg-white p-5 shadow rounded-xl text-center hover:shadow-lg transition group">
+        <img src="https://picsum.photos/200?44" alt="Physics Book" class="mx-auto rounded mb-4 object-cover h-48 w-full group-hover:scale-105 transition-transform duration-300" />
+        <p class="font-semibold text-lg">Physics Book - 2nd Year</p>
+        <p class="text-sm text-gray-500">📍 Lost in Room 202</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+
+</body>
+</html>

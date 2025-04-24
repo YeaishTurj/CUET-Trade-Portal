@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart - Old Products Bidding</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+  <!-- Navbar -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Heading -->
+  <section class="py-20 px-8 max-w-7xl mx-auto text-center">
+    <h1 class="text-4xl font-extrabold mb-4">Used Product Bidding</h1>
+    <p class="text-lg text-gray-600">Place bids on pre-loved items listed by CUET students. Highest bidder at the deadline wins!</p>
+  </section>
+
+  <!-- Bidding Grid -->
+  <section class="pb-24 px-8 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Card Template -->
+    <a href="bidding-product.html" class="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
+      <img src="https://picsum.photos/200?21" alt="Used Laptop" class="mx-auto mb-4 rounded object-cover h-48 w-full" />
+      <h3 class="font-semibold text-lg mb-1">Used Laptop</h3>
+      <p class="text-sm text-gray-500">Current Bid: <strong>$320</strong></p>
+      <p class="text-sm text-red-500">Ends in: <span class="font-semibold">2h 35m</span></p>
+      <span class="inline-block mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm transition">View Details</span>
+    </a>
+
+    <a href="bidding-product.html" class="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
+      <img src="https://picsum.photos/200?22" alt="Secondhand Guitar" class="mx-auto mb-4 rounded object-cover h-48 w-full" />
+      <h3 class="font-semibold text-lg mb-1">Secondhand Guitar</h3>
+      <p class="text-sm text-gray-500">Current Bid: <strong>$75</strong></p>
+      <p class="text-sm text-red-500">Ends in: <span class="font-semibold">5h 10m</span></p>
+      <span class="inline-block mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm transition">View Details</span>
+    </a>
+
+    <a href="bidding-product.html" class="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
+      <img src="https://picsum.photos/200?23" alt="Used Bicycle" class="mx-auto mb-4 rounded object-cover h-48 w-full" />
+      <h3 class="font-semibold text-lg mb-1">Bicycle (Used)</h3>
+      <p class="text-sm text-gray-500">Current Bid: <strong>$140</strong></p>
+      <p class="text-sm text-red-500">Ends in: <span class="font-semibold">1h 12m</span></p>
+      <span class="inline-block mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm transition">View Details</span>
+    </a>
+
+    <a href="bidding-product.html" class="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
+      <img src="https://picsum.photos/200?24" alt="Drawing Tablet" class="mx-auto mb-4 rounded object-cover h-48 w-full" />
+      <h3 class="font-semibold text-lg mb-1">Drawing Tablet</h3>
+      <p class="text-sm text-gray-500">Current Bid: <strong>$60</strong></p>
+      <p class="text-sm text-red-500">Ends in: <span class="font-semibold">3h 05m</span></p>
+      <span class="inline-block mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm transition">View Details</span>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+</body>
+</html>

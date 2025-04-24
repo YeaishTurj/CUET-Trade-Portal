@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart - New Products</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+  <!-- Navbar -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Heading -->
+  <section class="py-16 px-8 max-w-7xl mx-auto">
+    <div class="text-center mb-14">
+      <h2 class="text-4xl font-extrabold mb-4">New Products</h2>
+      <p class="text-gray-600 text-lg">Discover the latest additions in fashion, electronics, and subscriptions curated for students.</p>
+    </div>
+
+    <!-- Search & Sort -->
+    <div class="flex justify-between items-center mb-12">
+      <div class="relative w-1/2">
+        <input type="text" placeholder="Search for products..." class="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+        </svg>
+      </div>
+      <select class="px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option selected>Sort by</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+        <option>Rating</option>
+      </select>
+    </div>
+
+    <!-- Products Section -->
+    <div class="space-y-20">
+
+      <!-- Fashion -->
+      <div>
+        <h3 class="text-2xl font-bold mb-6">Fashion</h3>
+        <div id="fashion-products" class="grid grid-cols-4 gap-6">
+          <!-- Product Cards -->
+        </div>
+        <div class="text-center mt-6">
+          <button id="loadFashion" class="px-6 py-2 bg-gray-200 rounded-full hover:bg-gray-300 text-sm transition">View More</button>
+        </div>
+      </div>
+
+      <!-- Electronics -->
+      <div>
+        <h3 class="text-2xl font-bold mb-6">Electronics</h3>
+        <div id="electronics-products" class="grid grid-cols-4 gap-6"></div>
+        <div class="text-center mt-6">
+          <button id="loadElectronics" class="px-6 py-2 bg-gray-200 rounded-full hover:bg-gray-300 text-sm transition">View More</button>
+        </div>
+      </div>
+
+      <!-- Digital Subscriptions -->
+      <div>
+        <h3 class="text-2xl font-bold mb-6">Digital Subscriptions</h3>
+        <div id="digital-products" class="grid grid-cols-4 gap-6"></div>
+        <div class="text-center mt-6">
+          <button id="loadDigital" class="px-6 py-2 bg-gray-200 rounded-full hover:bg-gray-300 text-sm transition">View More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+
+  <script>
+    function createProductCard(src, title, rating, price) {
+      return `
+        <a href="product.html" class="block bg-white p-4 shadow rounded text-center hover:shadow-md transition">
+          <img src="${src}" alt="${title}" class="mx-auto rounded mb-3 h-48 object-cover" />
+          <h3 class="font-semibold text-lg mb-1">${title}</h3>
+          <p class="text-yellow-500 text-sm mb-1">${rating}</p>
+          <p class="font-bold text-lg">${price}</p>
+        </a>
+      `;
+    }
+
+    const load = (id, products) => {
+      document.getElementById(id).innerHTML += products.map(p => createProductCard(...p)).join('');
+    };
+
+    document.getElementById("loadFashion").addEventListener("click", () => {
+      load("fashion-products", [
+        ["https://picsum.photos/200?101", "T-Shirt", "★★★★☆ 4.5/5", "$20"],
+        ["https://picsum.photos/200?102", "Jeans", "★★★☆☆ 3.5/5", "$45"],
+        ["https://picsum.photos/200?103", "Jacket", "★★★★★ 5.0/5", "$60"],
+        ["https://picsum.photos/200?104", "Sneakers", "★★★★☆ 4.0/5", "$80"]
+      ]);
+    });
+
+    document.getElementById("loadElectronics").addEventListener("click", () => {
+      load("electronics-products", [
+        ["https://picsum.photos/200?201", "Smart Watch", "★★★★★ 5.0/5", "$129"],
+        ["https://picsum.photos/200?202", "Bluetooth Speaker", "★★★★☆ 4.0/5", "$75"],
+        ["https://picsum.photos/200?203", "Wireless Mouse", "★★★★☆ 4.2/5", "$25"],
+        ["https://picsum.photos/200?204", "Laptop", "★★★★☆ 4.5/5", "$899"]
+      ]);
+    });
+
+    document.getElementById("loadDigital").addEventListener("click", () => {
+      load("digital-products", [
+        ["https://picsum.photos/200?301", "E-Magazine", "★★★★☆ 4.5/5", "$5.99"],
+        ["https://picsum.photos/200?302", "Premium Notes", "★★★☆☆ 3.8/5", "$12.99"],
+        ["https://picsum.photos/200?303", "Online Course", "★★★★☆ 4.3/5", "$39"],
+        ["https://picsum.photos/200?304", "Cloud Storage", "★★★★☆ 4.6/5", "$19.99"]
+      ]);
+    });
+  </script>
+</body>
+</html>

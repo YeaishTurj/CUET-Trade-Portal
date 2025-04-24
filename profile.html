@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart - My Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
+      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
+        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
+        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
+
+      </nav>
+      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
+        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
+        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
+        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Profile Section -->
+  <section class="py-12 px-6 max-w-4xl mx-auto animate-fade-in">
+    <h2 class="text-3xl font-bold mb-6 text-center">👤 My Profile</h2>
+
+    <div class="bg-white shadow rounded-xl p-8">
+      <!-- User Info -->
+      <div class="flex items-center space-x-6 mb-8">
+        <img src="https://i.pravatar.cc/100" alt="User Avatar" class="w-20 h-20 rounded-full shadow ring-2 ring-blue-400" />
+        <div>
+          <h3 class="text-xl font-semibold">Tanvir Ahmed</h3>
+          <p class="text-gray-600 text-sm">tanvir@email.com</p>
+        </div>
+      </div>
+
+      <!-- Profile Form -->
+      <form class="space-y-6">
+        <div>
+          <label class="block text-sm font-medium mb-1" for="name">Full Name</label>
+          <input type="text" id="name" name="name" value="Tanvir Ahmed"
+            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1" for="email">Email</label>
+          <input type="email" id="email" name="email" value="tanvir@email.com"
+            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1" for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" value="+8801712345678"
+            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+
+        <div class="text-right">
+          <button type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow font-medium transition">
+            💾 Update Profile
+          </button>
+        </div>
+      </form>
+
+      <!-- Dashboard & Links -->
+      <div class="mt-10 text-center space-y-4">
+        <a href="seller-dashboard.html"
+           class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-md shadow transition">
+          🛒 Go to Seller Dashboard
+        </a>
+
+        <div>
+          <a href="my-orders.html"
+             class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md shadow transition">
+            👕 View My Orders
+          </a>
+        </div>
+
+        <div>
+          <a href="my-bids.html"
+             class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md shadow transition">
+            🔨 View My Bids
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CampusCart. All rights reserved.
+  </footer>
+
+</body>
+</html>
