@@ -5,50 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CampusCart - Lost Item Detail</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',
+            secondary: '#f97316',
+            accent: '#22c55e'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
 
   <!-- Navbar -->
-  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
-      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
-        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
-        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
-        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
-        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
-
+  <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-extrabold text-primary tracking-tight">CampusCart</a>
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-primary">New Arrivals</a>
+        <a href="bidding.html" class="hover:text-primary">Pre-Owned Products</a>
+        <a href="lost-found.html" class="text-primary font-semibold">Lost & Found</a>
+        <a href="sell.html" class="hover:text-primary">Sell Your Things</a>
+        <a href="cart.html" class="hover:text-primary">🛒 Cart</a>
+        <a href="login.html" class="hover:text-primary">Sign In</a>
+        <a href="signup.html" class="px-4 py-1.5 bg-secondary text-white rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
+        <a href="profile.html" class="hover:text-primary">👤 My Profile</a>
       </nav>
-      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
-        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
-        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
-        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
-        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
-      </div>
     </div>
   </header>
 
-  <!-- Detail Section -->
-  <section class="py-20 px-8 max-w-5xl mx-auto">
-    <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col md:flex-row gap-10">
+  <!-- Lost Item Detail -->
+  <section class="py-20 px-6 max-w-6xl mx-auto">
+    <div class="bg-white shadow rounded-xl p-8 flex flex-col lg:flex-row gap-12">
       <!-- Image -->
-      <div class="md:w-1/2">
-        <img src="https://picsum.photos/400?lost" alt="Lost Wallet" class="rounded-xl shadow w-full object-cover">
+      <div class="lg:w-1/2">
+        <img src="https://picsum.photos/500?lost" alt="Lost Wallet" class="rounded-xl shadow-lg w-full object-cover">
       </div>
 
-      <!-- Details -->
-      <div class="md:w-1/2">
+      <!-- Info -->
+      <div class="lg:w-1/2">
         <h1 class="text-3xl font-bold mb-4">Lost Wallet - Black</h1>
-        <p class="flex items-center text-sm text-gray-500 mb-2">📍 <span class="ml-1">Found at Cafeteria, CUET Campus</span></p>
-        <p class="text-gray-700 mb-6">
+        <p class="flex items-center text-sm text-gray-500 mb-4">📍 <span class="ml-1">Found at Cafeteria, CUET Campus</span></p>
+        <p class="text-gray-700 text-lg mb-6">
           This black leather wallet was found near the central cafeteria. It contains a student ID card, some cash, and a library card.
           If this belongs to you or someone you know, please contact the finder to return it.
         </p>
 
-        <!-- Contact Info -->
-        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg">
-          <h2 class="text-blue-700 font-semibold text-lg">📞 Contact Information</h2>
-          <p class="mt-2 text-sm text-gray-800">Name: <strong>Tanvir Ahmed</strong></p>
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-lg">
+          <h2 class="text-blue-700 font-semibold text-lg mb-2">📞 Contact Information</h2>
+          <p class="text-sm text-gray-800 mb-1">Name: <strong>Tanvir Ahmed</strong></p>
           <p class="text-sm text-gray-800">Phone: 
             <a href="tel:+8801712345678" class="text-blue-600 underline hover:text-blue-800">+880 17 1234 5678</a>
           </p>

@@ -5,33 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CampusCart - Bidding Product</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',
+            secondary: '#f97316',
+            accent: '#22c55e'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
 
   <!-- Navbar -->
-  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
-      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
-        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
-        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
-        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
-        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
-
+  <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-extrabold text-primary tracking-tight">CampusCart</a>
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-primary">New Arrivals</a>
+        <a href="bidding.html" class="text-primary font-semibold">Pre-Owned Products</a>
+        <a href="lost-found.html" class="hover:text-primary">Lost & Found</a>
+        <a href="sell.html" class="hover:text-primary">Sell Your Things</a>
+        <a href="cart.html" class="hover:text-primary">🛒 Cart</a>
+        <a href="login.html" class="hover:text-primary">Sign In</a>
+        <a href="signup.html" class="px-4 py-1.5 bg-secondary text-white rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
+        <a href="profile.html" class="hover:text-primary">👤 My Profile</a>
       </nav>
-      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
-        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
-        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
-        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
-        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
-      </div>
     </div>
   </header>
 
-  <!-- Bidding Product Section UI Enhanced -->
-  <section class="py-20 px-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 animate-fade-in">
+  <!-- Product Bidding Section -->
+  <section class="py-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
     <div>
-      <img src="https://picsum.photos/500?bid" alt="Used Laptop" class="rounded-xl shadow-lg w-full object-cover hover:scale-105 transition-transform duration-300" />
+      <img src="https://picsum.photos/500?bid" alt="Used Laptop" class="rounded-xl shadow-lg w-full object-cover" />
     </div>
     <div>
       <h1 class="text-3xl font-bold mb-2">Used Laptop - Core i5, 8GB RAM</h1>
@@ -51,10 +61,10 @@
 
       <div class="flex gap-4 items-center mb-6">
         <input type="number" placeholder="Enter your bid..." class="px-4 py-2 w-1/2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <button class="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition shadow">Place Bid</button>
+        <button class="px-6 py-2 bg-primary text-white rounded-full hover:bg-blue-800 transition shadow">Place Bid</button>
       </div>
 
-      <button class="mt-2 px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow">Order at ৳ 350</button>
+      <button class="w-full py-3 bg-accent text-white rounded-full font-semibold hover:bg-green-700 shadow transition">Order Now at ৳ 350</button>
 
       <div class="mt-12">
         <h2 class="text-xl font-semibold mb-4">All Bids (Sorted by Price)</h2>

@@ -5,45 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sell on CampusCart</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',
+            secondary: '#f97316',
+            accent: '#22c55e'
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800">
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
 
-  <!-- Header -->
-  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
-      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
-        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
-        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
-        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
-        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
-
+  <!-- Navbar -->
+  <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-extrabold text-primary tracking-tight">CampusCart</a>
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-primary">New Arrivals</a>
+        <a href="bidding.html" class="hover:text-primary">Pre-Owned Products</a>
+        <a href="lost-found.html" class="hover:text-primary">Lost & Found</a>
+        <a href="sell.html" class="text-primary font-semibold">Sell Your Things</a>
+        <a href="cart.html" class="hover:text-primary">🛒 Cart</a>
+        <a href="login.html" class="hover:text-primary">Sign In</a>
+        <a href="signup.html" class="px-4 py-1.5 bg-secondary text-white rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
+        <a href="profile.html" class="hover:text-primary">👤 My Profile</a>
       </nav>
-      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
-        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
-        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
-        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
-        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
-      </div>
     </div>
   </header>
 
-  <!-- Sell Type Selection -->
-  <section class="py-20 px-6 max-w-4xl mx-auto text-center animate-fade-in">
-    <h1 class="text-4xl font-bold mb-6">🛍️ Sell a Product</h1>
-    <p class="text-gray-600 mb-10">Choose how you’d like to list your item on CampusCart.</p>
+  <!-- Sell Type Section -->
+  <section class="py-20 px-6 max-w-4xl mx-auto text-center">
+    <h1 class="text-4xl font-extrabold mb-6">🛍️ Sell a Product</h1>
+    <p class="text-gray-600 mb-10 text-lg">Choose how you’d like to list your item on CampusCart.</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- New Product Card -->
-      <a href="sell-new.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-blue-500 group">
-        <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="New Product Icon" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- New Product -->
+      <a href="sell-new.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="New Product" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
         <h2 class="text-xl font-bold mb-2">🆕 Sell a New Product</h2>
         <p class="text-gray-600 text-sm">List a product at a fixed price. Perfect for brand new or unused items.</p>
       </a>
 
-      <!-- Old Product Card -->
-      <a href="sell-old.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-blue-500 group">
-        <img src="https://cdn-icons-png.flaticon.com/512/1261/1261163.png" alt="Old Product Icon" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform">
+      <!-- Old Product -->
+      <a href="sell-old.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/1261/1261163.png" alt="Old Product" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
         <h2 class="text-xl font-bold mb-2">🔄 Sell a Used Product (Bidding)</h2>
         <p class="text-gray-600 text-sm">Start a bidding session. Great for gently used or pre-owned items.</p>
       </a>

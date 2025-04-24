@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCart Admin - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',
+            secondary: '#f97316',
+            accent: '#22c55e'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+  <!-- Admin Navbar -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="admin-dashboard.html" class="text-2xl font-extrabold text-primary tracking-tight">Admin Panel</a>
+      <nav class="flex items-center gap-6 text-sm font-medium text-gray-700">
+        <a href="admin-dashboard.html" class="text-primary font-semibold">Dashboard</a>
+        <a href="admin-users.html" class="hover:text-primary">Users</a>
+        <a href="admin-products.html" class="hover:text-primary">Products</a>
+        <a href="admin-bids.html" class="hover:text-primary">Bids</a>
+        <a href="admin-lost-found.html" class="hover:text-primary">Lost & Found</a>
+        <a href="login.html" class="text-red-500 hover:underline">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Dashboard Overview -->
+  <section class="py-16 px-6 max-w-7xl mx-auto">
+    <h1 class="text-4xl font-extrabold mb-8">👋 Welcome, Admin</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <p class="text-gray-500 mb-2">Total Users</p>
+        <h2 class="text-3xl font-bold text-primary">1,245</h2>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <p class="text-gray-500 mb-2">Products Listed</p>
+        <h2 class="text-3xl font-bold text-primary">582</h2>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <p class="text-gray-500 mb-2">Active Bids</p>
+        <h2 class="text-3xl font-bold text-primary">78</h2>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <p class="text-gray-500 mb-2">Lost/Found Posts</p>
+        <h2 class="text-3xl font-bold text-primary">34</h2>
+      </div>
+    </div>
+
+    <div class="mt-16">
+      <h2 class="text-2xl font-bold mb-6">🔍 Quick Actions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="admin-users.html" class="bg-secondary text-white p-6 rounded-xl shadow text-center hover:bg-orange-600 transition">
+          Manage Users
+        </a>
+        <a href="admin-products.html" class="bg-primary text-white p-6 rounded-xl shadow text-center hover:bg-blue-800 transition">
+          Manage Products
+        </a>
+        <a href="admin-bids.html" class="bg-accent text-white p-6 rounded-xl shadow text-center hover:bg-green-700 transition">
+          View Bids
+        </a>
+        <a href="admin-lost-found.html" class="bg-yellow-400 text-white p-6 rounded-xl shadow text-center hover:bg-yellow-500 transition">
+          Moderate Lost & Found
+        </a>
+        <a href="sell-old.html" class="bg-gray-700 text-white p-6 rounded-xl shadow text-center hover:bg-black transition">
+          Create Bidding Product
+        </a>
+        <a href="sell-new.html" class="bg-gray-500 text-white p-6 rounded-xl shadow text-center hover:bg-gray-700 transition">
+          Create Fixed Product
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500 mt-10">
+    © 2025 CampusCart Admin. All rights reserved.
+  </footer>
+
+</body>
+</html>

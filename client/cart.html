@@ -5,63 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CampusCart - Cart</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',
+            secondary: '#f97316',
+            accent: '#22c55e'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
 
   <!-- Navbar -->
-  <header class="bg-white/80 backdrop-blur shadow sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-extrabold text-blue-700">CAMPUS.CART</a>
-      <nav class="hidden lg:flex space-x-8 text-sm font-medium text-gray-700">
-        <a href="new-products.html" class="hover:text-blue-600 transition">New Products</a>
-        <a href="bidding.html" class="hover:text-blue-600 transition">Old Products</a>
-        <a href="lost-found.html" class="text-blue-600 font-semibold">Lost & Found</a>
-        <a href="sell.html" class="hover:text-blue-600 transition">📦 Sell</a>
-
+  <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-extrabold text-primary tracking-tight">CampusCart</a>
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
+        <a href="new-products.html" class="hover:text-primary">New Arrivals</a>
+        <a href="bidding.html" class="hover:text-primary">Pre-Owned Products</a>
+        <a href="lost-found.html" class="hover:text-primary">Lost & Found</a>
+        <a href="sell.html" class="hover:text-primary">Sell Your Things</a>
+        <a href="cart.html" class="text-primary font-semibold">🛒 Cart</a>
+        <a href="login.html" class="hover:text-primary">Sign In</a>
+        <a href="signup.html" class="px-4 py-1.5 bg-secondary text-white rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
+        <a href="profile.html" class="hover:text-primary">👤 My Profile</a>
       </nav>
-      <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
-        <a href="cart.html" class="hover:text-blue-600 transition">🛒 Cart</a>
-        <a href="login.html" class="hover:text-blue-600 transition">🔐 Login</a>
-        <a href="signup.html" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow transition">Sign up</a>
-        <a href="profile.html" class="hover:text-blue-600 transition">👤 Profile</a>
-      </div>
     </div>
   </header>
 
   <!-- Page Heading -->
-  <section class="py-20 px-8 max-w-7xl mx-auto text-center">
-    <h1 class="text-4xl font-extrabold mb-4">Your Cart</h1>
+  <section class="py-20 px-6 max-w-7xl mx-auto text-center">
+    <h1 class="text-4xl font-extrabold mb-4">🛒 Your Cart</h1>
     <p class="text-lg text-gray-600">Review the items you've added and proceed to checkout.</p>
   </section>
 
   <!-- Cart Items Section -->
-  <section class="px-8 max-w-5xl mx-auto pb-24">
-    <div class="bg-white shadow-md rounded-xl p-6 divide-y divide-gray-200">
+  <section class="px-6 max-w-5xl mx-auto pb-24">
+    <div class="bg-white shadow rounded-xl p-6 divide-y divide-gray-200">
       <!-- Cart Item -->
       <div class="flex justify-between items-center py-6 hover:bg-gray-50 rounded-lg px-2 transition">
         <div class="flex gap-4 items-center">
-          <img src="https://picsum.photos/100?51" alt="Bluetooth Headphones" class="w-20 h-20 rounded-lg object-cover">
+          <img src="https://picsum.photos/100?51" alt="Bluetooth Headphones" class="w-20 h-20 rounded-lg object-cover" />
           <div>
             <h2 class="text-lg font-semibold">Bluetooth Headphones</h2>
             <p class="text-sm text-gray-500">Quantity: 1</p>
           </div>
         </div>
         <div class="text-right">
-          <p class="text-lg font-bold text-blue-700">$99</p>
+          <p class="text-lg font-bold text-primary">$99</p>
           <button class="text-red-500 text-sm hover:underline mt-1">Remove</button>
         </div>
       </div>
 
       <div class="flex justify-between items-center py-6 hover:bg-gray-50 rounded-lg px-2 transition">
         <div class="flex gap-4 items-center">
-          <img src="https://picsum.photos/100?52" alt="Laptop Stand" class="w-20 h-20 rounded-lg object-cover">
+          <img src="https://picsum.photos/100?52" alt="Laptop Stand" class="w-20 h-20 rounded-lg object-cover" />
           <div>
             <h2 class="text-lg font-semibold">Laptop Stand</h2>
             <p class="text-sm text-gray-500">Quantity: 1</p>
           </div>
         </div>
         <div class="text-right">
-          <p class="text-lg font-bold text-blue-700">$45</p>
+          <p class="text-lg font-bold text-primary">$45</p>
           <button class="text-red-500 text-sm hover:underline mt-1">Remove</button>
         </div>
       </div>
@@ -70,7 +80,7 @@
     <!-- Total and Checkout -->
     <div class="text-right mt-10">
       <p class="text-2xl font-bold text-green-700">Total: $144</p>
-      <button class="mt-4 px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 shadow transition">
+      <button class="mt-4 px-8 py-3 bg-primary text-white rounded-full font-medium hover:bg-blue-800 shadow transition">
         Proceed to Checkout
       </button>
     </div>
