@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fashion Product Details | CUET Portal</title>
+  <link rel="icon" href="logo.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',
+            secondary: '#f97316',
+            accent: '#22c55e'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          },
+          scale: {
+            '102': '1.02',
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
+        <img src="logo.png" alt="CUET Logo" class="w-10 h-10 object-contain">
+        <span class="text-lg lg:text-xl font-extrabold text-primary leading-tight">
+          CUET Trade &<br class="hidden lg:inline"> Lost-Found Portal
+        </span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-10 text-sm font-semibold text-black">
+        <a href="new-products.html" class="hover:scale-125 hover:text-primary transition">New Arrivals</a>
+        <a href="bidding.html" class="hover:scale-125 hover:text-primary transition">Pre-Owned Products</a>
+        <a href="lost-found.html" class="hover:scale-125 hover:text-primary transition">Lost & Found</a>
+        <a href="sell.html" class="hover:scale-125 hover:text-primary transition">Become a Seller</a>
+        <a href="cart.html" class="hover:scale-125 hover:text-primary transition">Cart</a>
+        <a href="login.html" class="hover:scale-125 hover:text-primary transition">Login</a>
+        <a href="signup.html" class="bg-secondary text-white px-4 py-1.5 rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Product Overview -->
+  <section class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <!-- Images -->
+    <div class="flex items-center justify-center bg-white rounded-xl shadow mb-4 overflow-hidden group">
+      <img src="logo.png" alt="Fashion Product" class="max-h-[80vh] max-w-full object-contain p-6 transform transition-transform duration-300 group-hover:scale-105">
+    </div>
+
+    <!-- Product Info -->
+    <div>
+      <h1 class="text-4xl font-extrabold mb-4 text-primary">Men's Casual Jacket</h1>
+      <p class="text-2xl font-bold text-green-600 mb-2">৳ 2,200</p>
+      <p class="text-gray-600 mb-6">Perfect for casual outings and daily wear. Available in multiple sizes.</p>
+
+      <div class="space-y-2 mb-6">
+        <p>✅ Material: 100% Cotton</p>
+        <p>✅ Available Sizes: M, L, XL, XXL</p>
+        <p>✅ Machine Washable</p>
+      </div>
+
+      <!-- Size Selection -->
+      <div class="mb-8">
+        <label class="block mb-4 font-semibold">Select Size</label>
+        <div class="flex flex-wrap gap-4">
+          <label class="cursor-pointer">
+            <input type="radio" name="size" value="S" class="peer hidden">
+            <div class="w-14 h-10 flex items-center justify-center border rounded-full peer-checked:bg-primary peer-checked:text-white">S</div>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="size" value="M" class="peer hidden">
+            <div class="w-14 h-10 flex items-center justify-center border rounded-full peer-checked:bg-primary peer-checked:text-white">M</div>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="size" value="L" class="peer hidden">
+            <div class="w-14 h-10 flex items-center justify-center border rounded-full peer-checked:bg-primary peer-checked:text-white">L</div>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="size" value="XL" class="peer hidden">
+            <div class="w-14 h-10 flex items-center justify-center border rounded-full peer-checked:bg-primary peer-checked:text-white">XL</div>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="size" value="XXL" class="peer hidden">
+            <div class="w-14 h-10 flex items-center justify-center border rounded-full peer-checked:bg-primary peer-checked:text-white">XXL</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Quantity Selection -->
+      <div class="mb-8">
+        <label class="block mb-4 font-semibold">Select Quantity</label>
+        <div class="flex items-center gap-4">
+          <button type="button" onclick="decreaseQty()" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-primary hover:text-white transition">−</button>
+          <input id="quantity" type="number" min="1" value="1" class="w-20 text-center px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary" readonly>
+          <button type="button" onclick="increaseQty()" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-primary hover:text-white transition">+</button>
+        </div>
+      </div>
+
+      <script>
+        function decreaseQty() {
+          var qty = document.getElementById('quantity');
+          if (parseInt(qty.value) > 1) qty.value--;
+        }
+        function increaseQty() {
+          var qty = document.getElementById('quantity');
+          qty.value++;
+        }
+      </script>
+
+      <!-- Seller Info -->
+      <div class="bg-white p-5 rounded-xl shadow mb-8">
+        <h3 class="text-lg font-bold mb-2 text-primary">Seller Information</h3>
+        <p class="text-gray-700"><span class="font-semibold">Seller:</span> FashionHub BD</p>
+        <p class="text-gray-700"><span class="font-semibold">Phone:</span> +880 1234-567890</p>
+        <p class="text-gray-700"><span class="font-semibold">WhatsApp:</span> +880 1234-567890</p>
+        <p class="text-gray-700"><span class="font-semibold">Email:</span> <a href="mailto:seller@example.com" class="text-blue-500">seller@example.com</a></p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button class="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:scale-105 hover:shadow-md transition">Add to Cart</button>
+        <button class="bg-secondary text-white px-6 py-3 rounded-full font-semibold hover:scale-105 hover:shadow-md transition">Buy Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="max-w-7xl mx-auto px-6 py-10">
+    <h2 class="text-3xl font-bold mb-6 text-center">Product Description</h2>
+    <p class="bg-white p-6 rounded-xl shadow text-gray-700">
+      Stay stylish and comfortable with our Men's Casual Jacket. Designed with premium cotton material, this jacket ensures both durability and breathability. Whether you are heading to a casual hangout or a weekend trip, this jacket perfectly complements your everyday look. Choose your color and size and elevate your wardrobe today.
+    </p>
+  </section>
+
+  <!-- Related Products -->
+  <section class="max-w-7xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold mb-8 text-center">🧥 Related Fashion Products</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <a href="#" class="bg-white p-5 rounded-xl shadow hover:scale-105 transition-transform text-center">
+        <img src="logo.png" alt="T-shirt" class="w-full h-40 object-contain mb-3">
+        <p class="font-semibold">Men's T-shirt</p>
+        <p class="text-green-600 font-bold">৳ 700</p>
+      </a>
+      <a href="#" class="bg-white p-5 rounded-xl shadow hover:scale-105 transition-transform text-center">
+        <img src="logo.png" alt="Sneakers" class="w-full h-40 object-contain mb-3">
+        <p class="font-semibold">Sneakers</p>
+        <p class="text-green-600 font-bold">৳ 3,200</p>
+      </a>
+      <a href="#" class="bg-white p-5 rounded-xl shadow hover:scale-105 transition-transform text-center">
+        <img src="logo.png" alt="Shirt" class="w-full h-40 object-contain mb-3">
+        <p class="font-semibold">Men's Formal Shirt</p>
+        <p class="text-green-600 font-bold">৳ 1,200</p>
+      </a>
+      <a href="#" class="bg-white p-5 rounded-xl shadow hover:scale-105 transition-transform text-center">
+        <img src="logo.png" alt="Shirt" class="w-full h-40 object-contain mb-3">
+        <p class="font-semibold">Men's Formal Shirt</p>
+        <p class="text-green-600 font-bold">৳ 1,200</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CUET Trade & Lost-Found Portal. All rights reserved.
+  </footer>
+
+</body>
+
+</html>

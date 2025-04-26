@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sell on CampusCart</title>
+  <title>CUET Trade & Lost-Found Portal</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,57 +15,90 @@
             primary: '#1e40af',
             secondary: '#f97316',
             accent: '#22c55e'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
           }
         }
       }
     }
   </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+<body class="bg-gray-50 text-gray-800 font-sans">
 
   <!-- Navbar -->
-  <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50">
+  <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-extrabold text-primary tracking-tight">CampusCart</a>
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
-        <a href="new-products.html" class="hover:text-primary">New Arrivals</a>
-        <a href="bidding.html" class="hover:text-primary">Pre-Owned Products</a>
-        <a href="lost-found.html" class="hover:text-primary">Lost & Found</a>
-        <a href="sell.html" class="text-primary font-semibold">Sell Your Things</a>
-        <a href="cart.html" class="hover:text-primary">🛒 Cart</a>
-        <a href="login.html" class="hover:text-primary">Sign In</a>
-        <a href="signup.html" class="px-4 py-1.5 bg-secondary text-white rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
-        <a href="profile.html" class="hover:text-primary">👤 My Profile</a>
+      <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
+        <img src="logo.png" alt="CUET Logo" class="w-10 h-10 object-contain" />
+        <span class="text-lg lg:text-xl font-extrabold text-primary leading-tight">
+          CUET Trade &<br class="hidden lg:inline" /> Lost-Found Portal
+        </span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-10 text-sm font-semibold text-black">
+        <a href="new-products.html" class="hover:scale-125 transition hover:text-primary transition">New Arrivals</a>
+        <a href="bidding.html" class="hover:scale-125 transition hover:text-primary transition">Pre-Owned Products</a>
+        <a href="lost-found.html" class="hover:scale-125 transition hover:text-primary transition">Lost & Found</a>
+        <a href="sell.html" class="flex items-center gap-2 scale-125 hover:text-black text-primary transition">
+          Become a Seller
+        </a>
+        <a href="cart.html" class="flex items-center gap-2 hover:scale-125 hover:text-primary transition">Cart</a>
+        <a href="login.html" class="flex items-center gap-2 hover:scale-125 hover:text-primary transition">Login</a>
+        <a href="signup.html" class="bg-secondary text-white px-4 py-1.5 rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
       </nav>
     </div>
   </header>
 
   <!-- Sell Type Section -->
-  <section class="py-20 px-6 max-w-4xl mx-auto text-center">
+  <section class="py-20 px-6 max-w-6xl mx-auto text-center">
     <h1 class="text-4xl font-extrabold mb-6">🛍️ Sell a Product</h1>
     <p class="text-gray-600 mb-10 text-lg">Choose how you’d like to list your item on CampusCart.</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-      <!-- New Product -->
-      <a href="sell-new.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="New Product" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-        <h2 class="text-xl font-bold mb-2">🆕 Sell a New Product</h2>
-        <p class="text-gray-600 text-sm">List a product at a fixed price. Perfect for brand new or unused items.</p>
+    <div class="flex flex-wrap justify-center gap-10">
+      <!-- Fashion Product -->
+      <a href="upload-fashion.html" class="bg-white w-72 p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png" alt="Fashion" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+        <h2 class="text-xl font-bold mb-2">👗 Sell Fashion Items</h2>
+        <p class="text-gray-600 text-sm">List clothes, shoes, accessories and more.</p>
       </a>
 
-      <!-- Old Product -->
-      <a href="sell-old.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/1261/1261163.png" alt="Old Product" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-        <h2 class="text-xl font-bold mb-2">🔄 Sell a Used Product (Bidding)</h2>
-        <p class="text-gray-600 text-sm">Start a bidding session. Great for gently used or pre-owned items.</p>
+      <!-- Electronics Product -->
+      <a href="upload-electronics.html" class="bg-white w-72 p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Electronics" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+        <h2 class="text-xl font-bold mb-2">💻 Sell Electronics & Accessories</h2>
+        <p class="text-gray-600 text-sm">Sell laptops, gadgets, mobile accessories and more.</p>
+      </a>
+
+      <!-- Digital Subscription -->
+      <a href="upload-digital.html" class="bg-white w-72 p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" alt="Digital" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+        <h2 class="text-xl font-bold mb-2">📱 Sell Digital Subscriptions</h2>
+        <p class="text-gray-600 text-sm">Netflix, YouTube, ChatGPT, Coursera subscriptions and more.</p>
+      </a>
+
+      <!-- Other Products -->
+      <a href="upload-others.html" class="bg-white w-72 p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/1170/1170627.png" alt="Others" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+        <h2 class="text-xl font-bold mb-2">📦 Sell Other Products</h2>
+        <p class="text-gray-600 text-sm">List anything that doesn't fit a specific category.</p>
+      </a>
+
+      <!-- Pre-owned / Bidding Product -->
+      <a href="sell-old.html" class="bg-white w-72 p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-primary group text-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/4341/4341025.png" alt="Bidding" class="w-16 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+        <h2 class="text-xl font-bold mb-2">🔄 Sell Pre-Owned (Bidding)</h2>
+        <p class="text-gray-600 text-sm">Start a bidding session for used items.</p>
       </a>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
-    © 2025 CampusCart. All rights reserved.
+  <footer class="bg-gray-100 border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CUET Trade & Lost-Found Portal. All rights reserved.
   </footer>
 
 </body>
+
 </html>

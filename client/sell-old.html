@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sell Used Product - CampusCart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CUET Trade & Lost-Found Portal</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,75 +15,84 @@
             primary: '#1e40af',
             secondary: '#f97316',
             accent: '#22c55e'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
           }
         }
       }
     }
   </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+<body class="bg-gray-50 text-gray-800 font-sans">
 
   <!-- Navbar -->
-  <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50">
+  <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-extrabold text-primary tracking-tight">CampusCart</a>
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
-        <a href="new-products.html" class="hover:text-primary">New Arrivals</a>
-        <a href="bidding.html" class="hover:text-primary">Pre-Owned Products</a>
-        <a href="lost-found.html" class="hover:text-primary">Lost & Found</a>
-        <a href="sell.html" class="text-primary font-semibold">Sell Your Things</a>
-        <a href="cart.html" class="hover:text-primary">🛒 Cart</a>
-        <a href="login.html" class="hover:text-primary">Sign In</a>
-        <a href="signup.html" class="px-4 py-1.5 bg-secondary text-white rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
-        <a href="profile.html" class="hover:text-primary">👤 My Profile</a>
+      <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
+        <img src="logo.png" alt="CUET Logo" class="w-10 h-10 object-contain" />
+        <span class="text-lg lg:text-xl font-extrabold text-primary leading-tight">
+          CUET Trade &<br class="hidden lg:inline" /> Lost-Found Portal
+        </span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-10 text-sm font-semibold text-black">
+        <a href="new-products.html" class="hover:scale-125 transition hover:text-primary">New Arrivals</a>
+        <a href="bidding.html" class="hover:scale-125 transition hover:text-primary">Pre-Owned Products</a>
+        <a href="lost-found.html" class="hover:scale-125 transition hover:text-primary">Lost & Found</a>
+        <a href="sell.html" class="scale-125 text-primary">Become a Seller</a>
+        <a href="cart.html" class="hover:scale-125 transition hover:text-primary">Cart</a>
+        <a href="login.html" class="hover:scale-125 transition hover:text-primary">Login</a>
+        <a href="signup.html" class="bg-secondary text-white px-4 py-1.5 rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
       </nav>
     </div>
   </header>
 
   <!-- Form Section -->
-  <section class="py-20 px-6 max-w-3xl mx-auto">
-    <h2 class="text-4xl font-extrabold mb-8 text-center">🔄 Sell a Used Product (Bidding)</h2>
+  <section class="py-20 px-6 max-w-2xl mx-auto">
+    <h2 class="text-4xl font-extrabold mb-10 text-center">🔄 Sell a Used Product (Bidding)</h2>
 
-    <form class="bg-white shadow rounded-xl p-8 space-y-6" action="#" method="POST" enctype="multipart/form-data">
+    <form class="bg-white shadow-lg rounded-2xl p-10 space-y-8 transition hover:shadow-2xl" action="#" method="POST" enctype="multipart/form-data">
       <!-- Title -->
       <div>
-        <label for="title" class="block text-sm font-medium mb-1">Product Title</label>
+        <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Product Title <span class="text-red-500">*</span></label>
         <input type="text" id="title" name="title" required placeholder="e.g., Used Guitar"
-               class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary">
       </div>
 
       <!-- Starting Bid -->
       <div>
-        <label for="startingBid" class="block text-sm font-medium mb-1">Starting Bid (USD)</label>
-        <input type="number" id="startingBid" name="startingBid" required placeholder="e.g., 50"
-               class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+        <label for="startingBid" class="block text-sm font-semibold text-gray-700 mb-2">Starting Bid (৳) <span class="text-red-500">*</span></label>
+        <input type="number" id="startingBid" name="startingBid" required placeholder="e.g., 500"
+               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary">
       </div>
 
       <!-- Bidding Deadline -->
       <div>
-        <label for="endTime" class="block text-sm font-medium mb-1">Bidding Deadline</label>
+        <label for="endTime" class="block text-sm font-semibold text-gray-700 mb-2">Bidding Deadline <span class="text-red-500">*</span></label>
         <input type="datetime-local" id="endTime" name="endTime" required
-               class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary">
       </div>
 
       <!-- Description -->
       <div>
-        <label for="description" class="block text-sm font-medium mb-1">Description</label>
-        <textarea id="description" name="description" rows="4" placeholder="Describe the condition, accessories, etc."
-                  class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+        <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Description <span class="text-red-500">*</span></label>
+        <textarea id="description" name="description" rows="4" required placeholder="Describe the condition, accessories, etc."
+                  class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary"></textarea>
       </div>
 
       <!-- Image Upload -->
       <div>
-        <label for="image" class="block text-sm font-medium mb-1">Upload Product Image</label>
+        <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">Upload Product Image</label>
         <input type="file" id="image" name="image"
-               class="w-full border border-gray-300 rounded-md px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+               class="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-primary">
       </div>
 
       <!-- Submit -->
-      <div class="text-right">
+      <div class="text-center">
         <button type="submit"
-                class="bg-primary hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-full shadow transition">
+                class="bg-primary hover:bg-blue-800 hover:scale-105 transition text-white font-bold px-10 py-3 rounded-full shadow-lg">
           Start Bidding
         </button>
       </div>
@@ -89,9 +100,10 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
-    © 2025 CampusCart. All rights reserved.
+  <footer class="bg-gray-100 border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CUET Trade & Lost-Found Portal. All rights reserved.
   </footer>
 
 </body>
+
 </html>

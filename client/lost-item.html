@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CampusCart - Lost Item Detail</title>
+  <title>CUET Trade & Lost-Found Portal</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,27 +15,36 @@
             primary: '#1e40af',
             secondary: '#f97316',
             accent: '#22c55e'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
           }
         }
       }
     }
   </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+<body class="bg-gray-50 text-gray-800 font-sans">
 
   <!-- Navbar -->
-  <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50">
+  <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-extrabold text-primary tracking-tight">CampusCart</a>
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
-        <a href="new-products.html" class="hover:text-primary">New Arrivals</a>
-        <a href="bidding.html" class="hover:text-primary">Pre-Owned Products</a>
-        <a href="lost-found.html" class="text-primary font-semibold">Lost & Found</a>
-        <a href="sell.html" class="hover:text-primary">Sell Your Things</a>
-        <a href="cart.html" class="hover:text-primary">🛒 Cart</a>
-        <a href="login.html" class="hover:text-primary">Sign In</a>
-        <a href="signup.html" class="px-4 py-1.5 bg-secondary text-white rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
-        <a href="profile.html" class="hover:text-primary">👤 My Profile</a>
+      <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
+        <img src="logo.png" alt="CUET Logo" class="w-10 h-10 object-contain" />
+        <span class="text-lg lg:text-xl font-extrabold text-primary leading-tight">
+          CUET Trade &<br class="hidden lg:inline" /> Lost-Found Portal
+        </span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-10 text-sm font-semibold text-black">
+        <a href="new-products.html" class="hover:scale-125 transition hover:text-primary">New Arrivals</a>
+        <a href="bidding.html" class="hover:scale-125 transition hover:text-primary">Pre-Owned Products</a>
+        <a href="lost-found.html" class="scale-125 text-primary">Lost & Found</a>
+        <a href="sell.html" class="hover:scale-125 transition hover:text-primary">Become a Seller</a>
+        <a href="cart.html" class="hover:scale-125 transition hover:text-primary">Cart</a>
+        <a href="login.html" class="hover:scale-125 transition hover:text-primary">Login</a>
+        <a href="signup.html" class="bg-secondary text-white px-4 py-1.5 rounded-full shadow hover:bg-orange-600 transition">Sign Up</a>
       </nav>
     </div>
   </header>
@@ -42,34 +53,40 @@
   <section class="py-20 px-6 max-w-6xl mx-auto">
     <div class="bg-white shadow rounded-xl p-8 flex flex-col lg:flex-row gap-12">
       <!-- Image -->
-      <div class="lg:w-1/2">
-        <img src="https://picsum.photos/500?lost" alt="Lost Wallet" class="rounded-xl shadow-lg w-full object-cover">
+      <div class="lg:w-1/2 group overflow-hidden rounded-xl">
+        <img src="logo.png" alt="Lost Wallet" class="rounded-xl shadow-lg w-full object-cover transform transition-transform duration-300 group-hover:scale-105">
       </div>
 
       <!-- Info -->
       <div class="lg:w-1/2">
-        <h1 class="text-3xl font-bold mb-4">Lost Wallet - Black</h1>
-        <p class="flex items-center text-sm text-gray-500 mb-4">📍 <span class="ml-1">Found at Cafeteria, CUET Campus</span></p>
-        <p class="text-gray-700 text-lg mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h1 class="text-3xl font-bold">Lost Wallet - Black</h1>
+          <span class="px-3 py-1 text-sm bg-red-500 text-white rounded-full">Lost</span>
+        </div>
+
+        <p class="flex items-center text-sm text-gray-500 mb-6">📍 <span class="ml-1">Found at Cafeteria, CUET Campus</span></p>
+
+        <p class="text-gray-700 text-lg mb-8 leading-relaxed">
           This black leather wallet was found near the central cafeteria. It contains a student ID card, some cash, and a library card.
           If this belongs to you or someone you know, please contact the finder to return it.
         </p>
 
-        <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-lg">
-          <h2 class="text-blue-700 font-semibold text-lg mb-2">📞 Contact Information</h2>
-          <p class="text-sm text-gray-800 mb-1">Name: <strong>Tanvir Ahmed</strong></p>
-          <p class="text-sm text-gray-800">Phone: 
-            <a href="tel:+8801712345678" class="text-blue-600 underline hover:text-blue-800">+880 17 1234 5678</a>
-          </p>
+        <div class="bg-gradient-to-r from-blue-100 to-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
+          <h2 class="text-blue-700 font-semibold text-lg mb-3">📞 Contact Information</h2>
+          <p class="text-gray-800 text-sm mb-1">Name: <strong>Tanvir Ahmed</strong></p>
+          <p class="text-gray-800 text-sm">Phone: <a href="tel:+8801712345678" class="text-blue-600 underline hover:text-blue-800 transition">+880 17 1234 5678</a></p>
+          <p class="text-gray-700"><span class="font-semibold">Email:</span> <a href="mailto:seller@example.com" class="text-blue-500">seller@example.com</a></p>
+      
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-white border-t py-8 text-center text-sm text-gray-500">
-    © 2025 CampusCart. All rights reserved.
+  <footer class="bg-gray-100 border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CUET Trade & Lost-Found Portal. All rights reserved.
   </footer>
 
 </body>
+
 </html>
