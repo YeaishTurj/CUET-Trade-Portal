@@ -7,3 +7,5 @@ cart.html
 
 admin-dashboard.html
 
+sell.html
+
