@@ -27,7 +27,7 @@ const Navbar = () => {
           New Arrivals
         </Link>
         <Link
-          to="/preowned-products"
+          to="/pre-owned-products"
           className="transition-transform transition-colors duration-300 hover:scale-105 hover:text-blue-600"
         >
           Pre-Owned Products

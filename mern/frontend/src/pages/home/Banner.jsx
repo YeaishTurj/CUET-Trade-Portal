@@ -37,7 +37,7 @@ export default function Banner() {
     <section
       className="relative overflow-hidden bg-cover bg-center"
       style={{
-        backgroundImage: `url(${backImg})`,
+        backgroundimageURL: `url(${backImg})`,
         minHeight: "500px", // increased min height
         marginTop: "10px",
       }}
