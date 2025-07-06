@@ -1,14 +1,14 @@
 // src/components/LostFoundPreview.jsx
-import ProductCard from "./ProductCard"
-import { Link } from "react-router-dom"
+import ProductCard from "./ProductCard";
+import { Link } from "react-router-dom";
 
-import foundImg from "../assets/found_image.jpg"
-import lostImg from "../assets/lost_image.jpg"
+import foundImg from "../assets/found_image.jpg";
+import lostImg from "../assets/lost_image.jpg";
 
 const lostFoundItems = [
   {
     id: "found-1",
-    image: foundImg,
+    imageURL: foundImg,
     title: "Black Leather Wallet",
     description: "Contains ID cards and credit cards",
     badge: "Found",
@@ -18,7 +18,7 @@ const lostFoundItems = [
   },
   {
     id: "lost-5",
-    image: lostImg,
+    imageURL: lostImg,
     title: "CUET Student ID Card",
     description: "ID No: CUET-2023-XXXXX",
     badge: "Lost",
@@ -28,7 +28,7 @@ const lostFoundItems = [
   },
   {
     id: "found-3",
-    image: foundImg,
+    imageURL: foundImg,
     title: "USB Pen Drive",
     description: "32GB black SanDisk drive",
     badge: "Found",
@@ -36,7 +36,7 @@ const lostFoundItems = [
     type: "lost",
     location: "EEE Building",
   },
-]
+];
 
 export default function LostFoundPreview() {
   return (
@@ -60,5 +60,5 @@ export default function LostFoundPreview() {
         </Link>
       </div>
     </section>
-  )
+  );
 }

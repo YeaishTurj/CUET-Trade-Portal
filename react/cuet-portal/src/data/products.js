@@ -1,9 +1,9 @@
 // src/data/products.js
-import fashionImg from "../assets/fashion_image.jpg"
-import elecImg from "../assets/elec_image.jpg"
-import digImg from "../assets/dig_image.jpg"
-import foundImg from "../assets/found_image.jpg"
-import bidImg from "../assets/pre_image.jpg"
+import fashionImg from "../assets/fashion_image.jpg";
+import elecImg from "../assets/elec_image.jpg";
+import digImg from "../assets/dig_image.jpg";
+import foundImg from "../assets/found_image.jpg";
+import bidImg from "../assets/pre_image.jpg";
 
 export const products = [
   {
@@ -11,7 +11,7 @@ export const products = [
     type: "fashion",
     title: "Classic Cotton T-Shirt",
     price: "৳ 500",
-    image: fashionImg,
+    imageURL: fashionImg,
     sizes: ["S", "M", "L", "XL"],
     description: "Soft, breathable 100% cotton. Perfect for campus casual.",
     seller: "CUET Closet",
@@ -21,7 +21,7 @@ export const products = [
     type: "electronics",
     title: "PD Power Bank",
     price: "৳ 800",
-    image: elecImg,
+    imageURL: elecImg,
     features: ["20,000mAh", "Dual USB-C", "Fast Charging"],
     seller: "CUET Tech Hub",
   },
@@ -30,7 +30,7 @@ export const products = [
     type: "digital",
     title: "Netflix Subscription (1 Month)",
     price: "৳ 800/month",
-    image: digImg,
+    imageURL: digImg,
     features: ["4K", "4 Screens", "Premium Plan"],
     seller: "StreamShare BD",
   },
@@ -39,7 +39,7 @@ export const products = [
     type: "bidding",
     title: "Used Mountain Bike",
     price: "৳ 2800",
-    image: bidImg,
+    imageURL: bidImg,
     bids: [
       { user: "Tanvir", amount: 2500 },
       { user: "Mitu", amount: 2700 },
@@ -51,14 +51,14 @@ export const products = [
     id: "lost-5",
     type: "lost",
     title: "Black Wallet",
-    image: foundImg,
+    imageURL: foundImg,
     location: "EEE Building",
     status: "Found",
     description: "Contains ID & cards. Claimed with verification.",
     contact: "018XXXXXXX",
   },
-]
+];
 
 export function getProductById(id) {
-  return products.find((p) => p.id === id)
+  return products.find((p) => p.id === id);
 }

@@ -1,9 +1,9 @@
 // src/components/ProductCard.jsx
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-export default function ProductCard({
+function ProductCard({
   id,
-  image,
+  imageURL,
   title,
   description,
   price,
@@ -21,7 +21,7 @@ export default function ProductCard({
     >
       <div className="relative">
         <img
-          src={image}
+          src={imageURL}
           alt={title}
           className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
         />
@@ -35,29 +35,43 @@ export default function ProductCard({
       </div>
 
       <div className="p-4">
-        <h3 className="font-semibold text-gray-900 mb-1 text-sm md:text-base">{title}</h3>
-        <p className="text-xs md:text-sm text-gray-500 mb-3 line-clamp-2">{description}</p>
+        <h3 className="font-semibold text-gray-900 mb-1 text-sm md:text-base">
+          {title}
+        </h3>
+        <p className="text-xs md:text-sm text-gray-500 mb-3 line-clamp-2">
+          {description}
+        </p>
 
         {type === "new" && (
           <div className="flex justify-between items-center">
-            <span className="font-bold text-green-600 text-sm md:text-base">{price}</span>
+            <span className="font-bold text-green-600 text-sm md:text-base">
+              {price}
+            </span>
           </div>
         )}
 
         {type === "bidding" && (
           <div>
-            <span className="font-bold text-green-600 text-sm md:text-base">{price}</span>
-            <p className="text-xs text-red-500 mt-1">Ends in: <strong>{timeLeft}</strong></p>
+            <span className="font-bold text-green-600 text-sm md:text-base">
+              {price}
+            </span>
+            <p className="text-xs text-red-500 mt-1">
+              Ends in: <strong>{timeLeft}</strong>
+            </p>
           </div>
         )}
 
         {type === "lost" && (
           <div className="text-sm text-center">
             <p className="text-gray-500 text-xs">📍 {location}</p>
-            <p className="text-xs text-gray-400 mt-1 line-clamp-1">{description}</p>
+            <p className="text-xs text-gray-400 mt-1 line-clamp-1">
+              {description}
+            </p>
           </div>
         )}
       </div>
     </Link>
-  )
+  );
 }
+
+export default ProductCard;

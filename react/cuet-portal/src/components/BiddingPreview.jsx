@@ -1,15 +1,16 @@
 // src/components/BiddingPreview.jsx
-import ProductCard from "./ProductCard"
-import { Link } from "react-router-dom"
+import ProductCard from "./ProductCard";
+import { Link } from "react-router-dom";
 
-import preImg1 from "../assets/pre_image.jpg"
+import preImg1 from "../assets/pre_image.jpg";
 
 const biddingProducts = [
   {
     id: "bid-4",
-    image: preImg1,
+    imageURL: preImg1,
     title: "Road Bicycle (Used - Good Condition)",
-    description: "21-speed gear system | Aluminum frame | Includes safety accessories",
+    description:
+      "21-speed gear system | Aluminum frame | Includes safety accessories",
     price: "৳ 3,500",
     badge: "Pre-Owned",
     badgeColor: "bg-amber-500",
@@ -18,7 +19,7 @@ const biddingProducts = [
   },
   {
     id: "bid-2",
-    image: preImg1,
+    imageURL: preImg1,
     title: "Mountain Bike (Used)",
     description: "Sturdy frame | 18-speed | Trail-ready",
     price: "৳ 2,800",
@@ -29,7 +30,7 @@ const biddingProducts = [
   },
   {
     id: "bid-3",
-    image: preImg1,
+    imageURL: preImg1,
     title: "Electric Kettle (Used)",
     description: "1500W fast boil | Auto shut-off | Stainless steel",
     price: "৳ 600",
@@ -38,7 +39,7 @@ const biddingProducts = [
     type: "bidding",
     timeLeft: "1h 15m",
   },
-]
+];
 
 export default function BiddingPreview() {
   return (
@@ -62,5 +63,5 @@ export default function BiddingPreview() {
         </Link>
       </div>
     </section>
-  )
+  );
 }

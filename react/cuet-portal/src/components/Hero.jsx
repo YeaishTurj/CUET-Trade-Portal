@@ -39,7 +39,7 @@ export default function Hero() {
     <section
       className="relative overflow-hidden bg-cover bg-center"
       style={{
-        backgroundImage: `url(${backImg})`,
+        backgroundimageURL: `url(${backImg})`,
         minHeight: "420px",
         marginTop: "10px",
       }}

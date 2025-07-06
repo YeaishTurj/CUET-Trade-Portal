@@ -9,7 +9,7 @@ import doiImg from "../assets/doi_chira.jpg"
 const newProducts = [
   {
     id: "fashion-1",
-    image: fashionImg,
+    imageURL: fashionImg,
     title: "Classic Cotton T-Shirt",
     description: "100% cotton, breathable, modern fit",
     price: "৳ 500",
@@ -19,7 +19,7 @@ const newProducts = [
   },
   {
     id: "elec-2",
-    image: elecImg,
+    imageURL: elecImg,
     title: "20000mAh PD Power Bank",
     description: "Dual USB-C charging | LED power",
     price: "৳ 500",
@@ -29,7 +29,7 @@ const newProducts = [
   },
   {
     id: "dig-3",
-    image: digImg,
+    imageURL: digImg,
     title: "Netflix Premium Plan",
     description: "4K, 4 screens, Unlimited content",
     price: "৳ 800/month",
@@ -39,7 +39,7 @@ const newProducts = [
   },
   {
     id: "doi-4",
-    image: doiImg,
+    imageURL: doiImg,
     title: "Traditional Doi Chira",
     description: "Yogurt, banana & fruits — fresh made",
     price: "৳ 50",
