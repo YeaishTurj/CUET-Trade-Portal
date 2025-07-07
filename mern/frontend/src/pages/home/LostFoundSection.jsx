@@ -9,7 +9,7 @@ function LostFoundSection() {
     .slice(0, 4); // Show only first 4
 
   return (
-    <section className="py-10 bg-white">
+    <section className="py-10 ">
       <div className="container mx-auto px-6">
         {/* Section Heading */}
         <div className="text-center mb-12">

@@ -5,11 +5,11 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <>
+    <div className="bg-gradient-to-r from-blue-50 via-indigo-100 to-blue-50">
       <Navbar />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
 

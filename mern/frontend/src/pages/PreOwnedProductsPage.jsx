@@ -1,16 +1,37 @@
 import React, { useState } from "react";
 import products from "../data/products";
 import ProductCards from "../components/ProductCards";
+import SearchBar from "../components/SearchBar";
+import SortDropdown from "../components/SortDropdown";
 
 const ITEMS_PER_PAGE = 8;
 
 function PreOwnedProductsPage() {
   const preOwnedProducts = products.filter((p) => p.category === "pre-owned");
+
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("");
 
-  const totalPages = Math.ceil(preOwnedProducts.length / ITEMS_PER_PAGE);
+  // Filtered + sorted products
+  const filteredProducts = preOwnedProducts
+    .filter((p) => {
+      if (!searchQuery.trim()) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        p.title.toLowerCase().includes(q) ||
+        (p.description && p.description.toLowerCase().includes(q))
+      );
+    })
+    .sort((a, b) => {
+      if (sortBy === "priceLowToHigh") return (a.price || 0) - (b.price || 0);
+      if (sortBy === "priceHighToLow") return (b.price || 0) - (a.price || 0);
+      return 0;
+    });
 
-  const paginatedProducts = preOwnedProducts.slice(
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+
+  const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -23,8 +44,18 @@ function PreOwnedProductsPage() {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (sort) => {
+    setSortBy(sort);
+    setCurrentPage(1);
+  };
+
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20  min-h-screen">
       <div className="container mx-auto px-6">
         {/* Page Heading */}
         <div className="text-center mb-12">
@@ -32,8 +63,15 @@ function PreOwnedProductsPage() {
             All Pre-Owned Products
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            ♻️ Buy smart, buy second-hand. These campus deals still have life left!
+            ♻️ Buy smart, buy second-hand. These campus deals are gently used,
+            budget-friendly, and ready for a second chance!
           </p>
+        </div>
+
+        {/* Search & Sort Controls */}
+        <div className="flex flex-wrap lg:flex-nowrap justify-between items-center gap-2 mb-10">
+          <SearchBar categories={[]} onSearch={handleSearch} />
+          <SortDropdown onSortChange={handleSortChange} />
         </div>
 
         {/* Product Grid */}

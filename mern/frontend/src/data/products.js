@@ -21,6 +21,7 @@ const products = [
     perWhich: "piece",
     price: 500,
     imageURL: fashionImg,
+
     availableSizes: ["S", "M", "L", "XL"],
     description: "Soft, breathable 100% cotton. Perfect for campus casual.",
     seller: "CUET Closet",
@@ -33,6 +34,7 @@ const products = [
     perWhich: "piece",
     price: 1200,
     imageURL: fashionImg2,
+
     availableSizes: ["M", "L", "XL"],
     description: "Warm fleece hoodie with CUET logo. Great for winter.",
     seller: "CUET Closet",
@@ -179,6 +181,7 @@ const products = [
     perWhich: "piece",
     price: 250,
     imageURL: fashionImg,
+
     availableSizes: ["One Size"],
     description: "Adjustable cotton cap with CUET embroidery.",
     seller: "CUET Closet",
@@ -191,6 +194,7 @@ const products = [
     perWhich: "piece",
     price: 900,
     imageURL: fashionImg2,
+
     availableSizes: ["S", "M", "L"],
     description: "Comfort-fit joggers, suitable for sports and leisure.",
     seller: "CUET Closet",
@@ -203,6 +207,7 @@ const products = [
     perWhich: "piece",
     price: 300,
     imageURL: fashionImg,
+
     availableSizes: [],
     description: "Eco-friendly bag for carrying books and essentials.",
     seller: "CUET Closet",
@@ -215,6 +220,7 @@ const products = [
     perWhich: "pair",
     price: 100,
     imageURL: fashionImg2,
+
     availableSizes: ["M", "L"],
     description: "Comfy cotton socks with CUET initials.",
     seller: "CUET Closet",
@@ -227,6 +233,7 @@ const products = [
     perWhich: "piece",
     price: 1500,
     imageURL: fashionImg,
+
     availableSizes: ["M", "L", "XL"],
     description: "Water-resistant jacket for unpredictable weather.",
     seller: "CUET Closet",
@@ -239,6 +246,7 @@ const products = [
     perWhich: "piece",
     price: 60,
     imageURL: fashionImg2,
+
     availableSizes: [],
     description: "ID card lanyard with CUET logo.",
     seller: "CUET Closet",
@@ -251,6 +259,7 @@ const products = [
     perWhich: "piece",
     price: 400,
     imageURL: fashionImg,
+
     availableSizes: [],
     description: "Lightweight scarf ideal for chilly mornings.",
     seller: "CUET Closet",
@@ -263,6 +272,7 @@ const products = [
     perWhich: "piece",
     price: 600,
     imageURL: fashionImg2,
+
     availableSizes: ["S", "M", "L", "XL"],
     description: "Stylish tee with campus-themed artwork.",
     seller: "CUET Closet",
@@ -546,7 +556,7 @@ const products = [
     contact: "018XXXXXXX",
     endsIn: "10h 20m",
   },
-    {
+  {
     id: 47,
     category: "lost",
     title: "CUET ID Card",
@@ -793,8 +803,7 @@ const products = [
     description: "Design your own stickers for clubs or fun.",
     seller: "Stickerify CUET",
     contact: "018XXXXXXX",
-  }
-
+  },
 ];
 
 export default products;

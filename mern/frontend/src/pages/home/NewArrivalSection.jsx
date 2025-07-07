@@ -9,7 +9,7 @@ function NewArrivalSection() {
   ).slice(0, 4); // Preview only 4 if you want to limit
 
   return (
-    <section className="py-10 bg-gray-50">
+    <section className="py-10 ">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-12">
