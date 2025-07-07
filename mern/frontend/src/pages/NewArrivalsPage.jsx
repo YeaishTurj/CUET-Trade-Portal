@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import products from "../data/products";
 import ProductCards from "../components/ProductCards";
+import SearchBar from "../components/SearchBar";
+import SortDropdown from "../components/SortDropdown";
 
 // Category config
 const categories = [
@@ -35,9 +37,17 @@ function NewArrivalsPage() {
             All New Arrivals
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            🎉 Discover the newest additions from your campus — gadgets, fashion,
-            services, and more!
+            🎉 Discover the newest additions from your campus — gadgets,
+            fashion, services, and more!
           </p>
+        </div>
+
+        {/* Search Bar */}
+        <div className="container mx-auto px-6">
+          <div className="flex flex-wrap lg:flex-nowrap justify-between items-center gap-2 mb-10">
+            <SearchBar />
+            <SortDropdown />
+          </div>
         </div>
 
         {/* Category-wise Sections */}
@@ -48,7 +58,7 @@ function NewArrivalsPage() {
           if (filteredProducts.length === 0) return null;
 
           return (
-            <div key={key} className="mb-16">
+            <div key={key} className="container mx-auto px-6 mb-16">
               {/* Category Heading */}
               <h2 className="text-2xl font-bold text-gray-800 mb-6">{label}</h2>
 

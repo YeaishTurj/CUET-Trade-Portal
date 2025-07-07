@@ -4,6 +4,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import backImg from "../../assets/landing.jpg";
+import { BiKey } from "react-icons/bi";
 
 const slides = [
   {
@@ -35,11 +36,12 @@ const slides = [
 export default function Banner() {
   return (
     <section
-      className="relative overflow-hidden bg-cover bg-center"
+      className="container mx-auto px-6 relative overflow-hidden bg-cover bg-center"
       style={{
-        backgroundimageURL: `url(${backImg})`,
+        backgroundImage: `url(${backImg})`,
         minHeight: "500px", // increased min height
         marginTop: "10px",
+        borderRadius: "2rem",
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-white/20 backdrop-blur-sm z-0" />
