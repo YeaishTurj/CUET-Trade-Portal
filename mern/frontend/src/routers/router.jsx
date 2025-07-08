@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       { path: "/become-seller", element: <BecomeSellerPage /> }, // ✅ Add this line
       { path: "/cart", element: <CartPage /> }, // ✅ Add this line
       { path: "/checkout", element: <CheckoutPage /> }, // ✅ Add this line
-      { path: "/product-details/:id", element: <ProductDetailsPage /> }, // ✅ Add this line
+      { path: "/product/:id", element: <ProductDetailsPage /> }, // ✅ Add this line
       { path: "/user-profile/", element: <UserProfilePage /> }, // ✅ Add this line
       { path: "/post-found", element: <PostFoundPage /> }, // ✅ Add this line
       { path: "/post-lost", element: <PostLostPage /> }, // ✅ Add this line

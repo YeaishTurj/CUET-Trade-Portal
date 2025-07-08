@@ -66,7 +66,7 @@ const products = [
     id: 5,
     category: "digital",
     title: "Netflix Subscription (1 Month)",
-    perWhich: "month",
+    perWhich: "year",
     price: 800,
     imageURL: digImg,
     features: ["4K", "4 Screens", "Premium Plan"],
