@@ -121,7 +121,7 @@ const products = [
     perWhich: "piece",
     price: 350,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["Ergonomic", "2.4GHz Wireless"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -133,7 +133,7 @@ const products = [
     perWhich: "piece",
     price: 1000,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["8hr Battery", "Bass Boost"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -145,7 +145,7 @@ const products = [
     perWhich: "piece",
     price: 850,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["Dual USB", "Fast Charging"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -157,7 +157,7 @@ const products = [
     perWhich: "piece",
     price: 150,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["1.5m Cable", "Fast Charging"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -169,7 +169,7 @@ const products = [
     perWhich: "piece",
     price: 550,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["Foldable", "Aluminum Build"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -181,7 +181,7 @@ const products = [
     perWhich: "piece",
     price: 600,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["Dual Fan", "LED Lights"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -193,7 +193,7 @@ const products = [
     perWhich: "piece",
     price: 200,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["Rechargeable", "Touch Control"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -205,7 +205,7 @@ const products = [
     perWhich: "piece",
     price: 300,
     imageURL: elecImg,
-    description: ["Product is very new condition with excellent services"],
+    description: "Product is very new condition with excellent services",
     features: ["USB 3.0", "Plug & Play"],
     seller: "Tech Seller",
     contact: "018XXXXXXX",
@@ -219,9 +219,8 @@ const products = [
     perWhich: "month",
     price: 150,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["Family Share", "Ad-Free"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -233,9 +232,8 @@ const products = [
     perWhich: "month",
     price: 200,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["4K", "4 Screens"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -247,9 +245,8 @@ const products = [
     perWhich: "month",
     price: 150,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["Templates", "Team Share"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -261,9 +258,8 @@ const products = [
     perWhich: "month",
     price: 200,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["Unlimited Projects", "Collab"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -275,9 +271,8 @@ const products = [
     perWhich: "month",
     price: 180,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["Creative Courses"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -289,9 +284,8 @@ const products = [
     perWhich: "month",
     price: 250,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["Plagiarism", "Grammar Help"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -303,9 +297,8 @@ const products = [
     perWhich: "month",
     price: 500,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["Latest Version"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -317,9 +310,8 @@ const products = [
     perWhich: "month",
     price: 300,
     imageURL: digImg,
-    description: [
+    description:
       "You can get the digital subscriptin in a very reasonable price",
-    ],
     features: ["Unlimited Certificates"],
     seller: "Digital Hub",
     contact: "018XXXXXXX",
@@ -430,7 +422,7 @@ const products = [
     perWhich: "piece",
     price: 2800,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["21-speed", "Front suspension", "Good condition"],
     bids: [
       {
@@ -457,7 +449,7 @@ const products = [
     perWhich: "piece",
     price: 500,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["Aluminum", "Foldable", "Non-slip"],
     bids: [
       {
@@ -484,7 +476,7 @@ const products = [
     perWhich: "piece",
     price: 1800,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["Acoustic", "Slight scratches", "Works fine"],
     bids: [
       {
@@ -511,7 +503,7 @@ const products = [
     perWhich: "piece",
     price: 1200,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["Wooden", "1 drawer", "Sturdy"],
     bids: [
       {
@@ -538,7 +530,7 @@ const products = [
     perWhich: "piece",
     price: 3500,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["32GB", "No cracks", "Fully functional"],
     bids: [
       {
@@ -565,7 +557,7 @@ const products = [
     perWhich: "piece",
     price: 2200,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["Inkjet", "Wireless", "Good condition"],
     bids: [
       {
@@ -592,7 +584,7 @@ const products = [
     perWhich: "piece",
     price: 400,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["Multiple compartments", "Lightly used"],
     bids: [
       {
@@ -619,7 +611,7 @@ const products = [
     perWhich: "piece",
     price: 500,
     imageURL: preImg,
-    description: ["you can't find this product as new as like us"],
+    description: "you can't find this product as new as like us",
     features: ["Casio FX-991ES", "Working perfectly"],
     bids: [
       {

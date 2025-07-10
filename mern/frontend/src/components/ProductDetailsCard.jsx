@@ -146,21 +146,21 @@
 
 // export default ProductDetailsCard;
 
-
-
-
-
-
-
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/features/cart/cartSlice";
 
 function ProductDetailsCard({ product }) {
   if (!product) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
-          <h2 className="text-xl font-semibold text-gray-800">Product not found</h2>
-          <p className="text-gray-600 mt-2">The requested product could not be located.</p>
+          <h2 className="text-xl font-semibold text-gray-800">
+            Product not found
+          </h2>
+          <p className="text-gray-600 mt-2">
+            The requested product could not be located.
+          </p>
         </div>
       </div>
     );
@@ -171,6 +171,12 @@ function ProductDetailsCard({ product }) {
   );
   const isLostFound = ["lost", "found"].includes(product.category);
   const isPreOwned = product.category === "pre-owned";
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
 
   return (
     <section className="py-12 min-h-screen bg-gray-50">
@@ -195,7 +201,13 @@ function ProductDetailsCard({ product }) {
             <div className="mt-6">
               {isForSale && (
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToCart(product);
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1"
+                  >
                     Add to Cart
                   </button>
                   <button className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1">
