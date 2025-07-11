@@ -43,6 +43,7 @@ const router = createBrowserRouter([
       { path: "/post-others", element: <PostOthersPage /> }, // ✅ Add this line
     ],
   },
+
 ]);
 
 export default router;

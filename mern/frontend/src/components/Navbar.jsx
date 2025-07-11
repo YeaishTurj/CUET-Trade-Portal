@@ -9,9 +9,10 @@ import {
   FiChevronDown,
   FiChevronUp,
 } from "react-icons/fi";
-
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CartModal from "./CartModal";
+import AuthModal from "./AuthModal";
 
 const navLinks = [
   { to: "/", text: "Home" },
@@ -35,6 +36,10 @@ const Navbar = () => {
   const [isCartOpen, setisCartOpen] = useState(false);
 
   const cartRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  const [authModalType, setAuthModalType] = useState(null); // 'signin' or 'signup'
 
   useEffect(() => {
     const handleClickOutsideCart = (event) => {
@@ -105,14 +110,14 @@ const Navbar = () => {
           </Link>
 
           {/* Main Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-6 font-semibold">
             {navLinks.map((link) => (
               <NavLink key={link.to} to={link.to} text={link.text} />
             ))}
           </nav>
 
           {/* Right side actions */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-6 font-semibold">
             <ActionLink
               to="/become-seller"
               icon={<FiArchive className="mr-2" />}
@@ -122,7 +127,7 @@ const Navbar = () => {
 
             <button
               onClick={handleCartToggle}
-              className="flex items-center text-gray-700 hover:text-blue-600 font-medium text-base cursor-pointer "
+              className="flex items-center text-gray-700 hover:text-blue-600 font-semibold text-base cursor-pointer "
             >
               <FiShoppingCart className="mr-2 text-xl" />
               <span className="hidden md:inline">Cart</span>
@@ -135,10 +140,10 @@ const Navbar = () => {
                 aria-haspopup="true"
                 aria-expanded={showDropdown}
                 tabIndex={0}
-                onClick={() => setShowDropdown((s) => !s)}
                 onKeyDown={handleDropdownKey}
                 onMouseEnter={() => setShowDropdown(true)}
-                className="flex items-center text-gray-700 hover:text-blue-600 font-medium text-base transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+                className="flex items-center text-gray-700 hover:text-blue-600 font-semibold text-base transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 cursor-pointer"
+                onClick={() => setAuthModalType("signin")}
               >
                 <FiUser className="mr-2 text-xl" />
                 <span className="hidden md:inline">Sign In</span>
@@ -157,13 +162,13 @@ const Navbar = () => {
                 >
                   <div className="px-4 py-3 flex justify-between items-center">
                     <p className="text-sm text-gray-500">New customer?</p>
-                    <Link
-                      to="/signup"
-                      className="text-sm font-medium text-blue-600 hover:text-blue-500"
+                    <button
+                      className="text-sm font-semibold text-blue-600 hover:text-blue-500 cursor-pointer"
                       tabIndex={0}
+                      onClick={() => setAuthModalType("signup")}
                     >
                       Sign up
-                    </Link>
+                    </button>
                   </div>
                   <div className="py-1">
                     {dropdownLinks.map((link) => (
@@ -184,6 +189,12 @@ const Navbar = () => {
           cartRef={cartRef}
         />
       )}
+      {authModalType && (
+        <AuthModal
+          type={authModalType}
+          onClose={() => setAuthModalType(null)}
+        />
+      )}
     </header>
   );
 };
@@ -193,7 +204,7 @@ function NavLink({ to, text }) {
   return (
     <Link
       to={to}
-      className="relative py-3 px-1 text-gray-700 hover:text-blue-600 font-medium text-base uppercase tracking-wider transition-colors duration-300
+      className="relative py-3 px-1 text-gray-700 hover:text-blue-600 font-semibold text-base uppercase tracking-wider transition-colors duration-300
         after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all after:duration-300
         hover:after:w-full"
     >
@@ -207,7 +218,7 @@ function ActionLink({ to, icon, text, className = "" }) {
   return (
     <Link
       to={to}
-      className={`${className} items-center text-gray-700 hover:text-blue-600 font-medium text-base transition-colors duration-300`}
+      className={`${className} items-center text-gray-700 hover:text-blue-600 font-semibold text-base transition-colors duration-300`}
     >
       {icon}
       <span className="hidden lg:inline">{text}</span>
@@ -220,7 +231,7 @@ function DropdownLink({ to, text, icon }) {
   return (
     <Link
       to={to}
-      className="flex items-center px-4 py-3 text-base text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-150"
+      className="flex items-center px-4 py-3 text-base text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-150 font-semibold"
     >
       {icon}
       {text}
