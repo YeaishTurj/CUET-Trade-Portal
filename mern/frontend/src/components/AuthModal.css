@@ -12,7 +12,7 @@ body {
   box-shadow: 0 0 40px #93c5fd; /* Slightly more intense */
   overflow: hidden;
   border-radius: 20px; /* Slightly rounder corners */
-  background-color: gainsboro;
+  background-color: white;
 }
 
 .containerCSS .form-box {

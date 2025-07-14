@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import "boxicons/css/boxicons.min.css";
 import "./AuthModal.css";
+import { useSignInUserMutation } from "../redux/features/auth/authApi";
+import { useDispatch } from "react-redux";
 
 const AuthModal = ({ type, onClose }) => {
   const [isRegister, setIsRegister] = useState(type === "signup");
@@ -23,6 +25,65 @@ const AuthModal = ({ type, onClose }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+
+  // Separate states for Sign In and Sign Up
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signInPassword, setSignInPassword] = useState("");
+  const [signInMessage, setSignInMessage] = useState("");
+
+  const [signUpFullName, setSignUpFullName] = useState("");
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
+  const [signUpMessage, setSignUpMessage] = useState("");
+
+  const cuetEmailRegex =
+    /^(u(0[1-9]|[1-9][0-9])(0[1-9]|1[0-2])(0[0-9]{2}|1[0-7][0-9]|180)@student\.cuet\.ac\.bd|.+@cuet\.ac\.bd)$/;
+
+  const dispatch = useDispatch();
+  const [signInUser, { isLoading: signInLoading }] = useSignInUserMutation();
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+
+    if (!cuetEmailRegex.test(signInEmail)) {
+      setSignInMessage("Please use a valid CUET email address.");
+      return;
+    }
+
+    try {
+      const response = await signInUser({
+        email: signInEmail,
+        password: signInPassword,
+      }).unwrap(); // ✅ Must await unwrap()
+
+      // console.log("✅ Sign In Successful:", response);
+      alert("Sign In Successful!");
+
+      setSignInEmail("");
+      setSignInPassword("");
+      setSignInMessage("");
+
+      onClose(); // Close modal on success
+    } catch (error) {
+      console.error("❌ Sign In Error:", error);
+      setSignInMessage("Invalid email or password. Please try again.");
+    }
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    if (!cuetEmailRegex.test(signUpEmail)) {
+      setSignUpMessage("Please use a valid CUET email address.");
+      return;
+    }
+
+    setSignUpMessage("");
+    console.log("Sign Up Data:", {
+      fullName: signUpFullName,
+      email: signUpEmail,
+      password: signUpPassword,
+    });
+  };
 
   return (
     <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center">
@@ -49,24 +110,54 @@ const AuthModal = ({ type, onClose }) => {
               Sign In
             </h2>
 
-            <form>
-              <div className="input-box animation" style={{ "--D": 1, "--S": 22 }}>
-                <input type="email" required />
-                <label htmlFor="">CUET Email</label>
+            <form onSubmit={handleSignIn}>
+              <div
+                className="input-box animation"
+                style={{ "--D": 1, "--S": 22 }}
+              >
+                <input
+                  type="email"
+                  required
+                  value={signInEmail}
+                  onChange={(e) => setSignInEmail(e.target.value)}
+                />
+                <label>CUET Email</label>
                 <i className="bx bxs-envelope" />
               </div>
 
-              <div className="input-box animation" style={{ "--D": 2, "--S": 23 }}>
-                <input type="password" required />
-                <label htmlFor="">Password</label>
+              <div
+                className="input-box animation"
+                style={{ "--D": 2, "--S": 23 }}
+              >
+                <input
+                  type="password"
+                  required
+                  value={signInPassword}
+                  onChange={(e) => setSignInPassword(e.target.value)}
+                />
+                <label>Password</label>
                 <i className="bx bxs-lock" />
               </div>
 
-              <div className="input-box animation" style={{ "--D": 3, "--S": 24 }}>
-                <button className="btnCSS" type="submit">Sign In</button>
+              <div
+                className="input-box animation"
+                style={{ "--D": 3, "--S": 24 }}
+              >
+                <button className="btnCSS" type="submit">
+                  Sign In
+                </button>
               </div>
 
-              <div className="regi-link animation" style={{ "--D": 4, "--S": 25 }}>
+              {signInMessage && (
+                <div className="text-red-500 text-sm mt-10 text-center">
+                  {signInMessage}
+                </div>
+              )}
+
+              <div
+                className="regi-link animation"
+                style={{ "--D": 4, "--S": 25 }}
+              >
                 <p>
                   Don't have an account?{" "}
                   <a
@@ -75,10 +166,14 @@ const AuthModal = ({ type, onClose }) => {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsRegister(true);
+                      setSignInEmail("");
+                      setSignInPassword("");
+                      setSignInMessage("");
                     }}
                   >
                     Sign Up
-                  </a>
+                  </a>{" "}
+                  here
                 </p>
               </div>
             </form>
@@ -90,7 +185,8 @@ const AuthModal = ({ type, onClose }) => {
               Welcome Back!
             </h2>
             <p className="animation" style={{ "--D": 1, "--S": 21 }}>
-              Access your <b>CUET Trade & Lost-Found Portal</b> account to continue.
+              Access your <b>CUET Trade & Lost-Found Portal</b> account to
+              continue.
             </p>
           </div>
 
@@ -100,30 +196,68 @@ const AuthModal = ({ type, onClose }) => {
               Sign Up
             </h2>
 
-            <form>
-              <div className="input-box animation" style={{ "--li": 18, "--S": 1 }}>
-                <input type="text" required />
-                <label htmlFor="">Full Name</label>
+            <form onSubmit={handleSignUp}>
+              <div
+                className="input-box animation"
+                style={{ "--li": 18, "--S": 1 }}
+              >
+                <input
+                  type="text"
+                  required
+                  value={signUpFullName}
+                  onChange={(e) => setSignUpFullName(e.target.value)}
+                />
+                <label>Full Name</label>
                 <i className="bx bxs-user" />
               </div>
 
-              <div className="input-box animation" style={{ "--li": 18, "--S": 1 }}>
-                <input type="email" required />
-                <label htmlFor="">CUET Email</label>
+              <div
+                className="input-box animation"
+                style={{ "--li": 18, "--S": 1 }}
+              >
+                <input
+                  type="email"
+                  required
+                  value={signUpEmail}
+                  onChange={(e) => setSignUpEmail(e.target.value)}
+                />
+                <label>CUET Email</label>
                 <i className="bx bxs-envelope" />
               </div>
 
-              <div className="input-box animation" style={{ "--li": 19, "--S": 2 }}>
-                <input type="password" required />
-                <label htmlFor="">Password</label>
+              <div
+                className="input-box animation"
+                style={{ "--li": 19, "--S": 2 }}
+              >
+                <input
+                  type="password"
+                  required
+                  value={signUpPassword}
+                  onChange={(e) => setSignUpPassword(e.target.value)}
+                />
+                <label>Password</label>
                 <i className="bx bxs-lock" />
               </div>
 
-              <div className="input-box animation" style={{ "--li": 20, "--S": 3 }}>
-                <button className="btnCSS" type="submit">Sign Up</button>
+              <div
+                className="input-box animation"
+                style={{ "--li": 20, "--S": 3 }}
+              >
+                <button className="btnCSS" type="submit">
+                  Sign Up
+                </button>
               </div>
 
-              <div className="regi-link animation" style={{ "--li": 21, "--S": 4 }}>
+              {signUpMessage && (
+                <div className="text-red-500 text-sm mt-5 text-center">
+                  {signUpMessage}
+                </div>
+              )}
+
+              <div
+                className="regi-link animation"
+                style={{ "--li": 21, "--S": 4 }}
+              >
                 <p>
                   Already have an account?{" "}
                   <a
@@ -132,10 +266,15 @@ const AuthModal = ({ type, onClose }) => {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsRegister(false);
+                      setSignUpEmail("");
+                      setSignUpPassword("");
+                      setSignUpFullName("");
+                      setSignUpMessage("");
                     }}
                   >
                     Sign In
-                  </a>
+                  </a>{" "}
+                  here
                 </p>
               </div>
             </form>
@@ -147,7 +286,8 @@ const AuthModal = ({ type, onClose }) => {
               Join Our Portal!
             </h2>
             <p className="animation" style={{ "--li": 18, "--S": 1 }}>
-              Create your account to access the <b>CUET Trade & Lost-Found Portal</b> services.
+              Create your account to access the{" "}
+              <b>CUET Trade & Lost-Found Portal</b> services.
             </p>
           </div>
         </div>
