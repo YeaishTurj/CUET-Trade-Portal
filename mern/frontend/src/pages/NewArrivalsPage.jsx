@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import products from "../data/products";
+import { useFetchProductsQuery } from "../redux/features/products/productsApi";
 import ProductCards from "../components/ProductCards";
 import SearchBar from "../components/SearchBar";
 import SortDropdown from "../components/SortDropdown";
@@ -13,6 +13,8 @@ const categories = [
 ];
 
 function NewArrivalsPage() {
+  const { data: products = [], isLoading, isError } = useFetchProductsQuery();
+
   const [visibleCounts, setVisibleCounts] = useState({
     fashion: 4,
     electronics: 4,
@@ -28,6 +30,7 @@ function NewArrivalsPage() {
     { value: "fashion", label: "Fashion & Lifestyle" },
     { value: "electronics", label: "Electronics & Accessories" },
     { value: "digital", label: "Digital Services" },
+    { value: "others", label: "Other Essentials" },
   ];
 
   const handleViewMore = (key) => {
@@ -37,7 +40,6 @@ function NewArrivalsPage() {
     }));
   };
 
-  // Filter + search + sort logic per category
   const getFilteredSortedProducts = (categoryKey) => {
     let filtered = products.filter((p) => p.category === categoryKey);
 
@@ -61,10 +63,12 @@ function NewArrivalsPage() {
     return filtered.slice(0, visibleCounts[categoryKey]);
   };
 
+  if (isLoading) return <div className="text-center mt-20">Loading...</div>;
+  if (isError) return <div className="text-center mt-20 text-red-500">Failed to load products.</div>;
+
   return (
     <section className="py-20 min-h-screen">
       <div className="container mx-auto px-6">
-        {/* Page Heading */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-extrabold text-blue-900 mb-4">
             All New Arrivals

@@ -1,17 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useFetchProductsQuery } from "../../redux/features/products/productsApi";
 import ProductCards from "../../components/ProductCards";
-import products from "../../data/products";
 
 function LostFoundSection() {
+  const { data: products = [], isLoading, isError } = useFetchProductsQuery();
+
   const previewProducts = products
     .filter((p) => p.category === "lost" || p.category === "found")
     .slice(0, 4); // Show only first 4
 
+  if (isLoading) return <div>Loading lost & found items...</div>;
+  if (isError) return <div>Error loading lost & found items.</div>;
+
   return (
-    <>
-      <ProductCards products={previewProducts} categories={["lost", "found"]} />
-    </>
+    <ProductCards
+      products={previewProducts}
+      categories={["lost", "found"]}
+    />
   );
 }
 

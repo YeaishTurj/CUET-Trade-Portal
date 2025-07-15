@@ -1,14 +1,18 @@
 const express = require("express");
 const Product = require("./products.model");
-const veryfyToken = require("../middleware/verifyToken");
-const verifyAdmin = require("../middleware/verifyAdmin");
+const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
-// post a product
-router.post("/create-product", async (req, res) => {
+// ✅ Create Product (must be authenticated)
+router.post("/create-product", verifyToken, async (req, res) => {
   try {
+    const { _id, role } = req.user;
+    const userContact = req.body.contact; // Optional override
+
     const newProduct = new Product({
       ...req.body,
+      postedBy: _id,
+      contact: userContact || req.user.contactNumber,
     });
 
     const savedProduct = await newProduct.save();
@@ -19,7 +23,7 @@ router.post("/create-product", async (req, res) => {
   }
 });
 
-// get all products
+// ✅ Get all products
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find().populate(
@@ -33,17 +37,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-// get a product by id
+// ✅ Get product by ID
 router.get("/:id", async (req, res) => {
   try {
-    const productId = req.params.id;
-    const product = await Product.findById(productId).populate(
+    const product = await Product.findById(req.params.id).populate(
       "postedBy",
       "email fullName profileImage contactNumber"
     );
-    if (!product) {
-      return res.status(404).send({ message: "Product not found" });
-    }
+    if (!product) return res.status(404).send({ message: "Product not found" });
     res.status(200).send(product);
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -51,61 +52,45 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// update a product
-router.patch("/update-product/:id", veryfyToken, async (req, res) => {
+// ✅ Update product (only postedBy or admin)
+router.patch("/update-product/:id", verifyToken, async (req, res) => {
   try {
-    const productId = req.params.id;
-    const userId = req.user._id; // From verifyToken middleware
-    const isAdmin = req.user.role === "admin";
+    const { _id: userId, role } = req.user;
+    const product = await Product.findById(req.params.id);
 
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+    if (!product) return res.status(404).send({ message: "Product not found" });
+    if (role !== "admin" && product.postedBy.toString() !== userId) {
+      return res.status(403).send({ message: "Unauthorized" });
     }
 
-    // Only allow if user is admin or posted the product
-    if (!isAdmin && product.postedBy.toString() !== userId) {
-      return res
-        .status(403)
-        .send({ message: "Unauthorized to update this product" });
-    }
-
-    Object.assign(product, req.body); // Apply updates
+    Object.assign(product, req.body);
     const updatedProduct = await product.save();
 
-    res.status(200).send({
-      message: "Product updated successfully",
-      product: updatedProduct,
-    });
+    res
+      .status(200)
+      .send({
+        message: "Product updated successfully",
+        product: updatedProduct,
+      });
   } catch (error) {
     console.error("Error updating product:", error);
     res.status(500).send({ message: "Internal server error" });
   }
 });
 
-// delete a product
-router.delete("/:id", veryfyToken, async (req, res) => {
+// ✅ Delete product (only postedBy or admin)
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    const productId = req.params.id;
-    const userId = req.user._id; // From verifyToken
-    const isAdmin = req.user.role === "admin";
+    const { _id: userId, role } = req.user;
+    const product = await Product.findById(req.params.id);
 
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).send({ message: "Product not found" });
-    }
-
-    if (!isAdmin && product.postedBy.toString() !== userId) {
-      return res
-        .status(403)
-        .send({ message: "Unauthorized to delete this product" });
+    if (!product) return res.status(404).send({ message: "Product not found" });
+    if (role !== "admin" && product.postedBy.toString() !== userId) {
+      return res.status(403).send({ message: "Unauthorized" });
     }
 
     await product.deleteOne();
-    res.status(200).send({
-      message: "Product deleted successfully",
-      product,
-    });
+    res.status(200).send({ message: "Product deleted successfully", product });
   } catch (error) {
     console.error("Error deleting product:", error);
     res.status(500).send({ message: "Internal server error" });

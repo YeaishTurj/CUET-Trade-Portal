@@ -15,7 +15,7 @@ function ProductCards({ products, categories }) {
   hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:border-blue-200
   transition-all duration-300 transform hover:-translate-y-1`}
           >
-            <Link to={`/product/${product.id}`} className="block">
+            <Link to={`/product/${product._id}`} className="block">
               {/* Image & badges */}
               <div className="relative">
                 <img

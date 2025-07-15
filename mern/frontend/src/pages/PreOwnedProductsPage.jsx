@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import products from "../data/products";
+import { useFetchProductsQuery } from "../redux/features/products/productsApi";
 import ProductCards from "../components/ProductCards";
 import SearchBar from "../components/SearchBar";
 import SortDropdown from "../components/SortDropdown";
@@ -7,11 +7,20 @@ import SortDropdown from "../components/SortDropdown";
 const ITEMS_PER_PAGE = 8;
 
 function PreOwnedProductsPage() {
+  const { data: products = [], isLoading, isError } = useFetchProductsQuery();
   const preOwnedProducts = products.filter((p) => p.category === "pre-owned");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("");
+
+  if (isLoading) return <div className="text-center mt-20">Loading...</div>;
+  if (isError)
+    return (
+      <div className="text-center mt-20 text-red-500">
+        Failed to load products.
+      </div>
+    );
 
   // Filtered + sorted products
   const filteredProducts = preOwnedProducts

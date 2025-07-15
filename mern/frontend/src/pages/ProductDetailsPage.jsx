@@ -1,19 +1,35 @@
-import { useParams } from "react-router-dom";
-import products from "../data/products";
+import React from "react";
+import { useParams, Link } from "react-router-dom";
 import ProductDetailsCard from "../components/ProductDetailsCard";
 import LostFoundSection from "../pages/home/LostFoundSection";
 import NewArrivalSection from "./home/NewArrivalSection";
 import PreOwnedSection from "./home/PreOwnedSection";
-import { Link } from "react-router-dom";
-
+import { useFetchProductByIdQuery } from "../redux/features/products/productsApi";
 function ProductDetailsPage() {
   const { id } = useParams();
-  const product = products.find((p) => p.id === Number(id));
+  const { data: product, isLoading, error } = useFetchProductByIdQuery(id);
+
   const isNewArrival =
     product &&
     ["fashion", "electronics", "digital", "others"].includes(product.category);
   const isPreOwned = product && product.category === "pre-owned";
   const isLostFound = product && ["lost", "found"].includes(product.category);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-blue-700 text-xl">Loading product...</p>
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-600 text-xl">Product not found or server error</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -28,14 +44,12 @@ function ProductDetailsPage() {
 
           {/* Product Details Card */}
           <ProductDetailsCard product={product} />
-
-          {/* Conditional Sections */}
         </div>
       </section>
 
-      <section className="py-10 ">
+      {/* Related Section */}
+      <section className="py-10">
         <div className="container mx-auto px-6">
-          {/* Section Heading */}
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-4">
               Explore Related Products
@@ -46,7 +60,6 @@ function ProductDetailsPage() {
           {isPreOwned && <PreOwnedSection />}
           {isLostFound && <LostFoundSection />}
 
-          {/* View All Button */}
           <div className="mt-10 flex justify-center">
             <Link
               to={

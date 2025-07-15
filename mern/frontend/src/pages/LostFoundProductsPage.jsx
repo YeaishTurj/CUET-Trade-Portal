@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import products from "../data/products";
+import { useFetchProductsQuery } from "../redux/features/products/productsApi";
 import ProductCards from "../components/ProductCards";
 import SearchBar from "../components/SearchBar";
 import { Link } from "react-router-dom";
 
 function LostFoundProductsPage() {
+  const { data: products = [], isLoading, isError } = useFetchProductsQuery();
+
   const LOST_COUNT = 4;
   const FOUND_COUNT = 4;
 
@@ -12,6 +14,14 @@ function LostFoundProductsPage() {
   const [visibleFound, setVisibleFound] = useState(FOUND_COUNT);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  if (isLoading) return <div className="text-center mt-20">Loading...</div>;
+  if (isError)
+    return (
+      <div className="text-center mt-20 text-red-500">
+        Failed to load products.
+      </div>
+    );
 
   const lostFoundCategories = [
     { value: "lost", label: "Lost Items" },
