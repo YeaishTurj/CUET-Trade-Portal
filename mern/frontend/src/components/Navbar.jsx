@@ -13,6 +13,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CartModal from "./CartModal";
 import AuthModal from "./AuthModal";
+import { useDispatch } from "react-redux";
+import avatarImg from "../assets/avatar.jpg";
+import { useSignOutUserMutation } from "../redux/features/auth/authApi";
+import { signOut } from "../redux/features/auth/authSlice";
 
 const navLinks = [
   { to: "/", text: "Home" },
@@ -28,16 +32,21 @@ const dropdownLinks = [
 ];
 
 const Navbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [signInDropdown, setSignInDropDownOpen] = useState(false);
+
   const dropdownRef = useRef(null);
 
   const products = useSelector((state) => state.cart.products);
 
   const [isCartOpen, setisCartOpen] = useState(false);
 
-  const cartRef = useRef(null);
+  const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+
+  // console.log("User in Navbar:", user);
+
+  const cartRef = useRef(null);
 
   const [authModalType, setAuthModalType] = useState(null); // 'signin' or 'signup'
 
@@ -65,20 +74,61 @@ const Navbar = () => {
   React.useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
+        setSignInDropDownOpen(false);
       }
     }
-    if (showDropdown) {
+    if (signInDropdown) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showDropdown]);
+  }, [signInDropdown]);
 
   // Keyboard accessibility for dropdown
   function handleDropdownKey(e) {
-    if (e.key === "Escape") setShowDropdown(false);
-    if (e.key === "Enter" || e.key === " ") setShowDropdown((s) => !s);
+    if (e.key === "Escape") setSignInDropDownOpen(false);
+    if (e.key === "Enter" || e.key === " ") setSignInDropDownOpen((s) => !s);
   }
+
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+  const handleUserDropdownToggle = () => {
+    setUserDropdownOpen(!userDropdownOpen);
+  };
+
+  const handleUserDropdownKey = (e) => {
+    if (e.key === "Escape") setUserDropdownOpen(false);
+    if (e.key === "Enter" || e.key === " ") setUserDropdownOpen((s) => !s);
+  };
+
+  const adminDropDownMenus = [
+    { label: "Dashboard", path: "/dashboard/admin" },
+    { label: "Manage Products", path: "/dashboard/manage-products" },
+    { label: "All Orders", path: "/dashboard/manage-orders" },
+  ];
+
+  const userDropDownMenus = [
+    { label: "Dashboard", path: "/dashboard/" },
+    { label: "My Profile", path: "/dashboard/profile" },
+    { label: "My Orders", path: "/dashboard/orders" },
+  ];
+
+  const dropdownMenus =
+    user?.role === "admin" ? [...adminDropDownMenus] : [...userDropDownMenus];
+
+  const [signOutUser] = useSignOutUserMutation();
+
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      // Dispatch sign out action
+      await signOutUser().unwrap();
+      dispatch(signOut());
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    }
+  };
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
@@ -135,30 +185,72 @@ const Navbar = () => {
 
             {/* Sign In Dropdown */}
             <div className="relative" ref={dropdownRef}>
-              <button
-                type="button"
-                aria-haspopup="true"
-                aria-expanded={showDropdown}
-                tabIndex={0}
-                onKeyDown={handleDropdownKey}
-                onMouseEnter={() => setShowDropdown(true)}
-                className="flex items-center text-gray-700 hover:text-blue-600 font-semibold text-base transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 cursor-pointer"
-                onClick={() => setAuthModalType("signin")}
-              >
-                <FiUser className="mr-2 text-xl" />
-                <span className="hidden md:inline">Sign In</span>
-                {showDropdown ? (
-                  <FiChevronUp className="ml-1 transition-transform duration-200" />
-                ) : (
-                  <FiChevronDown className="ml-1 transition-transform duration-200" />
-                )}
-              </button>
+              {user ? (
+                <>
+                  <img
+                    src={user?.profileImage || avatarImg}
+                    alt=""
+                    className="w-10 h-10 rounded-full cursor-pointer"
+                    onMouseEnter={handleUserDropdownToggle}
+                    onKeyDown={handleUserDropdownKey}
+                    tabIndex={0}
+                  />
+                  {userDropdownOpen && (
+                    <div
+                      className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 transition-all duration-200 origin-top-right z-50 animate-fade-in"
+                      onMouseLeave={() => setUserDropdownOpen(false)}
+                    >
+                      <div className="px-4 py-3 flex justify-between items-center">
+                        <p className="text-sm text-gray-500">
+                          Welcome, {user.fullName}
+                        </p>
+                        <button
+                          className="text-sm font-semibold text-blue-600 hover:text-blue-500 cursor-pointer"
+                          tabIndex={0}
+                          onClick={handleSignOut}
+                        >
+                          Sign out
+                        </button>
+                      </div>
+                      <div className="py-1">
+                        {dropdownMenus.map((menu) => (
+                          <DropdownLink
+                            key={menu.path}
+                            to={menu.path}
+                            text={menu.label}
+                            icon={<FiChevronDown className="mr-3" />}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <button
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded={signInDropdown}
+                  tabIndex={0}
+                  onKeyDown={handleDropdownKey}
+                  onMouseEnter={() => setSignInDropDownOpen(true)}
+                  className="flex items-center text-gray-700 hover:text-blue-600 font-semibold text-base transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 cursor-pointer"
+                  onClick={() => setAuthModalType("signin")}
+                >
+                  <FiUser className="mr-2 text-xl" />
+                  <span className="hidden md:inline">Sign In</span>
+                  {signInDropdown ? (
+                    <FiChevronUp className="ml-1 transition-transform duration-200" />
+                  ) : (
+                    <FiChevronDown className="ml-1 transition-transform duration-200" />
+                  )}
+                </button>
+              )}
 
               {/* Dropdown Menu */}
-              {showDropdown && (
+              {signInDropdown && (
                 <div
                   className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 transition-all duration-200 origin-top-right z-50 animate-fade-in"
-                  onMouseLeave={() => setShowDropdown(false)}
+                  onMouseLeave={() => setSignInDropDownOpen(false)}
                 >
                   <div className="px-4 py-3 flex justify-between items-center">
                     <p className="text-sm text-gray-500">New customer?</p>

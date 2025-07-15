@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
-const veryfyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies.token;
 
@@ -16,8 +16,11 @@ const veryfyToken = (req, res, next) => {
       return res.status(401).send({ message: "Invalid token" });
     }
 
-    req.userId = decoded.userId;
-    req.role = decoded.role;
+    req.user = {
+      _id: decoded.userId,
+      role: decoded.role,
+    };
+
     next();
   } catch (error) {
     console.error("Token verification failed:", error);
@@ -25,4 +28,4 @@ const veryfyToken = (req, res, next) => {
   }
 };
 
-module.exports = veryfyToken;
+module.exports = verifyToken;

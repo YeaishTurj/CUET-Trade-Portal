@@ -128,7 +128,14 @@ router.put("/users/:id", async (req, res) => {
 // Edit or Update User Profile Endpoint
 router.patch("/edit-profile/", async (req, res) => {
   try {
-    const { userId, fullName, contactNumber, address, profileImage, profession } = req.body;
+    const {
+      userId,
+      fullName,
+      contactNumber,
+      address,
+      profileImage,
+      profession,
+    } = req.body;
     if (!userId) {
       return res.status(400).send({ message: "User ID is required" });
     }

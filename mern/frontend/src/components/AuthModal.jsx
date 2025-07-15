@@ -4,6 +4,7 @@ import "boxicons/css/boxicons.min.css";
 import "./AuthModal.css";
 import { useSignInUserMutation } from "../redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
+import { setUser } from "../redux/features/auth/authSlice";
 
 const AuthModal = ({ type, onClose }) => {
   const [isRegister, setIsRegister] = useState(type === "signup");
@@ -57,6 +58,8 @@ const AuthModal = ({ type, onClose }) => {
       }).unwrap(); // ✅ Must await unwrap()
 
       // console.log("✅ Sign In Successful:", response);
+      const { token, user } = response;
+      dispatch(setUser({ user }));
       alert("Sign In Successful!");
 
       setSignInEmail("");

@@ -36,6 +36,10 @@ const authRoute = require("./src/users/user.route");
 
 app.use("/api/auth", authRoute);
 
+const productRoute = require("./src/products/products.route");
+
+app.use("/api/products", productRoute);
+
 main()
   .then(() => console.log("MongoDB is succesfully connected"))
   .catch((err) => console.log(err));
