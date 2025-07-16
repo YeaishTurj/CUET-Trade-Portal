@@ -6,6 +6,13 @@ require("dotenv").config();
 var cors = require("cors");
 var cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.use(express.json({ limit: "25mb" }));
 
@@ -39,6 +46,18 @@ app.use("/api/auth", authRoute);
 const productRoute = require("./src/products/products.route");
 
 app.use("/api/products", productRoute);
+
+const orderRoute = require("./src/orders/orders.route");
+
+app.use("/api/orders", orderRoute);
+
+const uploadRoute = require("./src/uploads/upload.route");
+
+app.use("/api/upload", uploadRoute);
+
+const cartRoute = require("./src/carts/cart.route");
+
+app.use("api/carts", cartRoute);
 
 main()
   .then(() => console.log("MongoDB is succesfully connected"))

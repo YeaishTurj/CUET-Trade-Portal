@@ -102,6 +102,7 @@ const Navbar = () => {
 
   const adminDropDownMenus = [
     { label: "Dashboard", path: "/dashboard/admin" },
+    { label: "My Profile", path: "/dashboard/profile" },
     { label: "Manage Products", path: "/dashboard/manage-products" },
     { label: "All Orders", path: "/dashboard/manage-orders" },
   ];

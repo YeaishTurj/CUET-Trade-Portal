@@ -18,6 +18,8 @@ import PostDigitalPage from "../pages/PostDigitalPage.jsx";
 import PostFashionPage from "../pages/PostFashionPage.jsx";
 import PostElectronicsPage from "../pages/PostElectronicsPage.jsx";
 import PostOthersPage from "../pages/PostOthersPage.jsx";
+import MyProfile from "../components/MyProfile.jsx";
+import EditProfile from "../components/EditProfile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,9 +43,10 @@ const router = createBrowserRouter([
       { path: "/post-fashion", element: <PostFashionPage /> }, // ✅ Add this line
       { path: "/post-electronics", element: <PostElectronicsPage /> }, // ✅ Add this line
       { path: "/post-others", element: <PostOthersPage /> }, // ✅ Add this line
+      { path: "/dashboard/profile", element: <MyProfile /> },
+      { path: "/dashboard/profile/edit", element: <EditProfile /> },
     ],
   },
-
 ]);
 
 export default router;

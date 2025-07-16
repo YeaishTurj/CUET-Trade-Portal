@@ -61,6 +61,12 @@ const authApi = createApi({
         body: profileData,
       }),
     }),
+    getSignedInUser: builder.query({
+      query: () => ({
+        url: "/me",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -72,5 +78,6 @@ export const {
   useDeleteUserMutation,
   useUpdateUserRoleMutation,
   useEditProfileMutation,
+  useGetSignedInUserQuery,
 } = authApi;
 export default authApi;

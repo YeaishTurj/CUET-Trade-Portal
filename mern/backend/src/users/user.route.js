@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("./user.model");
 const generateToken = require("../middleware/generateToken");
+const verifyToken = require("../middleware/verifyToken");
 
 // Sign Up Endpoint
 router.post("/signup", async (req, res) => {
@@ -12,15 +13,47 @@ router.post("/signup", async (req, res) => {
       return res.status(400).send({ message: "All fields are required" });
     }
 
+    const cuetEmailRegex =
+      /^(u(0[1-9]|[1-9][0-9])(0[1-9]|1[0-2])(0[0-9]{2}|1[0-7][0-9]|180)@student\.cuet\.ac\.bd|.+@cuet\.ac\.bd)$/;
+
+    // 🔒 Check CUET email format
+    if (!cuetEmailRegex.test(email)) {
+      return res
+        .status(400)
+        .send({ message: "Only CUET email addresses are allowed" });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).send({ message: "User already exists" });
     }
 
-    const user = new User({ fullName, email, password }); // Assuming password is hashed in the model
+    const user = new User({ fullName, email, password });
     await user.save();
 
-    res.status(201).send({ message: "User signed up successfully" });
+    const token = await generateToken(user._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+
+    res.status(201).send({
+      message: "User signed up successfully",
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+        profileImage: user.profileImage,
+        contactNumber: user.contactNumber,
+        address: user.address,
+        profession: user.profession,
+        createdAt: user.createdAt,
+        token,
+      },
+    });
   } catch (error) {
     console.error("Error during registration:", error);
     res.status(500).send({ message: "Internal server error" });
@@ -80,6 +113,21 @@ router.post("/signout", (req, res) => {
   res.status(200).send({ message: "User signed out successfully" });
 });
 
+// Get signed-in user profile (protected by JWT token in cookie)
+router.get("/me", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    res.status(200).send(user);
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
 // Delete User Endpoint
 router.delete("/users/:id", async (req, res) => {
   try {
@@ -98,7 +146,9 @@ router.delete("/users/:id", async (req, res) => {
 // Get All Users Endpoint
 router.get("/users", async (req, res) => {
   try {
-    const users = await User.find({}, "id email role").sort({ createdAt: -1 });
+    const users = await User.find({}, "id email role contactNumber profileImage").sort({
+      createdAt: -1,
+    });
     res.status(200).send(users);
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -126,19 +176,13 @@ router.put("/users/:id", async (req, res) => {
 });
 
 // Edit or Update User Profile Endpoint
-router.patch("/edit-profile/", async (req, res) => {
+router.patch("/edit-profile", verifyToken, async (req, res) => {
   try {
-    const {
-      userId,
-      fullName,
-      contactNumber,
-      address,
-      profileImage,
-      profession,
-    } = req.body;
-    if (!userId) {
-      return res.status(400).send({ message: "User ID is required" });
-    }
+    const { fullName, contactNumber, address, profileImage, profession } =
+      req.body;
+
+    const userId = req.user._id; // ✅ From token
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send({ message: "User not found" });
@@ -151,6 +195,7 @@ router.patch("/edit-profile/", async (req, res) => {
     if (profession) user.profession = profession;
 
     await user.save();
+
     res.status(200).send({
       message: "Profile updated successfully",
       user: {

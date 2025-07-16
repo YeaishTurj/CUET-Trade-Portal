@@ -4,40 +4,52 @@ const bcrypt = require("bcrypt");
 const userSchema = new Schema({
   fullName: {
     type: String,
-    require: true,
+    required: true,
+    trim: true,
   },
+
   email: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
+    lowercase: true,
+    trim: true,
   },
+
   password: {
     type: String,
-    require: true,
+    required: true,
   },
+
   role: {
     type: String,
+    enum: ["user", "admin"],
     default: "user",
   },
+
   profileImage: {
     type: String,
     default: "",
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+
   contactNumber: {
     type: String,
     default: "",
   },
+
   address: {
     type: String,
     default: "",
   },
+
   profession: {
     type: String,
     default: "",
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

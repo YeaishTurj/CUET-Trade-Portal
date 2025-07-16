@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import "boxicons/css/boxicons.min.css";
 import "./AuthModal.css";
-import { useSignInUserMutation } from "../redux/features/auth/authApi";
+import {
+  useSignInUserMutation,
+  useSignUpUserMutation,
+} from "../redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/auth/authSlice";
 
@@ -42,6 +45,7 @@ const AuthModal = ({ type, onClose }) => {
 
   const dispatch = useDispatch();
   const [signInUser, { isLoading: signInLoading }] = useSignInUserMutation();
+  const [signUpUser, { isLoading: signUpLoading }] = useSignUpUserMutation();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -73,19 +77,41 @@ const AuthModal = ({ type, onClose }) => {
     }
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
+
     if (!cuetEmailRegex.test(signUpEmail)) {
       setSignUpMessage("Please use a valid CUET email address.");
       return;
     }
 
-    setSignUpMessage("");
-    console.log("Sign Up Data:", {
-      fullName: signUpFullName,
-      email: signUpEmail,
-      password: signUpPassword,
-    });
+    try {
+      const response = await signUpUser({
+        fullName: signUpFullName,
+        email: signUpEmail,
+        password: signUpPassword,
+      }).unwrap(); // ✅ Get raw data
+
+      const { user } = response;
+
+      dispatch(setUser({ user }));
+      alert("Sign Up Successful!");
+
+      // Clear form
+      setSignUpFullName("");
+      setSignUpEmail("");
+      setSignUpPassword("");
+      setSignUpMessage("");
+
+      onClose(); // Close modal
+    } catch (error) {
+      console.error("❌ Sign Up Error:", error);
+      if (error?.data?.message) {
+        setSignUpMessage(error.data.message);
+      } else {
+        setSignUpMessage("Sign up failed. Try again.");
+      }
+    }
   };
 
   return (
