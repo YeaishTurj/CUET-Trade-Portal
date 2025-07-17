@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/features/cart/cartSlice";
 import { useGetSignedInUserQuery } from "../redux/features/auth/authApi";
-import { getBaseURL } from "../utils/baseURL"; // ✅ Adjust path if needed
-
+import { getBaseURL } from "../utils/baseURL";
+import { useEffect, useState } from "react";
 
 function ProductDetailsCard({ product }) {
   const dispatch = useDispatch();
@@ -24,14 +24,15 @@ function ProductDetailsCard({ product }) {
     );
   }
 
+  const category = product.category || "";
   const isForSale = ["fashion", "electronics", "digital", "others"].includes(
-    product.category
+    category
   );
-  const isLostFound = ["lost", "found"].includes(product.category);
-  const isPreOwned = product.category === "pre-owned";
+  const isLostFound = ["lost", "found"].includes(category);
+  const isPreOwned = category === "pre-owned";
 
   const handleAddToCart = async () => {
-    if (!user) return alert("Please log in to add items.");
+    if (!user) return alert("Please log in to add items to your cart.");
 
     try {
       const res = await fetch(`${getBaseURL()}/api/cart/add`, {
@@ -44,11 +45,13 @@ function ProductDetailsCard({ product }) {
       const data = await res.json();
       if (res.ok) {
         dispatch(addToCart({ ...product, id: product._id }));
+        alert("✅ Added to cart!");
       } else {
-        console.error(data.message);
+        alert(data.message || "❌ Failed to add to cart.");
       }
     } catch (err) {
       console.error("Failed to add to cart:", err);
+      alert("⚠️ Network error.");
     }
   };
 
@@ -57,15 +60,41 @@ function ProductDetailsCard({ product }) {
   const contact = postedBy?.contactNumber || product.contact || "N/A";
   const email = postedBy?.email || "N/A";
 
-  const productId = product._id || product.id;
+  const [countdown, setCountdown] = useState("");
 
-  // console.log("Product ID:", productId);
+  useEffect(() => {
+    if (!product.expiresAt || product.category !== "pre-owned") return;
+
+    const targetTime = new Date(product.expiresAt);
+
+    const interval = setInterval(() => {
+      const now = new Date();
+      const diff = targetTime - now;
+
+      if (diff <= 0) {
+        setCountdown("⏰ Auction expired");
+        clearInterval(interval);
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      setCountdown(`${d}d ${h}h ${m}m ${s}s`);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [product.expiresAt, product.category]);
+
+  console.log(countdown);
 
   return (
     <section className="py-12 min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Product Image */}
+          {/* Product Image + Action */}
           <div className="lg:w-1/2 bg-white p-6 rounded-lg shadow-md">
             <div className="aspect-w-1 aspect-h-1 mb-6">
               <img
@@ -80,15 +109,22 @@ function ProductDetailsCard({ product }) {
               />
             </div>
 
+            {isPreOwned && (
+              <div className="text-sm font-semibold text-red-600 mb-2">
+                {countdown
+                  ? countdown === "⏰ Auction expired"
+                    ? "⚠️ This auction has ended"
+                    : `⏳ Auction ends in: ${countdown}`
+                  : "⏳ Calculating time..."}
+              </div>
+            )}
+
             {/* Action Buttons */}
             <div className="mt-6">
               {isForSale && (
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddToCart();
-                    }}
+                    onClick={handleAddToCart}
                     className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1"
                   >
                     Add to Cart
@@ -98,15 +134,26 @@ function ProductDetailsCard({ product }) {
                   </button>
                 </div>
               )}
+
               {isPreOwned && (
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 mt-4">
                   <input
                     type="number"
                     placeholder="Enter your bid amount"
-                    className="border border-gray-300 rounded-lg px-4 py-3 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="border border-gray-300 rounded-lg px-4 py-3 flex-1"
+                    disabled={countdown === "⏰ Auction expired"}
                   />
-                  <button className="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1">
-                    Place a Bid
+                  <button
+                    disabled={countdown === "⏰ Auction expired"}
+                    className={`py-3 px-6 rounded-lg font-medium flex-1 ${
+                      countdown === "⏰ Auction expired"
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-purple-600 hover:bg-purple-700 text-white"
+                    }`}
+                  >
+                    {countdown === "⏰ Auction expired"
+                      ? "Bidding Closed"
+                      : "Place a Bid"}
                   </button>
                 </div>
               )}
@@ -117,7 +164,7 @@ function ProductDetailsCard({ product }) {
           <div className="lg:w-1/2 bg-white p-6 rounded-lg shadow-md">
             <div className="mb-6">
               <span className="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full uppercase font-semibold tracking-wide">
-                {product.category}
+                {category}
               </span>
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
                 {product.title}
@@ -152,7 +199,7 @@ function ProductDetailsCard({ product }) {
               </div>
             )}
 
-            {/* Lost/Found Description */}
+            {/* Lost/Found Info */}
             {isLostFound && (
               <div className="mb-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-2">
@@ -176,44 +223,38 @@ function ProductDetailsCard({ product }) {
                 </h2>
                 <div className="flex flex-wrap gap-3">
                   {product.availableSizes.map((size) => (
-                    <label key={size} className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        name="size"
-                        value={size}
-                        className="form-radio h-5 w-5 text-blue-600 border-gray-300"
-                      />
-                      <span className="ml-2 text-gray-700">{size}</span>
-                    </label>
+                    <span
+                      key={size}
+                      className="px-3 py-1 border rounded-full bg-gray-100 text-gray-800 text-sm"
+                    >
+                      {size}
+                    </span>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Seller / Reporter Info */}
+            {/* Seller Info */}
             <div className="border-t pt-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-3">
                 {isLostFound ? "Reporter" : "Seller"} Information
               </h2>
-              <div className="space-y-2">
+              <div className="space-y-2 text-sm text-gray-700">
                 <p>
-                  <span className="font-medium text-gray-900">Name:</span>{" "}
-                  <span className="text-gray-700">{name}</span>
+                  <strong>Name:</strong> {name}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-900">Phone:</span>{" "}
-                  <span className="text-gray-700">{contact}</span>
+                  <strong>Phone:</strong> {contact}
                 </p>
                 <p>
-                  <span className="font-medium text-gray-900">Email:</span>{" "}
-                  <span className="text-gray-700">{email}</span>
+                  <strong>Email:</strong> {email}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Extra Descriptions */}
+        {/* Additional Product Description */}
         {isForSale && (
           <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-gray-900 mb-4 text-center">
@@ -223,7 +264,7 @@ function ProductDetailsCard({ product }) {
           </div>
         )}
 
-        {/* Pre-owned Specific Bids */}
+        {/* Pre-owned Bid Display */}
         {isPreOwned && (
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -257,9 +298,6 @@ function ProductDetailsCard({ product }) {
                   <p className="text-gray-500 italic">
                     No bids yet. Be the first to bid!
                   </p>
-                  <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg font-medium transition duration-200">
-                    Place First Bid
-                  </button>
                 </div>
               )}
             </div>

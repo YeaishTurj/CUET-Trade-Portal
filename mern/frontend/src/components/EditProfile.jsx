@@ -130,6 +130,8 @@ const EditProfile = () => {
           )}
         </div>
 
+        
+
         <button
           type="submit"
           disabled={isUpdating}
@@ -137,7 +139,9 @@ const EditProfile = () => {
         >
           {isUpdating ? "Updating..." : "Update Profile"}
         </button>
+        
       </form>
+      
     </div>
   );
 };

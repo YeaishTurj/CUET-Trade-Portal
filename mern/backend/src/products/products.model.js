@@ -41,6 +41,10 @@ const productSchema = new Schema(
       default: [],
     },
     endsIn: { type: String },
+    expiresAt: {
+      type: Date,
+    },
+
     location: { type: String },
     postedBy: {
       type: Types.ObjectId,

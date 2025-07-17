@@ -1,6 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+function getTimeLeft(expiresAt) {
+  if (!expiresAt) return null;
+
+  const now = new Date();
+  const target = new Date(expiresAt);
+  const diff = target - now;
+
+  if (diff <= 0) return "Expired";
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+  return `${days}d ${hours}h ${minutes}m`;
+}
+
 function ProductCards({ products, categories }) {
   const finalProducts = products.filter((p) => categories.includes(p.category));
 
@@ -58,9 +74,20 @@ function ProductCards({ products, categories }) {
                 )}
 
                 {/* Ends In */}
-                {product.category === "pre-owned" && product.endsIn && (
+                {product.category === "pre-owned" && product.expiresAt && (
                   <p className="text-red-600 font-semibold text-sm mt-1">
-                    Ends in: <span className="font-bold">{product.endsIn}</span>
+                    {getTimeLeft(product.expiresAt) === "Expired" ? (
+                      <span className="text-red-500 font-bold">
+                        ⚠️ Auction Ended
+                      </span>
+                    ) : (
+                      <>
+                        Ends in:{" "}
+                        <span className="font-bold">
+                          {getTimeLeft(product.expiresAt)}
+                        </span>
+                      </>
+                    )}
                   </p>
                 )}
               </div>

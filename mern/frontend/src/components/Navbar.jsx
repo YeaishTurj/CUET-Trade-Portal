@@ -50,6 +50,7 @@ const Navbar = () => {
   const cartRef = useRef(null);
 
   const [authModalType, setAuthModalType] = useState(null); // 'signin' or 'signup'
+  
 
   useEffect(() => {
     const handleClickOutsideCart = (event) => {
@@ -205,7 +206,7 @@ const Navbar = () => {
                     >
                       <div className="px-4 py-3 flex justify-between items-center">
                         <p className="text-sm text-gray-500">
-                          Welcome, {user.fullName}
+                          Welcome, {user.fullName.split(" ")[0]}
                         </p>
                         <button
                           className="text-sm font-semibold text-blue-600 hover:text-blue-500 cursor-pointer"

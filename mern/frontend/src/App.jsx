@@ -8,8 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useGetSignedInUserQuery } from "./redux/features/auth/authApi";
 import { getBaseURL } from "./utils/baseURL";
 import { addToCart } from "./redux/features/cart/cartSlice";
+import { signOut, setUser } from "./redux/features/auth/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  const { data: user, isError, error } = useGetSignedInUserQuery();
+
   const fetchUserCart = async () => {
     try {
       const res = await fetch(`${getBaseURL()}/api/cart`, {
@@ -36,13 +40,21 @@ function App() {
     }
   };
 
-  const dispatch = useDispatch();
-  const { data: user } = useGetSignedInUserQuery();
-
-
+  // 👤 Load cart if user is present
   useEffect(() => {
-    if (user) fetchUserCart();
+    if (user) {
+      dispatch(setUser({ user }));
+      fetchUserCart();
+    }
   }, [user]);
+
+  // 🔒 Auto-logout if token is expired or invalid
+  useEffect(() => {
+    if (isError && error?.status === 401) {
+      dispatch(signOut());
+      console.warn("🔒 Token expired or invalid — user signed out");
+    }
+  }, [isError, error, dispatch]);
 
   return (
     <div className="bg-gradient-to-r from-blue-50 via-indigo-100 to-blue-50">
