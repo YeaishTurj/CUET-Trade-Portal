@@ -8,6 +8,8 @@ import {
 } from "../redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/auth/authSlice";
+import { addToCart } from "../redux/features/cart/cartSlice"; // ✅ Don't forget this
+import { getBaseURL } from "../utils/baseURL"; // ✅ Adjust path if needed
 
 const AuthModal = ({ type, onClose }) => {
   const [isRegister, setIsRegister] = useState(type === "signup");
@@ -47,6 +49,32 @@ const AuthModal = ({ type, onClose }) => {
   const [signInUser, { isLoading: signInLoading }] = useSignInUserMutation();
   const [signUpUser, { isLoading: signUpLoading }] = useSignUpUserMutation();
 
+  const fetchUserCart = async () => {
+    try {
+      const res = await fetch(`${getBaseURL()}/api/cart`, {
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch cart");
+      }
+
+      data.items.forEach((item) => {
+        dispatch(
+          addToCart({
+            ...item.product,
+            quantity: item.quantity,
+            id: item.product._id,
+          })
+        );
+      });
+    } catch (error) {
+      console.error("❌ Failed to load cart:", error.message);
+    }
+  };
+
   const handleSignIn = async (e) => {
     e.preventDefault();
 
@@ -71,6 +99,8 @@ const AuthModal = ({ type, onClose }) => {
       setSignInMessage("");
 
       onClose(); // Close modal on success
+
+      await fetchUserCart();
     } catch (error) {
       console.error("❌ Sign In Error:", error);
       setSignInMessage("Invalid email or password. Please try again.");

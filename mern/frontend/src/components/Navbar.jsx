@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import avatarImg from "../assets/avatar.jpg";
 import { useSignOutUserMutation } from "../redux/features/auth/authApi";
 import { signOut } from "../redux/features/auth/authSlice";
+import { clearCart } from "../redux/features/cart/cartSlice";
 
 const navLinks = [
   { to: "/", text: "Home" },
@@ -124,6 +125,7 @@ const Navbar = () => {
     try {
       // Dispatch sign out action
       await signOutUser().unwrap();
+      dispatch(clearCart());
       dispatch(signOut());
       navigate("/");
     } catch (error) {

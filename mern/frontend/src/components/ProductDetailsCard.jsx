@@ -1,9 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/features/cart/cartSlice";
+import { useGetSignedInUserQuery } from "../redux/features/auth/authApi";
+import { getBaseURL } from "../utils/baseURL"; // ✅ Adjust path if needed
+
 
 function ProductDetailsCard({ product }) {
   const dispatch = useDispatch();
+  const { data: user, isLoading } = useGetSignedInUserQuery();
 
   if (!product) {
     return (
@@ -26,12 +30,36 @@ function ProductDetailsCard({ product }) {
   const isLostFound = ["lost", "found"].includes(product.category);
   const isPreOwned = product.category === "pre-owned";
 
-  const handleAddToCart = () => dispatch(addToCart(product));
+  const handleAddToCart = async () => {
+    if (!user) return alert("Please log in to add items.");
+
+    try {
+      const res = await fetch(`${getBaseURL()}/api/cart/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ productId: product._id, quantity: 1 }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        dispatch(addToCart({ ...product, id: product._id }));
+      } else {
+        console.error(data.message);
+      }
+    } catch (err) {
+      console.error("Failed to add to cart:", err);
+    }
+  };
 
   const postedBy = typeof product.postedBy === "object" ? product.postedBy : {};
   const name = postedBy?.fullName || "N/A";
   const contact = postedBy?.contactNumber || product.contact || "N/A";
   const email = postedBy?.email || "N/A";
+
+  const productId = product._id || product.id;
+
+  // console.log("Product ID:", productId);
 
   return (
     <section className="py-12 min-h-screen bg-gray-50">

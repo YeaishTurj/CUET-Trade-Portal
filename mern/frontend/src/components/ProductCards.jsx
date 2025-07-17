@@ -9,7 +9,7 @@ function ProductCards({ products, categories }) {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {finalProducts.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className={`bg-gray-50 rounded-2xl overflow-hidden group relative
   shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-gray-200
   hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:border-blue-200

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getBaseURL } from "../../../utils/baseURL"; // ✅ Adjust path if needed
 
 // Utility functions
 const setSelectedItems = (state) =>
@@ -24,12 +25,15 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const isExists = state.products.find(
+      const existing = state.products.find(
         (product) => product.id === action.payload.id
       );
 
-      if (!isExists) {
-        state.products.push({ ...action.payload, quantity: 1 });
+      if (!existing) {
+        state.products.push({
+          ...action.payload,
+          quantity: action.payload.quantity || 1, // ✅ use backend quantity
+        });
       } else {
         console.log("Product already exists in the cart");
       }
@@ -49,6 +53,17 @@ const cartSlice = createSlice({
           ) {
             product.quantity -= 1;
           }
+
+          // After changing product.quantity:
+          fetch(`${getBaseURL()}/api/cart/update`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              productId: product.id,
+              quantity: product.quantity,
+            }),
+          }).catch((err) => console.error("Failed to sync quantity:", err));
         }
       });
 
@@ -57,7 +72,16 @@ const cartSlice = createSlice({
     },
 
     removeFromCart: (state, action) => {
-      state.products = state.products.filter((product) => product.id !== action.payload);
+      const id = action.payload;
+      state.products = state.products.filter((product) => product.id !== id);
+
+      // 🔁 Sync with backend
+      fetch(`${getBaseURL()}/api/cart/remove/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      }).catch((err) =>
+        console.error("Failed to remove item from backend:", err)
+      );
 
       state.selectedItems = setSelectedItems(state);
       state.totalPrice = setProductsTotal(state) + state.deliveryCharge;
@@ -67,6 +91,11 @@ const cartSlice = createSlice({
       state.products = [];
       state.selectedItems = 0;
       state.totalPrice = 0;
+
+      fetch(`${getBaseURL()}/api/cart/clear`, {
+        method: "DELETE",
+        credentials: "include",
+      }).catch((err) => console.error("Failed to clear cart in backend:", err));
     },
 
     setDeliveryCharge: (state, action) => {

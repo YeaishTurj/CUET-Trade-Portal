@@ -55,9 +55,8 @@ const uploadRoute = require("./src/uploads/upload.route");
 
 app.use("/api/upload", uploadRoute);
 
-const cartRoute = require("./src/carts/cart.route");
-
-app.use("api/carts", cartRoute);
+const cartRoutes = require("./src/carts/cart.route");
+app.use("/api/cart", cartRoutes);
 
 main()
   .then(() => console.log("MongoDB is succesfully connected"))

@@ -26,10 +26,13 @@ function ProductDetailsPage() {
   if (error || !product) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-600 text-xl">Product not found or server error</p>
+        <p className="text-red-600 text-xl">
+          Product not found or server error
+        </p>
       </div>
     );
   }
+
 
   return (
     <>
