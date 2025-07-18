@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { useCreateProductMutation } from "../redux/features/products/productsApi";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getBaseURL } from "../utils/baseURL";
-import { useSelector } from "react-redux";
 
-const PostProduct = () => {
-  const { user } = useSelector((state) => state.auth);
-  const [createProduct] = useCreateProductMutation();
+const EditProduct = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -17,32 +16,55 @@ const PostProduct = () => {
     availableSizes: "",
     location: "",
     endsIn: "",
+    imageURL: "",
   });
 
-  const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [postedProduct, setPostedProduct] = useState(null);
+  const [successMsg, setSuccessMsg] = useState("");
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`${getBaseURL()}/api/products/${id}`);
+        const data = await res.json();
+        if (res.ok) {
+          setFormData({
+            ...data,
+            features: data.features?.join(", ") || "",
+            availableSizes: data.availableSizes?.join(", ") || "",
+          });
+          setImagePreview(data.imageURL);
+        } else {
+          setErrorMsg(data.message || "Failed to load product");
+        }
+      } catch (err) {
+        console.error(err);
+        setErrorMsg("Failed to fetch product");
+      }
+    };
+    fetchProduct();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file?.type.startsWith("image/")) {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file?.type.startsWith("image/")) {
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
     }
@@ -56,7 +78,7 @@ const PostProduct = () => {
     try {
       let imageURL = formData.imageURL;
 
-      if (!imageURL && imageFile) {
+      if (imageFile) {
         const imageForm = new FormData();
         imageForm.append("image", imageFile);
         imageForm.append("type", "product");
@@ -70,12 +92,8 @@ const PostProduct = () => {
         const uploadData = await uploadRes.json();
         setIsUploading(false);
 
-        if (!uploadRes.ok) throw new Error(uploadData.message || "Upload failed");
+        if (!uploadRes.ok) throw new Error(uploadData.message || "Image upload failed");
         imageURL = uploadData.url;
-      }
-
-      if (!["lost", "found"].includes(formData.category) && !imageURL) {
-        return setErrorMsg("❌ Image is required for this product category.");
       }
 
       const payload = {
@@ -85,38 +103,30 @@ const PostProduct = () => {
         availableSizes: formData.availableSizes.split(",").map((s) => s.trim()),
       };
 
-      // Remove unnecessary fields
-      if (formData.category !== "fashion") delete payload.availableSizes;
-      if (formData.category !== "pre-owned") delete payload.endsIn;
-      if (!["lost", "found"].includes(formData.category)) delete payload.location;
-      if (["lost", "found"].includes(formData.category)) {
-        delete payload.price;
-        delete payload.perWhich;
-        delete payload.availableSizes;
-        delete payload.features;
+      if (formData.category === "pre-owned" && formData.endsIn) {
+        payload.endsIn = formData.endsIn;
       }
 
-      await createProduct(payload).unwrap();
-      setSuccessMsg("✅ Product posted successfully!");
-      setPostedProduct(payload);
-
-      setFormData({
-        title: "",
-        category: "",
-        description: "",
-        price: "",
-        perWhich: "piece",
-        features: "",
-        availableSizes: "",
-        location: "",
-        endsIn: "",
-        imageURL: "",
+      const res = await fetch(`${getBaseURL()}/api/products/update-product/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(payload),
       });
-      setImageFile(null);
-      setImagePreview(null);
-    } catch (error) {
-      console.error("Submit error:", error);
-      setErrorMsg(error?.data?.message || "Failed to post product");
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSuccessMsg("✅ Product updated successfully");
+        setTimeout(() => navigate("/dashboard/listings"), 1500);
+      } else {
+        setErrorMsg(data.message || "Update failed");
+      }
+    } catch (err) {
+      console.error("Update error:", err);
+      setErrorMsg("Something went wrong");
     }
   };
 
@@ -133,7 +143,7 @@ const PostProduct = () => {
       onDrop={handleDrop}
       className="max-w-2xl mx-auto bg-white p-6 rounded shadow space-y-4"
     >
-      <h2 className="text-xl font-bold mb-2">Post a Product</h2>
+      <h2 className="text-xl font-bold mb-2">Edit Product</h2>
 
       {successMsg && <p className="text-green-600">{successMsg}</p>}
       {errorMsg && <p className="text-red-600">{errorMsg}</p>}
@@ -141,19 +151,20 @@ const PostProduct = () => {
       <input
         type="text"
         name="title"
-        placeholder="Title"
-        className="w-full border p-2 rounded"
         value={formData.title}
         onChange={handleChange}
+        className="w-full border p-2 rounded"
+        placeholder="Title"
         required
       />
 
       <select
         name="category"
-        className="w-full border p-2 rounded"
         value={formData.category}
         onChange={handleChange}
+        className="w-full border p-2 rounded"
         required
+        disabled
       >
         <option value="">Select Category</option>
         <option value="fashion">Fashion</option>
@@ -167,10 +178,10 @@ const PostProduct = () => {
 
       <textarea
         name="description"
-        placeholder="Description"
-        className="w-full border p-2 rounded"
         value={formData.description}
         onChange={handleChange}
+        className="w-full border p-2 rounded"
+        placeholder="Description"
       />
 
       {showPrice && (
@@ -178,18 +189,18 @@ const PostProduct = () => {
           <input
             type="number"
             name="price"
-            placeholder="Price"
-            className="w-full border p-2 rounded"
             value={formData.price}
             onChange={handleChange}
+            className="w-full border p-2 rounded"
+            placeholder="Price"
           />
           <input
             type="text"
             name="perWhich"
-            placeholder="Per (piece/day/month)"
-            className="w-full border p-2 rounded"
             value={formData.perWhich}
             onChange={handleChange}
+            className="w-full border p-2 rounded"
+            placeholder="Per (piece/day/month)"
           />
         </>
       )}
@@ -198,10 +209,10 @@ const PostProduct = () => {
         <input
           type="text"
           name="features"
-          placeholder="Features (comma separated)"
-          className="w-full border p-2 rounded"
           value={formData.features}
           onChange={handleChange}
+          className="w-full border p-2 rounded"
+          placeholder="Features (comma separated)"
         />
       )}
 
@@ -209,10 +220,10 @@ const PostProduct = () => {
         <input
           type="text"
           name="availableSizes"
-          placeholder="Available Sizes (comma separated)"
-          className="w-full border p-2 rounded"
           value={formData.availableSizes}
           onChange={handleChange}
+          className="w-full border p-2 rounded"
+          placeholder="Available Sizes (comma separated)"
         />
       )}
 
@@ -220,10 +231,10 @@ const PostProduct = () => {
         <input
           type="text"
           name="endsIn"
-          placeholder="Auction duration (e.g. 1d 4h 20m)"
-          className="w-full border p-2 rounded"
           value={formData.endsIn}
           onChange={handleChange}
+          className="w-full border p-2 rounded"
+          placeholder="Auction duration (e.g. 1d 4h 20m)"
         />
       )}
 
@@ -231,14 +242,13 @@ const PostProduct = () => {
         <input
           type="text"
           name="location"
-          placeholder="Location"
-          className="w-full border p-2 rounded"
           value={formData.location}
           onChange={handleChange}
+          className="w-full border p-2 rounded"
+          placeholder="Location"
         />
       )}
 
-      {/* Drag-and-Drop Upload */}
       <div className="w-full border-2 border-dashed p-4 rounded text-center">
         <label className="cursor-pointer">
           <input
@@ -253,33 +263,20 @@ const PostProduct = () => {
         {imagePreview && !isUploading && (
           <img
             src={imagePreview}
-            alt="Preview"
-            className="mt-3 mx-auto h-40 object-contain"
+            alt="Product"
+            className="mt-3 mx-auto h-40 object-contain rounded"
           />
         )}
       </div>
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
       >
-        Submit Product
+        Update Product
       </button>
-
-      {postedProduct && (
-        <div className="mt-4 p-3 border rounded bg-green-50">
-          <p><strong>Preview:</strong> {postedProduct.title}</p>
-          {postedProduct.imageURL && (
-            <img
-              src={postedProduct.imageURL}
-              alt="Product"
-              className="mt-2 h-36 object-contain rounded"
-            />
-          )}
-        </div>
-      )}
     </form>
   );
 };
 
-export default PostProduct;
+export default EditProduct;

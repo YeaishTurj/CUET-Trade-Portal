@@ -20,6 +20,11 @@ import PostElectronicsPage from "../pages/PostElectronicsPage.jsx";
 import PostOthersPage from "../pages/PostOthersPage.jsx";
 import MyProfile from "../components/MyProfile.jsx";
 import EditProfile from "../components/EditProfile.jsx";
+import Dashboard from "../pages/Dashboard.jsx";
+import AdminUserManagement from "../pages/AdminUserManagement.jsx"; // ✅ Import
+import AdminProductManagement from "../pages/AdminProductManagement.jsx"; // ✅ Import
+import UserProductManagement from "../pages/UserProductManagement.jsx";
+import EditProduct from "../pages/EditProduct"; // ✅ Import
 
 const router = createBrowserRouter([
   {
@@ -35,7 +40,7 @@ const router = createBrowserRouter([
       { path: "/become-seller", element: <BecomeSellerPage /> }, // ✅ Add this line
       { path: "/cart", element: <CartPage /> }, // ✅ Add this line
       { path: "/checkout", element: <CheckoutPage /> }, // ✅ Add this line
-      { path: "/product/:id", element: <ProductDetailsPage /> }, // ✅ Add this line
+      { path: "/products/:id", element: <ProductDetailsPage /> }, // ✅ Add this line
       { path: "/user-profile/", element: <UserProfilePage /> }, // ✅ Add this line
       { path: "/post-found", element: <PostFoundPage /> }, // ✅ Add this line
       { path: "/post-lost", element: <PostLostPage /> }, // ✅ Add this line
@@ -45,6 +50,11 @@ const router = createBrowserRouter([
       { path: "/post-others", element: <PostOthersPage /> }, // ✅ Add this line
       { path: "/dashboard/profile", element: <MyProfile /> },
       { path: "/dashboard/profile/edit", element: <EditProfile /> },
+      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/admin/users", element: <AdminUserManagement /> }, // ✅ Add this line
+      { path: "/admin/products", element: <AdminProductManagement /> }, // ✅ Add this line
+      { path: "/dashboard/listings", element: <UserProductManagement /> }, // ✅ Add this line
+      { path: "/edit-product/:id", element: <EditProduct /> }, // ✅ Add this line
     ],
   },
 ]);

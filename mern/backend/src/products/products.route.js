@@ -2,7 +2,7 @@ const express = require("express");
 const Product = require("./products.model");
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
-
+const mongoose = require("mongoose");
 
 // ✅ Create Product (must be authenticated)
 router.post("/create-product", verifyToken, async (req, res) => {
@@ -45,20 +45,30 @@ router.post("/create-product", verifyToken, async (req, res) => {
   }
 });
 
-
-// ✅ Get all products
+// ✅ Combined Get All Products + Filtering
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find().populate(
-      "postedBy",
-      "fullName profileImage"
-    );
-    res.status(200).send(products);
+    const filter = {};
+
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+
+    if (req.query.postedBy && mongoose.Types.ObjectId.isValid(req.query.postedBy)) {
+      filter.postedBy = new mongoose.Types.ObjectId(req.query.postedBy);
+    }
+
+    const products = await Product.find(filter)
+      .populate("postedBy", "fullName email profileImage")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
-    res.status(500).send({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 // ✅ Get product by ID
 router.get("/:id", async (req, res) => {
@@ -75,29 +85,66 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ✅ Update product (only postedBy or admin)
+// PATCH /update-product/:id
 router.patch("/update-product/:id", verifyToken, async (req, res) => {
-  try {
-    const { _id: userId, role } = req.user;
-    const product = await Product.findById(req.params.id);
+  const { id } = req.params;
+  const {
+    title,
+    price,
+    perWhich,
+    description,
+    availableSizes,
+    features,
+    location,
+    endsIn,
+    imageURL,
+  } = req.body;
 
-    if (!product) return res.status(404).send({ message: "Product not found" });
-    if (role !== "admin" && product.postedBy.toString() !== userId) {
-      return res.status(403).send({ message: "Unauthorized" });
+  try {
+    const product = await Product.findById(id);
+
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    if (product.postedBy.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to update this product" });
     }
 
-    Object.assign(product, req.body);
-    const updatedProduct = await product.save();
+    product.title = title || product.title;
+    product.price = price ?? product.price;
+    product.perWhich = perWhich ?? product.perWhich;
+    product.description = description || product.description;
+    product.availableSizes = availableSizes || product.availableSizes;
+    product.features = features || product.features;
+    product.location = location || product.location;
+    product.imageURL = imageURL || product.imageURL;
 
-    res
-      .status(200)
-      .send({
-        message: "Product updated successfully",
-        product: updatedProduct,
-      });
-  } catch (error) {
-    console.error("Error updating product:", error);
-    res.status(500).send({ message: "Internal server error" });
+    // ✅ Handle `endsIn` and recalculate `expiresAt` if category is pre-owned
+    if (product.category === "pre-owned" && endsIn) {
+      const parseEndsInToDate = (str) => {
+        const units = { d: 86400000, h: 3600000, m: 60000, s: 1000 };
+        return new Date(
+          Date.now() +
+            [...str.matchAll(/(\d+)([dhms])/g)].reduce(
+              (acc, [, num, unit]) => acc + num * (units[unit] || 0),
+              0
+            )
+        );
+      };
+
+      product.expiresAt = parseEndsInToDate(endsIn);
+    }
+
+    await product.save();
+
+    res.status(200).json({
+      message: "Product updated successfully",
+      product,
+    });
+  } catch (err) {
+    console.error("Update error:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -123,37 +170,36 @@ router.delete("/:id", verifyToken, async (req, res) => {
 // 🔒 Place a bid on pre-owned product
 router.post("/place-bid/:id", verifyToken, async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
     const { biddingPrice } = req.body;
+    const product = await Product.findById(req.params.id);
 
     if (!product) return res.status(404).send({ message: "Product not found" });
     if (product.category !== "pre-owned")
-      return res.status(400).send({ message: "Not a pre-owned product" });
+      return res.status(400).send({ message: "Not a pre-owned item" });
 
-    // ⏰ Check expiry
     if (product.expiresAt && new Date() > new Date(product.expiresAt)) {
-      return res.status(403).send({ message: "Auction has expired" });
+      return res.status(403).send({ message: "Auction expired" });
     }
 
-    // 💵 Validate bid amount
     if (!biddingPrice || biddingPrice <= 0) {
-      return res.status(400).send({ message: "Invalid bidding price" });
+      return res.status(400).send({ message: "Invalid bidding amount" });
     }
 
-    // 📌 Save bid
     product.bids.push({
-      user: req.user._id,
+      user: req.user._id.toString(), // or username/email if you prefer
       biddingPrice,
     });
 
     await product.save();
-
     res.status(200).send({ message: "Bid placed", product });
   } catch (error) {
-    console.error("Error placing bid:", error);
+    console.error("Bid error:", error);
     res.status(500).send({ message: "Internal server error" });
   }
 });
+
+
+
 
 
 module.exports = router;

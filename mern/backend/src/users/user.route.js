@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("./user.model");
 const generateToken = require("../middleware/generateToken");
 const verifyToken = require("../middleware/verifyToken");
+const Product = require("../products/products.model");
 
 // Sign Up Endpoint
 router.post("/signup", async (req, res) => {
@@ -146,9 +147,11 @@ router.delete("/users/:id", async (req, res) => {
 // Get All Users Endpoint
 router.get("/users", async (req, res) => {
   try {
-    const users = await User.find({}, "id email role contactNumber profileImage").sort({
-      createdAt: -1,
-    });
+    const users = await User.find()
+      .select(
+        "id fullName email role contactNumber profileImage address profession createdAt"
+      )
+      .sort({ createdAt: -1 });
     res.status(200).send(users);
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -211,6 +214,54 @@ router.patch("/edit-profile", verifyToken, async (req, res) => {
   } catch (error) {
     console.error("Error updating profile:", error);
     res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+// Get User by ID Endpoint
+router.get("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id).select(
+      "id fullName email role contactNumber profileImage address profession createdAt"
+    );
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    res.status(200).send(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+router.get("/stats", verifyToken, async (req, res) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Access denied" });
+  }
+
+  try {
+    const totalUsers = await User.countDocuments();
+    const totalProducts = await Product.countDocuments({
+      category: { $nin: ["lost", "found"] }, // ✅ Exclude lost/found
+    });
+
+    const totalBids = await Product.aggregate([
+      { $unwind: "$bids" },
+      { $count: "count" },
+    ]);
+
+    const lostFoundPosts = await Product.countDocuments({
+      category: { $in: ["lost", "found"] },
+    });
+
+    res.status(200).json({
+      totalUsers,
+      totalProducts,
+      totalBids: totalBids[0]?.count || 0,
+      lostFoundPosts,
+    });
+  } catch (error) {
+    console.error("Error fetching stats:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

@@ -53,13 +53,23 @@ const productsApi = createApi({
     // ✅ Delete product
     deleteProduct: builder.mutation({
       query: (id) => ({
-        url: `/${id}`, // this matches router.delete("/:id")
+        url: `/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result, error, id) => [
         { type: "Products", id },
         { type: "Products", id: "LIST" },
       ],
+    }),
+
+    // ✅ Place Bid on Pre-Owned Product
+    placeBid: builder.mutation({
+      query: ({ id, biddingPrice }) => ({
+        url: `/place-bid/${id}`,
+        method: "POST",
+        body: { biddingPrice },
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: "Products", id }],
     }),
   }),
 });
@@ -70,6 +80,7 @@ export const {
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  usePlaceBidMutation, // ← make sure to use this in ProductDetails.jsx
 } = productsApi;
 
 export default productsApi;
