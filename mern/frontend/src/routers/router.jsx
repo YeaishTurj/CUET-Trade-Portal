@@ -8,7 +8,7 @@ import LostFoundProductsPage from "../pages/LostFoundProductsPage.jsx"; // ✅ I
 import PostLostFoundPage from "../pages/PostLostFoundPage.jsx"; // ✅ Import
 import PostPreOwnedPage from "../pages/PostPreOwnedPage.jsx"; // ✅ Import
 import BecomeSellerPage from "../pages/BecomeSellerPage.jsx"; // ✅ Import
-import CartPage from "../pages/CartPage.jsx"; // ✅ Import if needed
+// import CartPage from "../pages/CartPage.jsx"; // ✅ Import if needed
 import CheckoutPage from "../pages/CheckoutPage.jsx"; // ✅ Import if needed
 import ProductDetailsPage from "../pages/ProductDetailsPage.jsx"; // ✅ Import if needed
 import UserProfilePage from "../pages/UserProfilePage.jsx"; // ✅ Import if needed
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       { path: "/post-lost-found", element: <PostLostFoundPage /> },
       { path: "/post-pre-owned", element: <PostPreOwnedPage /> },
       { path: "/become-seller", element: <BecomeSellerPage /> }, // ✅ Add this line
-      { path: "/cart", element: <CartPage /> }, // ✅ Add this line
+      // { path: "/cart", element: <CartPage /> }, // ✅ Add this line
       { path: "/checkout", element: <CheckoutPage /> }, // ✅ Add this line
       { path: "/products/:id", element: <ProductDetailsPage /> }, // ✅ Add this line
       { path: "/user-profile/", element: <UserProfilePage /> }, // ✅ Add this line

@@ -14,6 +14,40 @@ function App() {
   const dispatch = useDispatch();
   const { data: user, isError, error } = useGetSignedInUserQuery();
 
+  const fetchUserCart = async () => {
+    try {
+      const res = await fetch(`${getBaseURL()}/api/cart`, {
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch cart");
+      }
+
+      data.items.forEach((item) => {
+        dispatch(
+          addToCart({
+            ...item.product,
+            quantity: item.quantity,
+            id: item.product._id,
+          })
+        );
+      });
+    } catch (error) {
+      console.error("❌ Failed to load cart:", error.message);
+    }
+  };
+
+  // 👤 Load cart if user is present
+  useEffect(() => {
+    if (user) {
+      dispatch(setUser({ user }));
+      fetchUserCart();
+    }
+  }, [user]);
+
   // 🔒 Auto-logout if token is expired or invalid
   useEffect(() => {
     if (isError && error?.status === 401) {
