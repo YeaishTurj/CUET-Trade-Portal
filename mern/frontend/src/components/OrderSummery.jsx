@@ -8,7 +8,7 @@ import {
   FaTrashAlt,
   FaArrowRight,
 } from "react-icons/fa";
-import { clearCart } from "../redux/features/cart/cartSlice"; // Uncomment if implemented
+import { clearCart } from "../redux/features/cart/cartSlice";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
