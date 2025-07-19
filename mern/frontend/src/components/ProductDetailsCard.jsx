@@ -90,7 +90,11 @@ const ProductDetailsCard = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ productId: product._id, quantity: 1, price }), // Passing price along with productId and quantity
+        body: JSON.stringify({
+          productId: product._id,
+          quantity: 1,
+          price: price,
+        }), // Passing price along with productId and quantity
       });
       const data = await res.json();
       if (res.ok) {
@@ -146,6 +150,10 @@ const ProductDetailsCard = () => {
   const isPreOwned = category === "pre-owned";
   const isLostFound = ["lost", "found"].includes(category);
 
+  const currUserId = user?._id || "";
+
+  // console.log(winner, isWinner, winningPrice, user?._id);
+
   return (
     <section className="py-12 min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -166,11 +174,26 @@ const ProductDetailsCard = () => {
             </div>
 
             {isPreOwned && (
-              <div className="text-sm font-semibold text-red-600 mb-2">
-                {countdown === "⏰ Auction expired"
-                  ? "⚠️ This auction has ended"
-                  : `⏳ Auction ends in: ${countdown}`}
-              </div>
+              <>
+                <div className="text-sm font-semibold text-red-600 mb-2">
+                  {countdown === "⏰ Auction expired"
+                    ? "⚠️ This auction has ended"
+                    : `⏳ Auction ends in: ${countdown}`}
+                </div>
+
+                {isWinner && winner === currUserId && (
+                  <div className="text-sm font-semibold text-green-600 mb-2">
+                    🎉 You are the highest bidder!
+                  </div>
+                )}
+
+                {!isWinner && (
+                  <div className="text-sm font-semibold text-gray-600 mb-2">
+                    Highest Bid: ৳
+                    {winningPrice ? winningPrice.toLocaleString() : "N/A"}
+                  </div>
+                )}
+              </>
             )}
 
             {/* Action Buttons */}
@@ -182,9 +205,19 @@ const ProductDetailsCard = () => {
                     className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1"
                   >
                     Add to Cart
+                    {isWinner && (
+                      <span className="ml-2 text-sm text-yellow-300">
+                        at ৳{winningPrice.toLocaleString()}
+                      </span>
+                    )}
                   </button>
                   <button className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1">
                     Buy Now
+                    {isWinner && (
+                      <span className="ml-2 text-sm text-yellow-300">
+                        at ৳{winningPrice.toLocaleString()}
+                      </span>
+                    )}
                   </button>
                 </div>
               )}

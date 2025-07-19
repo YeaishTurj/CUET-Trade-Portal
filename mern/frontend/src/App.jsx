@@ -31,6 +31,7 @@ function App() {
           addToCart({
             ...item.product,
             quantity: item.quantity,
+            price: item.price,
             id: item.product._id,
           })
         );

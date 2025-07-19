@@ -7,7 +7,9 @@ const verifyToken = require("../middleware/verifyToken");
 // 🔁 Add item to cart
 router.post("/add", verifyToken, async (req, res) => {
   const userId = req.user._id;
-  const { productId, quantity = 1 } = req.body;
+  const { productId, quantity = 1, price } = req.body;
+
+  console.log("Adding item to cart:", { userId, productId, quantity, price });
 
   try {
     let cart = await Cart.findOne({ user: userId });
@@ -23,7 +25,7 @@ router.post("/add", verifyToken, async (req, res) => {
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      cart.items.push({ product: productId, quantity });
+      cart.items.push({ product: productId, quantity, price });
     }
 
     await cart.save();

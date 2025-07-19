@@ -1,16 +1,18 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaShoppingBasket, FaMoneyBillWave, FaTruck, FaTrashAlt, FaArrowRight } from "react-icons/fa";
+import {
+  FaShoppingBasket,
+  FaMoneyBillWave,
+  FaTruck,
+  FaTrashAlt,
+  FaArrowRight,
+} from "react-icons/fa";
 import { clearCart } from "../redux/features/cart/cartSlice"; // Uncomment if implemented
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
-  const { selectedItems, totalPrice, deliveryCharge } = useSelector(
-    (store) => store.cart
-  );
-
-  const subtotal = totalPrice - deliveryCharge;
+  const { selectedItems, totalPrice } = useSelector((store) => store.cart);
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -27,14 +29,7 @@ const OrderSummary = () => {
           <FaShoppingBasket /> Selected Items:{" "}
           <span className="font-medium">{selectedItems}</span>
         </p>
-        <p className="flex items-center gap-2">
-          <FaMoneyBillWave /> Subtotal:{" "}
-          <span className="font-medium">৳{subtotal.toFixed(2)}</span>
-        </p>
-        <p className="flex items-center gap-2">
-          <FaTruck /> Delivery Charge:{" "}
-          <span className="font-medium">৳{deliveryCharge.toFixed(2)}</span>
-        </p>
+
         <hr className="my-3 border-gray-200" />
         <p className="text-base font-bold text-gray-800 flex items-center gap-2">
           <FaMoneyBillWave /> Total: ৳{totalPrice.toFixed(2)}

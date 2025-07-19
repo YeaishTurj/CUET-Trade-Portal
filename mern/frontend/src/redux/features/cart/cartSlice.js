@@ -16,7 +16,6 @@ const initialState = {
   products: [],
   selectedItems: 0,
   totalPrice: 0,
-  deliveryCharge: 50, // Default delivery charge (you can change this dynamically later)
 };
 
 // Slice
@@ -39,7 +38,7 @@ const cartSlice = createSlice({
       }
 
       state.selectedItems = setSelectedItems(state);
-      state.totalPrice = setProductsTotal(state) + state.deliveryCharge;
+      state.totalPrice = setProductsTotal(state);
     },
 
     updateQuantity: (state, action) => {
@@ -68,7 +67,7 @@ const cartSlice = createSlice({
       });
 
       state.selectedItems = setSelectedItems(state);
-      state.totalPrice = setProductsTotal(state) + state.deliveryCharge;
+      state.totalPrice = setProductsTotal(state);
     },
 
     removeFromCart: (state, action) => {
@@ -84,7 +83,7 @@ const cartSlice = createSlice({
       );
 
       state.selectedItems = setSelectedItems(state);
-      state.totalPrice = setProductsTotal(state) + state.deliveryCharge;
+      state.totalPrice = setProductsTotal(state);
     },
 
     clearCart: (state) => {
@@ -98,10 +97,6 @@ const cartSlice = createSlice({
       }).catch((err) => console.error("Failed to clear cart in backend:", err));
     },
 
-    setDeliveryCharge: (state, action) => {
-      state.deliveryCharge = action.payload;
-      state.totalPrice = setProductsTotal(state) + state.deliveryCharge;
-    },
   },
 });
 
@@ -111,7 +106,6 @@ export const {
   updateQuantity,
   removeFromCart,
   clearCart,
-  setDeliveryCharge,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
