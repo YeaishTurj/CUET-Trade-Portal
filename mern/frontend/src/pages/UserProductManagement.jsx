@@ -11,16 +11,16 @@ const UserProductManagement = () => {
 
   const { data: user, isLoading, isError } = useGetSignedInUserQuery();
 
-  console.log(user._id);
+  const currUserId = user?._id || "";
 
   // ✅ Always call hooks first (before return!)
   useEffect(() => {
     const fetchProducts = async () => {
-      if (!user?._id) return;
+      if (!currUserId) return;
 
       try {
         const res = await fetch(
-          `${getBaseURL()}/api/products?postedBy=${user._id}`,
+          `${getBaseURL()}/api/products?postedBy=${currUserId}`,
           { credentials: "include" }
         );
         const data = await res.json();
@@ -35,9 +35,9 @@ const UserProductManagement = () => {
     };
 
     fetchProducts();
-  }, [refresh, user]);
+  }, [refresh, currUserId]);
 
-  console.log("User Products:", products);
+
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(

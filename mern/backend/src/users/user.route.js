@@ -233,6 +233,7 @@ router.get("/users/:id", async (req, res) => {
     res.status(500).send({ message: "Internal server error" });
   }
 });
+
 router.get("/stats", verifyToken, async (req, res) => {
   if (req.user.role !== "admin") {
     return res.status(403).json({ message: "Access denied" });
@@ -262,6 +263,30 @@ router.get("/stats", verifyToken, async (req, res) => {
   } catch (error) {
     console.error("Error fetching stats:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ✅ Get all bids placed by the logged-in user
+router.get("/my-bids/:id", verifyToken, async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    // 🔒 Ensure the user is accessing their own data
+    if (req.user._id.toString() !== userId) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    // 🧠 Find products where the user has placed a bid
+    const myBids = await Product.find({
+      "bids.user": userId,
+    })
+      .select("title category imageURL bids winningBid createdAt")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(myBids);
+  } catch (error) {
+    console.error("Error fetching my bids:", error);
+    res.status(500).json({ message: "Failed to load your bids" });
   }
 });
 

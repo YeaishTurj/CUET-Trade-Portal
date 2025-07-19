@@ -62,7 +62,7 @@
 //         // "found", not required, should be disabled in frontend
 
 //     },
-//     availableSizes: { type: [String], 
+//     availableSizes: { type: [String],
 
 //       //      "fashion", required
 //       // "electronics", not required, should be disabled in frontend
@@ -140,12 +140,6 @@
 
 // const Product = model("Product", productSchema);
 // module.exports = Product;
-
-
-
-
-
-
 
 const { Schema, model, Types } = require("mongoose");
 const User = require("../users/user.model"); // Adjust if needed
@@ -245,6 +239,11 @@ const productSchema = new Schema(
 
     contact: {
       type: String,
+    },
+
+    winningBid: {
+      user: { type: String },
+      biddingPrice: { type: Number },
     },
   },
   { timestamps: true }

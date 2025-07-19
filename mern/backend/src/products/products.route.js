@@ -54,7 +54,10 @@ router.get("/", async (req, res) => {
       filter.category = req.query.category;
     }
 
-    if (req.query.postedBy && mongoose.Types.ObjectId.isValid(req.query.postedBy)) {
+    if (
+      req.query.postedBy &&
+      mongoose.Types.ObjectId.isValid(req.query.postedBy)
+    ) {
       filter.postedBy = new mongoose.Types.ObjectId(req.query.postedBy);
     }
 
@@ -68,7 +71,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 // ✅ Get product by ID
 router.get("/:id", async (req, res) => {
@@ -167,7 +169,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
   }
 });
 
-// 🔒 Place a bid on pre-owned product
+// 🔒 Place a bid on pre-owned product (replace previous bid if exists)
 router.post("/place-bid/:id", verifyToken, async (req, res) => {
   try {
     const { biddingPrice } = req.body;
@@ -177,6 +179,7 @@ router.post("/place-bid/:id", verifyToken, async (req, res) => {
     if (product.category !== "pre-owned")
       return res.status(400).send({ message: "Not a pre-owned item" });
 
+    // Check if the auction has expired
     if (product.expiresAt && new Date() > new Date(product.expiresAt)) {
       return res.status(403).send({ message: "Auction expired" });
     }
@@ -185,11 +188,23 @@ router.post("/place-bid/:id", verifyToken, async (req, res) => {
       return res.status(400).send({ message: "Invalid bidding amount" });
     }
 
-    product.bids.push({
-      user: req.user._id.toString(), // or username/email if you prefer
-      biddingPrice,
-    });
+    // Find the existing bid of the user
+    const existingBidIndex = product.bids.findIndex(
+      (bid) => bid.user.toString() === req.user._id.toString()
+    );
 
+    if (existingBidIndex !== -1) {
+      // User already placed a bid, replace it with the new bid
+      product.bids[existingBidIndex].biddingPrice = biddingPrice;
+    } else {
+      // No previous bid, add a new one
+      product.bids.push({
+        user: req.user._id.toString(),
+        biddingPrice,
+      });
+    }
+
+    // Save the updated product with the new bid
     await product.save();
     res.status(200).send({ message: "Bid placed", product });
   } catch (error) {
@@ -198,8 +213,93 @@ router.post("/place-bid/:id", verifyToken, async (req, res) => {
   }
 });
 
+// 🔒 Remove a user's bid on a pre-owned product
+router.post("/remove-bid/:id", verifyToken, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
 
+    if (!product) return res.status(404).send({ message: "Product not found" });
+    if (product.category !== "pre-owned")
+      return res.status(400).send({ message: "Not a pre-owned item" });
 
+    // Check if the auction has expired
+    if (product.expiresAt && new Date() > new Date(product.expiresAt)) {
+      return res
+        .status(403)
+        .send({ message: "Auction expired, can't remove bid" });
+    }
 
+    // Find the index of the user's bid
+    const bidIndex = product.bids.findIndex(
+      (bid) => bid.user.toString() === req.user._id.toString()
+    );
+
+    if (bidIndex === -1) {
+      return res.status(404).send({ message: "Bid not found for this user" });
+    }
+
+    // Remove the bid
+    product.bids.splice(bidIndex, 1);
+
+    // Save the updated product
+    await product.save();
+
+    res.status(200).send({ message: "Bid removed successfully", product });
+  } catch (error) {
+    console.error("Error removing bid:", error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+// set winning bid after auction ends// PATCH /api/products/select-winner/:id
+router.patch("/select-winner/:id", verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const { winningBid } = req.body;
+
+  try {
+    const product = await Product.findById(id);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    // Check if requester is the owner
+    if (product.postedBy.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to select winner" });
+    }
+
+    // Save the winning bid
+    product.winningBid = winningBid;
+    await product.save();
+
+    res.status(200).json(product);
+  } catch (err) {
+    console.error("Error selecting winner:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// remove winning bid
+router.patch("/remove-winner/:id", verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    if (product.postedBy.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to modify this product" });
+    }
+
+    product.winningBid = undefined;
+    await product.save();
+
+    res.status(200).json(product);
+  } catch (err) {
+    console.error("Error removing winner:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 module.exports = router;

@@ -25,6 +25,8 @@ import AdminUserManagement from "../pages/AdminUserManagement.jsx"; // ✅ Impor
 import AdminProductManagement from "../pages/AdminProductManagement.jsx"; // ✅ Import
 import UserProductManagement from "../pages/UserProductManagement.jsx";
 import EditProduct from "../pages/EditProduct"; // ✅ Import
+import ManageBidsPage from "../pages/ManageBidsPage.jsx"; // ✅ Import if needed
+import MyBidsPage from "../pages/MyBidsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +57,8 @@ const router = createBrowserRouter([
       { path: "/admin/products", element: <AdminProductManagement /> }, // ✅ Add this line
       { path: "/dashboard/listings", element: <UserProductManagement /> }, // ✅ Add this line
       { path: "/edit-product/:id", element: <EditProduct /> }, // ✅ Add this line
+      { path: "/dashboard/bids/:id", element: <ManageBidsPage /> }, // ✅ Add this line
+      { path: "/dashboard/bids", element: <MyBidsPage /> }, // ✅ Add this line
     ],
   },
 ]);

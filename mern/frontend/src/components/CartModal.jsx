@@ -1,61 +1,131 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { updateQuantity } from "../redux/features/cart/cartSlice"; // adjust path if needed
-import { removeFromCart } from "../redux/features/cart/cartSlice";
+import React, { useEffect, useState } from "react";
+import { FaWindowClose, FaTrash, FaShoppingCart, FaPlusCircle, FaMinusCircle } from "react-icons/fa";
+import { getBaseURL } from "../utils/baseURL"; // Ensure this function returns the correct API URL
 
-import {
-  FaWindowClose,
-  FaPlus,
-  FaMinus,
-  FaTrash,
-  FaShoppingCart,
-} from "react-icons/fa";
-import OrderSummary from "./OrderSummery";
+const CartModal = ({ isOpen, onClose, cartRef }) => {
+  const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState(null);
 
-const CartModal = ({ products, isOpen, onClose, cartRef }) => {
-  const dispatch = useDispatch();
-
-  const handleQuantity = (type, id) => {
-    const payload = { type, id };
-    dispatch(updateQuantity(payload));
+  // Fetch logged-in user
+  const fetchUser = async () => {
+    try {
+      const res = await fetch(`${getBaseURL()}/api/auth/me`, {
+        credentials: "include", // Ensure the session or cookie is sent with the request
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data); // Set user data if the response is OK
+      } else {
+        alert("Failed to load user data. Please log in.");
+      }
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+      alert("⚠️ Error fetching user data.");
+    }
   };
 
-  const handleRemove = (e, id) => {
-    e.preventDefault();
-    dispatch(removeFromCart(id));
+  // Fetch user on mount
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  // Fetch cart items when modal opens and user is available
+  const fetchCartItems = async () => {
+    if (!user) return;
+
+    try {
+      const res = await fetch(`${getBaseURL()}/api/cart/${user._id}`); // Fetch cart items using user._id
+      const data = await res.json();
+
+      if (res.ok) {
+        setCartItems(data.items); // Update state with cart items
+      } else {
+        alert("Error fetching cart items.");
+      }
+    } catch (err) {
+      console.error("Error fetching cart items:", err);
+      alert("⚠️ Error fetching cart items.");
+    }
   };
+
+  console.log("User:", user); // Debugging line to check user data
+  console.log("Cart items:", cartItems); // Debugging line to check cart items
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (cartRef.current && !cartRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+    if (isOpen && user) {
+      fetchCartItems(); // Fetch cart items when modal opens and user is available
     }
+  }, [isOpen, user]);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen, cartRef, onClose]);
+  // Handle removing an item from the cart
+  const handleRemoveItem = async (productId) => {
+    try {
+      const res = await fetch(`/api/cart/remove/${productId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        // Optimistically update the cart state after removing the item
+        setCartItems((prevItems) =>
+          prevItems.filter((item) => item._id !== productId)
+        );
+      } else {
+        alert("Failed to remove item.");
+      }
+    } catch (err) {
+      console.error("Error removing item:", err);
+    }
+  };
+
+  // Handle quantity update
+  const handleQuantityChange = async (productId, action) => {
+    const updatedCartItems = cartItems.map((item) => {
+      if (item._id === productId) {
+        if (action === "increase") {
+          item.quantity += 1;
+        } else if (action === "decrease" && item.quantity > 1) {
+          item.quantity -= 1;
+        }
+      }
+      return item;
+    });
+
+    // Optimistically update the frontend
+    setCartItems(updatedCartItems);
+
+    // Send the updated cart to the backend
+    try {
+      const res = await fetch(`/api/update-cart/${user._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cartItems: updatedCartItems }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update cart");
+      }
+      // If everything is OK, the cart state is already updated
+    } catch (err) {
+      console.error("Error updating cart:", err);
+      alert("⚠️ Error updating cart.");
+      // Revert to previous cart state if the update fails
+      fetchCartItems();
+    }
+  };
 
   return (
     <div
       className={`fixed inset-0 z-[1000] bg-black/50 transition-opacity ${
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
-      style={{ transition: "opacity 300ms" }}
     >
       <div
         ref={cartRef}
         className={`fixed right-0 top-0 md:w-1/3 w-full bg-white h-full overflow-y-auto shadow-xl transition-transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        style={{
-          transition: "transform 300ms cubic-bezier(0.25,0.46,0.45,0.94)",
-        }}
       >
         <div className="p-6">
           {/* Header */}
@@ -72,67 +142,56 @@ const CartModal = ({ products, isOpen, onClose, cartRef }) => {
             </button>
           </div>
 
-          <div>
-            {products.length === 0 ? (
-              <div className="text-gray-500 text-center py-10">
-                Your cart is empty
-              </div>
-            ) : (
-              products.map((item, index) => (
+          {/* Cart Items */}
+          {cartItems.length > 0 ? (
+            <div className="space-y-4">
+              {cartItems.map((item) => (
                 <div
-                  key={index}
-                  className="flex flex-col md:flex-row md:items-center md:justify-between bg-gray-50 rounded-lg hover:shadow-md transition-shadow md:p-5 p-3 mb-4"
+                  key={item._id}
+                  className="flex justify-between items-center border-b pb-3"
                 >
-                  <div className="flex items-center w-full justify-between">
-                    {/* Product Info */}
-                    <div className="flex items-center">
-                      <img
-                        src={item.imageURL}
-                        alt={item.title}
-                        className="w-12 h-12 object-cover rounded mr-4"
-                      />
-                      <div>
-                        <h5 className="text-base font-semibold text-gray-800">
-                          {item.title}
-                        </h5>
-                        <p className="text-gray-600 text-sm">
-                          ৳{Number(item.price).toFixed(2)}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Quantity + Remove */}
-                    <div className="flex items-center mt-2 md:mt-0">
-                      <div className="flex items-center rounded px-2 py-1 bg-white">
+                  <div className="flex items-center">
+                    <img
+                      src={item.product.imageURL}
+                      alt={item.product.title}
+                      className="w-16 h-16 object-contain"
+                    />
+                    <div className="ml-4">
+                      <h5 className="font-semibold">{item.product.title}</h5>
+                      <p className="text-sm text-gray-500">৳{item.price}</p>
+                      <div className="flex items-center gap-2">
                         <button
-                          className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-700 hover:bg-blue-600 hover:text-white transition-colors"
-                          onClick={() => handleQuantity("decrement", item.id)}
+                          onClick={() =>
+                            handleQuantityChange(item._id, "decrease")
+                          }
+                          className="text-gray-500"
                         >
-                          <FaMinus size={12} />
+                          <FaMinusCircle />
                         </button>
-                        <span className="px-3 text-sm">{item.quantity}</span>
+                        <span>{item.quantity}</span>
                         <button
-                          className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-700 hover:bg-blue-600 hover:text-white transition-colors"
-                          onClick={() => handleQuantity("increment", item.id)}
+                          onClick={() =>
+                            handleQuantityChange(item._id, "increase")
+                          }
+                          className="text-gray-500"
                         >
-                          <FaPlus size={12} />
+                          <FaPlusCircle />
                         </button>
                       </div>
-
-                      <button className="ml-4 text-sm text-red-500 hover:text-red-700 transition-colors flex items-center gap-1"
-                        onClick={(e) => handleRemove(e, item.id)}
-                      >
-                        <FaTrash size={14} /> Remove
-                      </button>
                     </div>
                   </div>
+                  <button
+                    onClick={() => handleRemoveItem(item._id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <FaTrash />
+                  </button>
                 </div>
-              ))
-            )}
-          </div>
-
-          {/* Order Summary */}
-          {products.length > 0 && <OrderSummary />}
+              ))}
+            </div>
+          ) : (
+            <p>Your cart is empty.</p>
+          )}
         </div>
       </div>
     </div>
