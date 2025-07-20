@@ -30,6 +30,7 @@ import MyBidsPage from "../pages/MyBidsPage.jsx";
 import ChooseDeliveryPage from "../pages/ChooseDeliveryPage.jsx";
 import OrderConfirmationPage from "../pages/OrderConfirmationPage.jsx";
 import OrderSuccessPage from "../pages/OrderSuccessPage.jsx";
+import OrdersPage from "../pages/OrdersPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,7 @@ const router = createBrowserRouter([
       { path: "/choose-delivery", element: <ChooseDeliveryPage /> }, // ✅ Add this line
       { path: "/order-confirmation", element: <OrderConfirmationPage /> }, // ✅ Add this line
       { path: "/order-success", element: <OrderSuccessPage /> }, // ✅ Add this line
+      { path: "/orders", element: <OrdersPage /> },
     ],
   },
 ]);

@@ -8,7 +8,7 @@ const ChooseDeliveryPage = () => {
   // Retrieve the passed products and totalPrice from the previous page/modal
   const { products, orderedProducts, totalPrice } = location.state;
 
-  // console.log(orderedProducts, totalPrice);
+  console.log(orderedProducts, totalPrice);
 
   const handleDeliveryOption = (deliveryOption) => {
     // When the user selects the delivery option, navigate to the final order page or confirmation page

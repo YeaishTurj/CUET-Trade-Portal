@@ -30,14 +30,13 @@ const OrderConfirmationPage = () => {
   const deliveryCharge = deliveryOption === "home_delivery" ? 50 : 0;
   const finalTotalPrice = totalPrice + deliveryCharge;
 
-  console.log(
-    "details",
-    orderedProducts,
-    totalPrice,
-    deliveryOption,
-    deliveryCharge,
-    finalTotalPrice
-  );
+  //   console.log(
+  //     orderedProducts,
+  //     totalPrice,
+  //     deliveryOption,
+  //     deliveryCharge,
+  //     finalTotalPrice
+  //   );
 
   const [user, setUser] = useState(null);
 
@@ -65,30 +64,19 @@ const OrderConfirmationPage = () => {
   const handleConfirmOrder = () => {
     setIsSubmitting(true);
 
-    // Get the user's email from localStorage or Redux
-
-    const userEmail = user?.email || ""; // Fallback to empty string if email is unavailable
-    const userId = user?._id; // Extract the userId from the localStorage or wherever it is stored
-
-    // Set the delivery charge for home delivery
-    const finalTotalPrice = totalPrice + deliveryCharge;
-
-    fetch(`${getBaseURL()}/api/orders/create-order/${userId}`, {
+    fetch(`${getBaseURL()}/api/orders/create-order`, {
       method: "POST",
-      credentials: "include", // Include credentials (cookies)
+      credentials: "include", // Include cookies for authentication
       headers: {
-        "Content-Type": "application/json", // Set Content-Type header to JSON
+        "Content-Type": "application/json", // ✅ Add this!
       },
       body: JSON.stringify({
-        products,
-        totalPrice: finalTotalPrice, // Final price including delivery charge
+        products: orderedProducts,
         deliveryOption,
-        email: userEmail, // User email
-        amount: finalTotalPrice, // Send the final total price as amount
-        deliveryCharge, // Send delivery charge as part of the request
+        amount: finalTotalPrice,
         shippingAddress:
-          deliveryOption === "home_delivery" ? user?.address : "", // Optional, used for home delivery only
-        status: "pending", // Default order status
+          deliveryOption === "home_delivery" ? user?.address : "",
+        status: "processing",
       }),
     })
       .then((response) => response.json())
@@ -104,6 +92,16 @@ const OrderConfirmationPage = () => {
         setIsSubmitting(false);
       });
   };
+
+  // console.log(
+  //   JSON.stringify({
+  //     products: orderedProducts,
+  //     deliveryOption,
+  //     amount: finalTotalPrice, // Send the final total price as amount
+  //     shippingAddress: deliveryOption === "home_delivery" ? user?.address : "", // Optional, used for home delivery only
+  //     status: "processing", // Default order status
+  //   })
+  // );
 
   return (
     <div className="p-6">

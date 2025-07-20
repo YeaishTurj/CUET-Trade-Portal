@@ -3,52 +3,89 @@ const router = express.Router();
 const Order = require("./orders.model");
 const verifyToken = require("../middleware/verifyToken");
 
-router.post("/create-order/:id", async (req, res) => {
-  const { id } = req.params; // Extract the userId from the URL parameter
-  const {
-    products,
-    totalPrice,
-    deliveryOption,
-    email,
-    amount,
-    deliveryCharge,
-    shippingAddress,
-  } = req.body;
+router.post("/create-order", verifyToken, async (req, res) => {
+  const { products, deliveryOption, amount, shippingAddress, status } =
+    req.body;
+
+  // Get the authenticated user's ID from token
+  const userId = req.user._id;
 
   // Validate required fields
-  if (!email || !amount) {
-    return res.status(400).json({ message: "Email and Amount are required." });
+  if (!products || !Array.isArray(products) || products.length === 0) {
+    return res.status(400).json({ message: "Products are required." });
+  }
+
+  if (!amount) {
+    return res
+      .status(400)
+      .json({ message: "Total price and amount are required." });
   }
 
   try {
-    // Create a new order with the userId from the URL
+    // Create a new order
     const order = new Order({
-      userId: id, // Use the userId passed in the URL
+      userId,
       products,
-      totalPrice: totalPrice + deliveryCharge, // Total price including delivery charge
       deliveryOption,
-      email,
-      amount, // The final total price
-      deliveryCharge,
+      amount,
       shippingAddress:
-        deliveryOption === "home_delivery" ? shippingAddress : "", // Only set if home_delivery
-      status: "pending", // Default status
-      orderId: `ORDER-${Date.now()}`, // Generate a unique order ID
+        deliveryOption === "home_delivery" ? shippingAddress : "",
+      status,
+      orderId: `ORDER-${Date.now()}`,
     });
 
-    // Save the order to the database
     await order.save();
 
-    // Return the success response
     res.status(200).json({
       message: "Order created successfully",
       orderId: order.orderId,
     });
   } catch (err) {
-    // Return error response
-    console.error(err);
-    res.status(500).json({ message: "Error creating order", error: err.message });
+    console.error("Order creation error:", err);
+    res
+      .status(500)
+      .json({ message: "Error creating order", error: err.message });
   }
 });
+
+// Fetch all orders for the logged-in user
+router.get("/user-orders", verifyToken, async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const orders = await Order.find({ userId });
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: "No orders found." });
+    }
+
+    res.status(200).json({ orders });
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    res.status(500).json({ message: "Error fetching orders", error: err.message });
+  }
+});
+
+
+
+// Fetch all orders for the logged-in user
+router.get("/user-orders", verifyToken, async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    // Fetch orders belonging to the logged-in user
+    const orders = await Order.find({ userId });
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: "No orders found." });
+    }
+
+    res.status(200).json({ orders });
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    res.status(500).json({ message: "Error fetching orders", error: err.message });
+  }
+});
+
 
 module.exports = router;

@@ -104,14 +104,13 @@ const Navbar = () => {
   const adminDropDownMenus = [
     { label: "Dashboard", path: "/dashboard" },
     { label: "My Profile", path: "/dashboard/profile" },
-    { label: "Manage Products", path: "/dashboard/manage-products" },
-    { label: "All Orders", path: "/dashboard/manage-orders" },
+    { label: "My Orders", path: "/orders" },
   ];
 
   const userDropDownMenus = [
     { label: "Dashboard", path: "/dashboard/" },
     { label: "My Profile", path: "/dashboard/profile" },
-    { label: "My Orders", path: "/dashboard/orders" },
+    { label: "My Orders", path: "/orders" },
   ];
 
   const dropdownMenus =

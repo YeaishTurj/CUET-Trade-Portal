@@ -115,15 +115,26 @@ const ProductDetailsCard = () => {
   const navigate = useNavigate();
 
   const handleBuyNow = () => {
-    // Set the quantity to 1 (since it's Buy Now) and total price is the price of the product
     const quantity = 1;
     const totalPrice =
       (winner === currUserId ? winningPrice : product.price) * quantity;
 
-    // Navigate to the Choose Delivery page with product and total price
+    const orderedProduct = {
+      productId: product._id, // ✅ keep _id as string
+      quantity,
+      size: selectedSize,
+    };
+
+    console.log({
+      products: [orderedProduct],
+      orderedProducts: [orderedProduct],
+      totalPrice,
+    });
+
     navigate("/choose-delivery", {
       state: {
-        products: [{ ...product, quantity, size: selectedSize }],
+        products: [orderedProduct],
+        orderedProducts: [orderedProduct],
         totalPrice,
       },
     });
