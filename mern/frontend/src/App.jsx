@@ -32,6 +32,7 @@ function App() {
             ...item.product,
             quantity: item.quantity,
             price: item.price,
+            size: item.size,
             id: item.product._id,
           })
         );

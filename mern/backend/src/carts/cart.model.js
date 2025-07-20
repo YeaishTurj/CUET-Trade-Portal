@@ -1,4 +1,3 @@
-// models/cart.model.js
 const { Schema, model, Types } = require("mongoose");
 
 const cartSchema = new Schema(
@@ -9,6 +8,7 @@ const cartSchema = new Schema(
         product: { type: Types.ObjectId, ref: "Product", required: true },
         quantity: { type: Number, default: 1 },
         price: { type: Number, required: true }, // Added price field
+        size: { type: String, default: "regular" },
       },
     ],
   },

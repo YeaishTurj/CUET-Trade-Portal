@@ -90,8 +90,13 @@ const AuthModal = ({ type, onClose }) => {
       }).unwrap(); // ✅ Must await unwrap()
 
       // console.log("✅ Sign In Successful:", response);
-      const { token, user } = response;
+      localStorage.setItem("token", response.token);
+      document.cookie = `token=${response.token}; path=/; secure; HttpOnly`;
+      console.log("Token set in cookie:", response.token);
+
+      const { user } = response;
       dispatch(setUser({ user }));
+
       alert("Sign In Successful!");
 
       setSignInEmail("");
@@ -121,6 +126,9 @@ const AuthModal = ({ type, onClose }) => {
         email: signUpEmail,
         password: signUpPassword,
       }).unwrap(); // ✅ Get raw data
+
+      localStorage.setItem("token", response.token);
+      document.cookie = `token=${response.token}; path=/; secure; HttpOnly`;
 
       const { user } = response;
 

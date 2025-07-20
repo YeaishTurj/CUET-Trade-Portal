@@ -50,7 +50,6 @@ const Navbar = () => {
   const cartRef = useRef(null);
 
   const [authModalType, setAuthModalType] = useState(null); // 'signin' or 'signup'
-  
 
   useEffect(() => {
     const handleClickOutsideCart = (event) => {
@@ -175,7 +174,7 @@ const Navbar = () => {
             <ActionLink
               to="/become-seller"
               icon={<FiArchive className="mr-2" />}
-              text="Become Seller"
+              text="Become A Seller"
               className="hidden md:flex"
             />
 

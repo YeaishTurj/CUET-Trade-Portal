@@ -1,64 +1,53 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("./orders.model");
+const verifyToken = require("../middleware/verifyToken");
 
-// ✅ Place Order via Cash on Delivery
-router.post("/place-order", async (req, res) => {
+router.post("/create-order/:id", async (req, res) => {
+  const { id } = req.params; // Extract the userId from the URL parameter
+  const {
+    products,
+    totalPrice,
+    deliveryOption,
+    email,
+    amount,
+    deliveryCharge,
+    shippingAddress,
+  } = req.body;
+
+  // Validate required fields
+  if (!email || !amount) {
+    return res.status(400).json({ message: "Email and Amount are required." });
+  }
+
   try {
-    const {
-      userId,
-      products,
-      amount,
-      email,
-      shippingAddress,
-      deliveryOption, // "collect_from_seller" or "home_delivery"
-    } = req.body;
-
-    const deliveryCharge = deliveryOption === "home_delivery" ? 50 : 0;
-    const totalAmount = amount + deliveryCharge;
-
+    // Create a new order with the userId from the URL
     const order = new Order({
-      orderId: `COD-${Date.now()}`,
-      userId,
+      userId: id, // Use the userId passed in the URL
       products,
-      amount: totalAmount,
-      email,
-      shippingAddress,
+      totalPrice: totalPrice + deliveryCharge, // Total price including delivery charge
       deliveryOption,
+      email,
+      amount, // The final total price
       deliveryCharge,
-      status: "pending",
-      paymentStatus: "unpaid",
+      shippingAddress:
+        deliveryOption === "home_delivery" ? shippingAddress : "", // Only set if home_delivery
+      status: "pending", // Default status
+      orderId: `ORDER-${Date.now()}`, // Generate a unique order ID
     });
 
+    // Save the order to the database
     await order.save();
 
-    res.status(201).json({ message: "Order placed successfully", order });
-  } catch (error) {
-    console.error("Error placing COD order:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// (Optional) ✅ Get all orders for admin
-router.get("/", async (req, res) => {
-  try {
-    const orders = await Order.find().sort({ createdAt: -1 });
-    res.status(200).json(orders);
-  } catch (error) {
-    console.error("Error fetching orders:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// (Optional) ✅ Get orders by user ID
-router.get("/user/:userId", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
-    res.status(200).json(orders);
-  } catch (error) {
-    console.error("Error fetching user orders:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    // Return the success response
+    res.status(200).json({
+      message: "Order created successfully",
+      orderId: order.orderId,
+    });
+  } catch (err) {
+    // Return error response
+    console.error(err);
+    res.status(500).json({ message: "Error creating order", error: err.message });
   }
 });
 

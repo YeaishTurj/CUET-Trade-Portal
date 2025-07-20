@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateQuantity } from "../redux/features/cart/cartSlice"; // adjust path if needed
+import { updateQuantity } from "../redux/features/cart/cartSlice";
 import { removeFromCart } from "../redux/features/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 import {
   FaWindowClose,
@@ -41,6 +42,16 @@ const CartModal = ({ products, isOpen, onClose, cartRef }) => {
     };
   }, [isOpen, cartRef, onClose]);
 
+  // Assuming 'products' is an array of items from the cart (from Redux state)
+
+  const orderedProducts = products.map((item) => ({
+    productId: item._id || item.id, // use _id if populated, fallback to id
+    quantity: item.quantity,
+    size: item.size || "regular", // fallback to "regular" if size missing
+  }));
+
+  console.log(orderedProducts);
+
   return (
     <div
       className={`fixed inset-0 z-[1000] bg-black/50 transition-opacity ${
@@ -71,7 +82,6 @@ const CartModal = ({ products, isOpen, onClose, cartRef }) => {
               <FaWindowClose />
             </button>
           </div>
-
           <div>
             {products.length === 0 ? (
               <div className="text-gray-500 text-center py-10">
@@ -97,6 +107,9 @@ const CartModal = ({ products, isOpen, onClose, cartRef }) => {
                         </h5>
                         <p className="text-gray-600 text-sm">
                           ৳{Number(item.price).toFixed(2)}
+                          {item.category === "fashion"
+                            ? ", Size: " + item.size
+                            : ""}
                         </p>
                       </div>
                     </div>
@@ -133,7 +146,7 @@ const CartModal = ({ products, isOpen, onClose, cartRef }) => {
           </div>
 
           {/* Order Summary */}
-          {products.length > 0 && <OrderSummary />}
+          {products.length > 0 && <OrderSummary products={products} orderedProducts={orderedProducts} />}
         </div>
       </div>
     </div>

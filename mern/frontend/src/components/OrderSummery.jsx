@@ -9,10 +9,27 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 import { clearCart } from "../redux/features/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
-const OrderSummary = () => {
+const OrderSummary = ({ products, orderedProducts }) => {
   const dispatch = useDispatch();
   const { selectedItems, totalPrice } = useSelector((store) => store.cart);
+
+  console.log("OrderSummary products:", orderedProducts);
+
+  const navigate = useNavigate();
+
+  // This function will handle the "Proceed" button click
+  const handleProceedToDelivery = () => {
+    const totalPrice = products.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
+    // Pass cart products, quantities, and the total price to the next page/modal
+    navigate("/choose-delivery", {
+      state: { products, orderedProducts, totalPrice }, // Pass cart products and total price to the next page
+    });
+  };
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -42,16 +59,16 @@ const OrderSummary = () => {
             e.stopPropagation();
             handleClearCart();
           }}
-          className="w-full md:w-1/2 bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition flex items-center justify-center gap-2"
+          className="w-full md:w-1/2 bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition flex items-center justify-center gap-2 mouse-pointer"
         >
           <FaTrashAlt /> Clear Cart
         </button>
-        <Link
-          to="/checkout"
-          className="w-full md:w-1/2 text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2"
+        <button
+          onClick={handleProceedToDelivery}
+          className="w-full md:w-1/2 text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2 mouse-pointer"
         >
           Proceed <FaArrowRight />
-        </Link>
+        </button>
       </div>
     </div>
   );

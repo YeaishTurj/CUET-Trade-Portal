@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+// cash on delivery order schema
+
 const orderSchema = new mongoose.Schema(
   {
     orderId: {
@@ -26,52 +28,33 @@ const orderSchema = new mongoose.Schema(
           required: true,
           min: 1,
         },
+        size: {
+          type: String,
+          required: true,
+          default: "regular",
+        },
       },
     ],
 
     amount: {
       type: Number,
       required: true,
+      // if deliveryOption is "home_delivery", there will be an additional delivery charge 50 tk
     },
 
     deliveryOption: {
-      type: String,
-      enum: ["home_delivery", "collect_from_seller"],
-      required: true,
-    },
-
-    deliveryCharge: {
-      type: Number,
-      default: 0,
-    },
-
-    email: {
       type: String,
       required: true,
     },
 
     shippingAddress: {
-      street: { type: String, default: "" },
-      city: { type: String, default: "" },
-      postalCode: { type: String, default: "" },
-      country: { type: String, default: "Bangladesh" },
+      // Optional, can be used for home delivery
+      // automatically populated if deliveryOption is "home_delivery"
+      // from user.model.js ->   address: {type: String,default: "",},
     },
-
     status: {
       type: String,
-      enum: ["pending", "processing", "shipped", "completed", "cancelled"],
-      default: "pending",
-    },
-
-    paymentStatus: {
-      type: String,
-      enum: ["unpaid", "paid", "failed", "refunded"],
-      default: "unpaid",
-    },
-
-    transactionId: {
-      type: String,
-      default: "",
+      default: "processing",
     },
   },
   { timestamps: true }

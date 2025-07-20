@@ -4,6 +4,7 @@ import { addToCart } from "../redux/features/cart/cartSlice";
 import { useGetSignedInUserQuery } from "../redux/features/auth/authApi";
 import { getBaseURL } from "../utils/baseURL";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetailsCard = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const ProductDetailsCard = () => {
   const [isWinner, setIsWinner] = useState(false);
   const [winner, setWinner] = useState(null);
   const [winningPrice, setWinningPrice] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("regular");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -94,6 +96,7 @@ const ProductDetailsCard = () => {
           productId: product._id,
           quantity: 1,
           price: price,
+          size: selectedSize,
         }), // Passing price along with productId and quantity
       });
       const data = await res.json();
@@ -107,6 +110,23 @@ const ProductDetailsCard = () => {
       console.error("Failed to add to cart:", err);
       alert("⚠️ Network error.");
     }
+  };
+
+  const navigate = useNavigate();
+
+  const handleBuyNow = () => {
+    // Set the quantity to 1 (since it's Buy Now) and total price is the price of the product
+    const quantity = 1;
+    const totalPrice =
+      (winner === currUserId ? winningPrice : product.price) * quantity;
+
+    // Navigate to the Choose Delivery page with product and total price
+    navigate("/choose-delivery", {
+      state: {
+        products: [{ ...product, quantity, size: selectedSize }],
+        totalPrice,
+      },
+    });
   };
 
   const handlePlaceBid = async () => {
@@ -151,8 +171,7 @@ const ProductDetailsCard = () => {
   const isLostFound = ["lost", "found"].includes(category);
 
   const currUserId = user?._id || "";
-
-  // console.log(winner, isWinner, winningPrice, user?._id);
+  // console.log("Selected Size:", selectedSize);
 
   return (
     <section className="py-12 min-h-screen bg-gray-50">
@@ -187,7 +206,7 @@ const ProductDetailsCard = () => {
                   </div>
                 )}
 
-                {!isWinner && (
+                {!isWinner && winner === currUserId && (
                   <div className="text-sm font-semibold text-gray-600 mb-2">
                     Highest Bid: ৳
                     {winningPrice ? winningPrice.toLocaleString() : "N/A"}
@@ -211,7 +230,10 @@ const ProductDetailsCard = () => {
                       </span>
                     )}
                   </button>
-                  <button className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1">
+                  <button
+                    onClick={handleBuyNow}
+                    className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition duration-200 flex-1"
+                  >
                     Buy Now
                     {isWinner && (
                       <span className="ml-2 text-sm text-yellow-300">
@@ -316,23 +338,37 @@ const ProductDetailsCard = () => {
               </div>
             )}
 
-            {product.availableSizes?.length > 0 && (
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                  Available Sizes
-                </h2>
-                <div className="flex flex-wrap gap-3">
-                  {product.availableSizes.map((size) => (
-                    <span
-                      key={size}
-                      className="px-3 py-1 border rounded-full bg-gray-100 text-gray-800 text-sm"
-                    >
-                      {size}
-                    </span>
-                  ))}
+            {product.availableSizes?.length > 0 &&
+              product.category === "fashion" && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-3">
+                    Available Sizes
+                  </h2>
+                  <div className="flex flex-wrap gap-3">
+                    {product.availableSizes.map((size) => (
+                      <label
+                        key={size}
+                        className={`cursor-pointer px-3 py-1 border rounded-full text-sm transition-all
+            ${
+              selectedSize === size
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-gray-100 text-gray-800"
+            }`}
+                      >
+                        <input
+                          type="radio"
+                          name="size"
+                          value={size}
+                          className="hidden"
+                          onChange={() => setSelectedSize(size)}
+                          checked={selectedSize === size}
+                        />
+                        {size}
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             <div className="border-t pt-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-3">
