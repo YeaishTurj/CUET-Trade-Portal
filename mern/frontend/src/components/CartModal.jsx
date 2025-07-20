@@ -47,7 +47,10 @@ const CartModal = ({ products, isOpen, onClose, cartRef }) => {
   const orderedProducts = products.map((item) => ({
     productId: item._id || item.id, // use _id if populated, fallback to id
     quantity: item.quantity,
-    size: item.size || "regular", // fallback to "regular" if size missing
+    size: item.size || "N/A", // fallback to "regular" if size missing
+    title: item.title,
+    imageURL: item.imageURL,
+    sellerId: item.postedBy,
   }));
 
   console.log(orderedProducts);
@@ -146,7 +149,12 @@ const CartModal = ({ products, isOpen, onClose, cartRef }) => {
           </div>
 
           {/* Order Summary */}
-          {products.length > 0 && <OrderSummary products={products} orderedProducts={orderedProducts} />}
+          {products.length > 0 && (
+            <OrderSummary
+              products={products}
+              orderedProducts={orderedProducts}
+            />
+          )}
         </div>
       </div>
     </div>

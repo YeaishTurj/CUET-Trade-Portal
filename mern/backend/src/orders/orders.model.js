@@ -31,7 +31,16 @@ const orderSchema = new mongoose.Schema(
         size: {
           type: String,
           required: true,
-          default: "regular",
+          default: "N/A",
+        },
+        title: {
+          type: String,
+        },
+        imageURL: {
+          type: String,
+        },
+        sellerId: {
+          type: String,
         },
       },
     ],

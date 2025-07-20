@@ -116,6 +116,18 @@ const Dashboard = () => {
               </p>
             </div>
           </Link>
+
+          {/* Manage My Orders */}
+          <Link to="/dashboard/orders">
+            <div className="p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition">
+              <h2 className="text-xl font-semibold mb-2">
+                📦 Manage All Orders
+              </h2>
+              <p className="text-gray-600">
+                View and manage orders (as a seller).
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

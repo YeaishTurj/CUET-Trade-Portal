@@ -15,23 +15,7 @@ const OrdersPage = () => {
       });
       const data = await res.json();
       if (res.ok) {
-        // Populate the products with their details like title and imageURL
-        const populatedOrders = await Promise.all(
-          data.orders.map(async (order) => {
-            // Fetch product details for each product in the order
-            const productDetails = await Promise.all(
-              order.products.map(async (product) => {
-                const productRes = await fetch(
-                  `${getBaseURL()}/api/products/${product.productId}`
-                );
-                const productData = await productRes.json();
-                return productData;
-              })
-            );
-            return { ...order, products: productDetails };
-          })
-        );
-        setOrders(populatedOrders); // Set fetched orders with product details
+        setOrders(data.orders); // Set fetched orders
       } else {
         alert("Failed to fetch orders.");
       }
@@ -43,26 +27,21 @@ const OrdersPage = () => {
     }
   };
 
-  console.log(orders);
-
   // Cancel an order
   const cancelOrder = async (orderId) => {
     try {
-      const res = await fetch(
-        `${getBaseURL()}/api/orders/cancel-order/${orderId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`${getBaseURL()}/api/orders/cancel-order/${orderId}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await res.json();
       if (res.ok) {
         alert("Order canceled successfully.");
-        setOrders(orders.filter((order) => order.orderId !== orderId)); // Remove the canceled order from the list
+        setOrders(orders.filter(order => order.orderId !== orderId)); // Remove the canceled order from the list
       } else {
         alert(data.message || "Failed to cancel order.");
       }
@@ -94,13 +73,14 @@ const OrdersPage = () => {
               {order.products.map((product, productIndex) => (
                 <div key={productIndex} className="flex items-center mb-2">
                   <img
-                    src={product.imageURL}
+                    src={product.imageURL || "/path/to/fallback-image.jpg"} // Fallback image if imageURL is missing
                     alt={product.title}
                     className="w-16 h-16 object-cover mr-4"
                   />
                   <div>
                     <p>{product.title}</p>
-                    <p>Quantity: {order.products[productIndex].quantity}</p>
+                    <p>Quantity: {product.quantity}</p>
+                    <p>Size: {product.size}</p>
                   </div>
                 </div>
               ))}

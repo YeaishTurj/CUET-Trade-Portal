@@ -123,13 +123,16 @@ const ProductDetailsCard = () => {
       productId: product._id, // ✅ keep _id as string
       quantity,
       size: selectedSize,
+      title: product.title,
+      imageURL: product.imageURL,
+      sellerId: product.postedBy,
     };
 
-    console.log({
-      products: [orderedProduct],
-      orderedProducts: [orderedProduct],
-      totalPrice,
-    });
+    // console.log({
+    //   products: [orderedProduct],
+    //   orderedProducts: [orderedProduct],
+    //   totalPrice,
+    // });
 
     navigate("/choose-delivery", {
       state: {
