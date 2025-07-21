@@ -124,7 +124,7 @@ router.get("/me", verifyToken, async (req, res) => {
 
     res.status(200).send(user);
   } catch (error) {
-    console.error("Error fetching profile:", error);
+    console.log("error fetching profile:", error);
     res.status(500).send({ message: "Internal server error" });
   }
 });
@@ -154,7 +154,7 @@ router.get("/users", async (req, res) => {
       .sort({ createdAt: -1 });
     res.status(200).send(users);
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.log("error fetching users:", error);
     res.status(500).send({ message: "Internal server error" });
   }
 });
@@ -229,7 +229,7 @@ router.get("/users/:id", async (req, res) => {
     }
     res.status(200).send(user);
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.log("error fetching user:", error);
     res.status(500).send({ message: "Internal server error" });
   }
 });
@@ -261,7 +261,7 @@ router.get("/stats", verifyToken, async (req, res) => {
       lostFoundPosts,
     });
   } catch (error) {
-    console.error("Error fetching stats:", error);
+    console.log("error fetching stats:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -285,7 +285,7 @@ router.get("/my-bids/:id", verifyToken, async (req, res) => {
 
     res.status(200).json(myBids);
   } catch (error) {
-    console.error("Error fetching my bids:", error);
+    console.log("error fetching my bids:", error);
     res.status(500).json({ message: "Failed to load your bids" });
   }
 });

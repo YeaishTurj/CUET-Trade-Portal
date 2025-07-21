@@ -7,6 +7,8 @@ const Dashboard = () => {
   const { data: user, isLoading, isError } = useGetSignedInUserQuery();
   const [stats, setStats] = useState(null);
 
+  const isAdmin = user?.role === "admin";
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -24,123 +26,178 @@ const Dashboard = () => {
       }
     };
 
-    if (user?.role === "admin") {
-      fetchStats();
-    }
+    if (isAdmin) fetchStats();
   }, [user]);
 
-  if (isLoading) return <p className="p-10">Loading your dashboard...</p>;
-  if (isError || !user)
-    return <p className="p-10 text-red-500">Error loading user data.</p>;
-
-  const isAdmin = user?.role === "admin";
-
-  return (
-    <div className="min-h-screen px-6 py-12 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        {/* Welcome Message */}
-        <h1 className="text-4xl font-extrabold text-blue-800 text-center">
-          👋 Welcome, {isAdmin ? "Admin" : user.fullName}
-        </h1>
-        <p className="text-center text-gray-600 mt-2">
-          Here’s your quick dashboard overview
-        </p>
-
-        {/* Admin Stats Section */}
-        {isAdmin && stats && (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
-              <StatCard label="Total Users" value={stats.totalUsers} />
-              <StatCard label="Products Listed" value={stats.totalProducts} />
-              <StatCard label="Active Bids" value={stats.totalBids} />
-              <StatCard label="Lost/Found Posts" value={stats.lostFoundPosts} />
-            </div>
-
-            {/* Admin Actions as Cards */}
-            <h2 className="text-center text-lg font-semibold mt-12 text-gray-800">
-              Admin Tools
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-8 mt-4">
-              <Link to="/admin/users">
-                <div className="p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition">
-                  <h2 className="text-xl font-semibold mb-2">
-                    👥 Manage All Users
-                  </h2>
-                  <p className="text-gray-600">
-                    View all users, promote roles, deactivate accounts, or reset
-                    passwords.
-                  </p>
-                </div>
-              </Link>
-
-              <Link to="/admin/products">
-                <div className="p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition">
-                  <h2 className="text-xl font-semibold mb-2">
-                    📦 Manage All Products
-                  </h2>
-                  <p className="text-gray-600">
-                    Approve or remove listed products, flag inappropriate
-                    content.
-                  </p>
-                </div>
-              </Link>
-            </div>
-          </>
-        )}
-
-        {/* Universal User Actions */}
-        <h2 className="text-center text-lg font-semibold mt-12 text-gray-800">
-          My Tools
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-8 mt-4">
-          <Link to="/dashboard/listings">
-            <div className="p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition">
-              <h2 className="text-xl font-semibold mb-2">
-                🧾 Manage Uploaded Products
-              </h2>
-              <p className="text-gray-600">
-                View, edit, or delete your products. For pre-owned items, choose
-                a bid winner.
-              </p>
-            </div>
-          </Link>
-
-          <Link to="/dashboard/bids">
-            <div className="p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition">
-              <h2 className="text-xl font-semibold mb-2">📈 My Bids</h2>
-              <p className="text-gray-600">
-                Track your bids, see if you've won, and proceed to purchase if
-                applicable.
-              </p>
-            </div>
-          </Link>
-
-          {/* Manage My Orders */}
-          <Link to="/dashboard/orders">
-            <div className="p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition">
-              <h2 className="text-xl font-semibold mb-2">
-                📦 Manage All Orders
-              </h2>
-              <p className="text-gray-600">
-                View and manage orders (as a seller).
-              </p>
-            </div>
-          </Link>
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-pulse text-xl text-gray-600">
+          Loading your dashboard...
         </div>
       </div>
-    </div>
+    );
+  if (isError || !user)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-red-500 text-lg">Failed to load dashboard.</div>
+      </div>
+    );
+
+  return (
+    <section className="py-12 min-h-screen ">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {isAdmin ? (
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                Admin Dashboard
+              </span>
+            ) : (
+              <>
+                Welcome back,{" "}
+                <span className="text-blue-600">{user.fullName}</span>
+              </>
+            )}
+          </h1>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            {isAdmin
+              ? "Overview of platform performance and admin tools"
+              : "Everything you need to manage your account in one place"}
+          </p>
+        </div>
+
+        {/* Admin Stats */}
+        {isAdmin && stats && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+              Platform Statistics
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard
+                label="Total Users"
+                value={stats.totalUsers}
+                icon="👥"
+                color="from-purple-500 to-indigo-500"
+              />
+              <StatCard
+                label="Products Listed"
+                value={stats.totalProducts}
+                icon="📦"
+                color="from-blue-500 to-teal-500"
+              />
+              <StatCard
+                label="Active Bids"
+                value={stats.totalBids}
+                icon="💰"
+                color="from-green-500 to-emerald-500"
+              />
+              <StatCard
+                label="Lost/Found Posts"
+                value={stats.lostFoundPosts}
+                icon="🔍"
+                color="from-amber-500 to-orange-500"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Admin Tools */}
+        {isAdmin && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+              Admin Tools
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <DashboardCard
+                to="/admin/users"
+                title="Manage Users"
+                description="View all users, manage roles, and account status"
+                icon="👥"
+                gradient="bg-gradient-to-br from-purple-50 to-indigo-50"
+              />
+              <DashboardCard
+                to="/admin/products"
+                title="Manage Products"
+                description="Approve or remove listed products"
+                icon="📦"
+                gradient="bg-gradient-to-br from-blue-50 to-teal-50"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* User Tools */}
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            My Dashboard
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <DashboardCard
+              to="/dashboard/listings"
+              title="My Listings"
+              description="Manage your uploaded products"
+              icon="🧾"
+              gradient="bg-gradient-to-br from-green-50 to-emerald-50"
+            />
+            <DashboardCard
+              to="/dashboard/bids"
+              title="My Bids"
+              description="Track your bids and purchases"
+              icon="📈"
+              gradient="bg-gradient-to-br from-amber-50 to-orange-50"
+            />
+            <DashboardCard
+              to="/dashboard/orders"
+              title="Manage All Orders"
+              description="View and manage your orders"
+              icon="🛒"
+              gradient="bg-gradient-to-br from-red-50 to-pink-50"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
-const StatCard = ({ label, value }) => (
-  <div className="bg-white text-center rounded-lg shadow-md p-6">
-    <p className="text-gray-500 text-sm mb-2">{label}</p>
-    <h3 className="text-3xl font-extrabold text-blue-700">
-      {value.toLocaleString()}
-    </h3>
+const StatCard = ({ label, value, icon, color }) => (
+  <div
+    className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all hover:shadow-md hover:-translate-y-1`}
+  >
+    <div className="p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-500">{label}</p>
+          <h3 className="text-3xl font-bold text-gray-900 mt-1">
+            {value.toLocaleString()}
+          </h3>
+        </div>
+        <div
+          className={`text-3xl bg-gradient-to-r ${color} rounded-lg p-3 text-white`}
+        >
+          {icon}
+        </div>
+      </div>
+    </div>
   </div>
+);
+
+const DashboardCard = ({ to, title, description, icon, gradient }) => (
+  <Link to={to} className="group">
+    <div
+      className={`${gradient} rounded-xl p-6 h-full border border-gray-100 transition-all group-hover:shadow-md group-hover:-translate-y-1`}
+    >
+      <div className="flex items-start">
+        <div className="text-3xl mr-4">{icon}</div>
+        <div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">{title}</h2>
+          <p className="text-gray-600">{description}</p>
+        </div>
+      </div>
+    </div>
+  </Link>
 );
 
 export default Dashboard;

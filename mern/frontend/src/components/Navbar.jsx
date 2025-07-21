@@ -18,6 +18,7 @@ import avatarImg from "../assets/avatar.jpg";
 import { useSignOutUserMutation } from "../redux/features/auth/authApi";
 import { signOut } from "../redux/features/auth/authSlice";
 import { clearCart } from "../redux/features/cart/cartSlice";
+import { getBaseURL } from "../utils/baseURL";
 
 const navLinks = [
   { to: "/", text: "Home" },
@@ -29,7 +30,6 @@ const navLinks = [
 const dropdownLinks = [
   { to: "/profile", text: "My Profile", icon: <FiUser className="mr-3" /> },
   { to: "/orders", text: "Orders", icon: <FiArchive className="mr-3" /> },
-  { to: "/wishlist", text: "Wishlist", icon: <FiHeart className="mr-3" /> },
 ];
 
 const Navbar = () => {
@@ -43,13 +43,69 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
-
-  // console.log("User in Navbar:", user);
-
   const cartRef = useRef(null);
 
   const [authModalType, setAuthModalType] = useState(null); // 'signin' or 'signup'
+
+  const [user, setUser] = useState(null); // State to store user data
+
+  const [loadingUser, setLoadingUser] = useState(true);
+
+  // const handleReload = () => {
+  //   sessionStorage.setItem("reloaded", "true");
+  //   window.location.reload();
+  //   sessionStorage.removeItem("reloaded");
+  // };
+
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("reloaded")) {
+  //     sessionStorage.removeItem("reloaded");
+  //   }
+  // }, []);
+
+  // Fetch the logged-in user's data
+  const fetchUser = async () => {
+    try {
+      const res = await fetch(`${getBaseURL()}/api/auth/me`, {
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data);
+      } else {
+        console.log("Failed to load user data. Please log in.");
+      }
+    } catch (err) {
+      console.log("error fetching user data:", err);
+    } finally {
+      setLoadingUser(false); // Always end loading
+    }
+  };
+
+  useEffect(() => {
+    fetchUser(); // Fetch user data on component mount
+  }, []);
+
+  useEffect(() => {
+    if (!loadingUser) {
+      if (!user) {
+        setAuthModalType("signin");
+      } else {
+        setAuthModalType(null);
+      }
+    }
+  }, [user, loadingUser]);
+
+  // useEffect(() => {
+  //   if (!loadingUser) {
+  //     if (!user) {
+  //       setAuthModalType("signin");
+  //     } else {
+  //       setAuthModalType(null);
+  //       window.location.reload(); // 🔁 Reload after login/signup
+  //     }
+  //   }
+  // }, [user, loadingUser]);
 
   useEffect(() => {
     const handleClickOutsideCart = (event) => {
@@ -127,6 +183,7 @@ const Navbar = () => {
       dispatch(clearCart());
       dispatch(signOut());
       navigate("/");
+      window.location.reload(); // Reload to clear user state
     } catch (error) {
       console.error("Failed to sign out:", error);
     }
@@ -184,6 +241,8 @@ const Navbar = () => {
               <FiShoppingCart className="mr-2 text-xl" />
               <span className="hidden md:inline">Cart</span>
             </button>
+
+            {/* <button onClick={handleReload}>🔄 Refresh Page</button>; */}
 
             {/* Sign In Dropdown */}
             <div className="relative" ref={dropdownRef}>

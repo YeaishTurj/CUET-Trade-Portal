@@ -67,7 +67,7 @@ router.get("/", async (req, res) => {
 
     res.status(200).json(products);
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.log("error fetching products:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -82,7 +82,7 @@ router.get("/:id", async (req, res) => {
     if (!product) return res.status(404).send({ message: "Product not found" });
     res.status(200).send(product);
   } catch (error) {
-    console.error("Error fetching product:", error);
+    console.log("error fetching product:", error);
     res.status(500).send({ message: "Internal server error" });
   }
 });

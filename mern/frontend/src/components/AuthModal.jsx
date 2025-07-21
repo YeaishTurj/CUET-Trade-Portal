@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaWindowClose } from "react-icons/fa";
+import { FaWindowClose, FaEye, FaEyeSlash } from "react-icons/fa";
 import "boxicons/css/boxicons.min.css";
 import "./AuthModal.css";
 import {
@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/auth/authSlice";
 import { addToCart } from "../redux/features/cart/cartSlice"; // ✅ Don't forget this
 import { getBaseURL } from "../utils/baseURL"; // ✅ Adjust path if needed
+import { useNavigate } from "react-router-dom";
 
 const AuthModal = ({ type, onClose }) => {
   const [isRegister, setIsRegister] = useState(type === "signup");
@@ -36,11 +37,13 @@ const AuthModal = ({ type, onClose }) => {
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [signInMessage, setSignInMessage] = useState("");
+  const [showSignInPassword, setShowSignInPassword] = useState(false);
 
   const [signUpFullName, setSignUpFullName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
   const [signUpMessage, setSignUpMessage] = useState("");
+  const [showSignUpPassword, setShowSignUpPassword] = useState(false);
 
   const cuetEmailRegex =
     /^(u(0[1-9]|[1-9][0-9])(0[1-9]|1[0-2])(0[0-9]{2}|1[0-7][0-9]|180)@student\.cuet\.ac\.bd|.+@cuet\.ac\.bd)$/;
@@ -75,6 +78,8 @@ const AuthModal = ({ type, onClose }) => {
     }
   };
 
+  const navigate = useNavigate();
+
   const handleSignIn = async (e) => {
     e.preventDefault();
 
@@ -89,7 +94,6 @@ const AuthModal = ({ type, onClose }) => {
         password: signInPassword,
       }).unwrap(); // ✅ Must await unwrap()
 
-      // console.log("✅ Sign In Successful:", response);
       localStorage.setItem("token", response.token);
       document.cookie = `token=${response.token}; path=/; secure; HttpOnly`;
       console.log("Token set in cookie:", response.token);
@@ -102,6 +106,9 @@ const AuthModal = ({ type, onClose }) => {
       setSignInEmail("");
       setSignInPassword("");
       setSignInMessage("");
+
+      navigate("/"); // Redirect to home page
+      window.location.reload(); // Reload to clear user state
 
       onClose(); // Close modal on success
 
@@ -140,6 +147,10 @@ const AuthModal = ({ type, onClose }) => {
       setSignUpEmail("");
       setSignUpPassword("");
       setSignUpMessage("");
+
+      navigate("/");
+
+      window.location.reload(); // Reload to clear user state
 
       onClose(); // Close modal
     } catch (error) {
@@ -193,17 +204,31 @@ const AuthModal = ({ type, onClose }) => {
               </div>
 
               <div
-                className="input-box animation"
+                className="input-box animation relative"
                 style={{ "--D": 2, "--S": 23 }}
               >
                 <input
-                  type="password"
+                  type={showSignInPassword ? "text" : "password"}
                   required
                   value={signInPassword}
                   onChange={(e) => setSignInPassword(e.target.value)}
                 />
                 <label>Password</label>
-                <i className="bx bxs-lock" />
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowSignInPassword(!showSignInPassword)}
+                >
+                  {showSignInPassword ? (
+                    <i>
+                      <FaEyeSlash />
+                    </i>
+                  ) : (
+                    <i>
+                      <FaEye />
+                    </i>
+                  )}
+                </button>
               </div>
 
               <div
@@ -293,17 +318,31 @@ const AuthModal = ({ type, onClose }) => {
               </div>
 
               <div
-                className="input-box animation"
+                className="input-box animation relative"
                 style={{ "--li": 19, "--S": 2 }}
               >
                 <input
-                  type="password"
+                  type={showSignUpPassword ? "text" : "password"}
                   required
                   value={signUpPassword}
                   onChange={(e) => setSignUpPassword(e.target.value)}
                 />
                 <label>Password</label>
-                <i className="bx bxs-lock" />
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowSignUpPassword(!showSignUpPassword)}
+                >
+                  {showSignUpPassword ? (
+                    <i>
+                      <FaEyeSlash />
+                    </i>
+                  ) : (
+                    <i>
+                      <FaEye />
+                    </i>
+                  )}
+                </button>
               </div>
 
               <div

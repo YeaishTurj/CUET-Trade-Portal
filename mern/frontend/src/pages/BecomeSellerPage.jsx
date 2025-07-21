@@ -11,19 +11,19 @@ const iconSrcs = {
 };
 
 const headings = {
-  fashion:    "👗 Sell New Fashion",  
-  electronics: "💻 Sell New Tech",  
-  digital:     "🔗 Sell  Subscriptions",  // Changed from "CUET Subs"
-  others:      "📦 Sell Other Items",  
-  preowned:    "🔄 Sell Pre-Owned",  
+  fashion: "👗 Sell New Fashion",
+  electronics: "💻 Sell New Tech",
+  digital: "🔗 Subscriptions", // Changed from "CUET Subs"
+  others: "📦 Sell Other Items",
+  preowned: "🔄 Sell Pre-Owned",
 };
 
 const descriptions = {
-  fashion:    "List brand-new clothes with original tags.",  
-  electronics: "Sell sealed gadgets at lowest prices.",  
-  digital:    "Sell Netflix, YouTube, GPT accounts.",  // Explicit examples
-  others:     "Post items not in other categories.",  
-  preowned:   "Sell used items (mention condition).",  
+  fashion: "List brand-new clothes with original tags.",
+  electronics: "Sell sealed gadgets at lowest prices.",
+  digital: "Sell Netflix, YouTube, GPT accounts.", // Explicit examples
+  others: "Post items not in other categories.",
+  preowned: "Sell used items (mention condition).",
 };
 
 const BecomeSellerPage = () => {

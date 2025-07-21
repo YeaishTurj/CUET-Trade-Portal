@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom"; // 🆕 Added useLocation
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -12,6 +12,8 @@ import { signOut, setUser } from "./redux/features/auth/authSlice";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation(); // 🆕 Track route changes
+
   const { data: user, isError, error } = useGetSignedInUserQuery();
 
   const fetchUserCart = async () => {
@@ -57,6 +59,17 @@ function App() {
       console.warn("🔒 Token expired or invalid — user signed out");
     }
   }, [isError, error, dispatch]);
+
+  // 🔁 Refresh on route change — only once
+  useEffect(() => {
+    const alreadyReloaded = sessionStorage.getItem("reloaded");
+    if (!alreadyReloaded) {
+      sessionStorage.setItem("reloaded", "true");
+      window.location.reload();
+    } else {
+      sessionStorage.removeItem("reloaded");
+    }
+  }, [location.pathname]);
 
   return (
     <div className="bg-gradient-to-r from-blue-50 via-indigo-100 to-blue-50">

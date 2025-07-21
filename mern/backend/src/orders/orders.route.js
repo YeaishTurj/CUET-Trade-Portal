@@ -61,7 +61,7 @@ router.get("/user-orders", verifyToken, async (req, res) => {
 
     res.status(200).json({ orders });
   } catch (err) {
-    console.error("Error fetching orders:", err);
+    console.log("Error fetching orders:", err);
     res
       .status(500)
       .json({ message: "Error fetching orders", error: err.message });
@@ -82,7 +82,7 @@ router.get("/user-orders", verifyToken, async (req, res) => {
 
     res.status(200).json({ orders });
   } catch (err) {
-    console.error("Error fetching orders:", err);
+    console.log("Error fetching orders:", err);
     res
       .status(500)
       .json({ message: "Error fetching orders", error: err.message });
@@ -107,7 +107,7 @@ router.get("/seller-orders", verifyToken, async (req, res) => {
 
     res.status(200).json({ orders });
   } catch (err) {
-    console.error("Error fetching seller orders:", err);
+    console.log("error fetching seller orders:", err);
     res
       .status(500)
       .json({ message: "Error fetching orders", error: err.message });
