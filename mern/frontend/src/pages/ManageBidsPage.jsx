@@ -164,7 +164,7 @@ const ManageBidsPage = () => {
                     </p>
                     <p className="text-sm text-gray-500">{user.email || "N/A"}</p>
                     <p className="text-blue-700 mt-1 font-bold text-lg">
-                      ৳{bid.biddingPrice.toLocaleString()}
+                      ৳{bid.biddingPrice?.toLocaleString()}
                     </p>
                   </div>
                   <button

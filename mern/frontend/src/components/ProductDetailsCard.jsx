@@ -271,7 +271,7 @@ const ProductDetailsCard = () => {
                 {winningPrice && (
                   <div className="mt-4 flex items-center p-4 bg-gray-50 text-gray-700 rounded-lg">
                     <span className="font-medium">
-                      Highest Bid: ৳ {winningPrice.toLocaleString()}
+                      Highest Bid: ৳ {winningPrice?.toLocaleString()}
                     </span>
                   </div>
                 )}
@@ -302,7 +302,7 @@ const ProductDetailsCard = () => {
                         Add to Cart
                         {isWinner && (
                           <span className="ml-2 text-yellow-300">
-                            (৳ {winningPrice.toLocaleString()})
+                            (৳ {winningPrice?.toLocaleString()})
                           </span>
                         )}
                       </>
@@ -316,7 +316,7 @@ const ProductDetailsCard = () => {
                     Buy Now
                     {isWinner && (
                       <span className="ml-2 text-yellow-300">
-                        (৳ {winningPrice.toLocaleString()})
+                        (৳ {winningPrice?.toLocaleString()})
                       </span>
                     )}
                   </button>
@@ -387,7 +387,7 @@ const ProductDetailsCard = () => {
                 <div>
                   <p className="text-sm text-gray-500">Price</p>
                   <p className="text-xl font-bold text-gray-900">
-                    ৳ {product.price.toLocaleString()}
+                    ৳ {product.price?.toLocaleString()}
                     {product.perWhich && (
                       <span className="text-sm text-gray-500 ml-1">
                         / {product.perWhich}
@@ -528,7 +528,7 @@ const ProductDetailsCard = () => {
                     </div>
                     <div className="flex items-center">
                       <span className="font-semibold text-blue-600">
-                       ৳ {bid.biddingPrice.toLocaleString()}
+                       ৳ {bid.biddingPrice?.toLocaleString()}
                       </span>
                     </div>
                   </div>

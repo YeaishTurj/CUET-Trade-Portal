@@ -171,7 +171,7 @@ const StatCard = ({ label, value, icon, color }) => (
         <div>
           <p className="text-sm font-medium text-gray-500">{label}</p>
           <h3 className="text-3xl font-bold text-gray-900 mt-1">
-            {value.toLocaleString()}
+            {value?.toLocaleString()}
           </h3>
         </div>
         <div

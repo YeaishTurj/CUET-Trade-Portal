@@ -163,7 +163,7 @@ const OrdersPageSeller = () => {
                   <div className="text-right">
                     <p className="text-sm text-gray-500">Total Amount</p>
                     <p className="text-xl font-bold text-blue-600">
-                      ৳{order.amount.toLocaleString()}
+                      ৳{order.amount?.toLocaleString()}
                     </p>
                   </div>
                 </div>

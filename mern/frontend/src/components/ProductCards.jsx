@@ -59,7 +59,7 @@ function ProductCards({ products, categories }) {
                 {/* Price Section */}
                 {product.price && (
                   <p className="text-green-600 font-bold mt-2 text-base md:text-lg">
-                    ৳ {product.price.toLocaleString()}
+                    ৳ {product.price?.toLocaleString()}
                     {product.category === "pre-owned" && (
                       <span className="text-gray-500 text-sm font-medium ml-1">
                         (Asking Price)
