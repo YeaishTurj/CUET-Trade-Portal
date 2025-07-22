@@ -1,3 +1,3 @@
 export const getBaseURL = () => {
-  return "http://localhost:5000";
+  return import.meta.env.VITE_API_URL;
 };
