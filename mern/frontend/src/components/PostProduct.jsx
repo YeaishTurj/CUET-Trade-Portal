@@ -52,7 +52,7 @@ const PostProduct = () => {
     if (showPrice && !formData.price) errors.price = "Price is required";
     if (showLocation && !formData.location)
       errors.location = "Location is required";
-    if (!["lost", "found"].includes(formData.category) && !imageFile) {
+    if (!imageFile) {
       errors.image = "Image is required for this category";
     }
 
@@ -127,14 +127,7 @@ const PostProduct = () => {
       // Remove unnecessary fields based on category
       if (formData.category !== "fashion") delete payload.availableSizes;
       if (formData.category !== "pre-owned") delete payload.endsIn;
-      if (!["lost", "found"].includes(formData.category))
-        delete payload.location;
-      if (["lost", "found"].includes(formData.category)) {
-        delete payload.price;
-        delete payload.perWhich;
-        delete payload.availableSizes;
-        delete payload.features;
-      }
+      delete payload.location;
 
       // Create product
       await createProduct(payload).unwrap();
@@ -164,11 +157,11 @@ const PostProduct = () => {
   };
 
   // Conditional field rendering
-  const showPrice = !["lost", "found"].includes(formData.category);
+  const showPrice = true;
   const showSizes = formData.category === "fashion";
-  const showFeatures = !["lost", "found"].includes(formData.category);
+  const showFeatures = true;
   const showAuction = formData.category === "pre-owned";
-  const showLocation = ["lost", "found"].includes(formData.category);
+  const showLocation = false;
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -241,8 +234,6 @@ const PostProduct = () => {
                 <option value="digital">Digital</option>
                 <option value="others">Others</option>
                 <option value="pre-owned">Pre-Owned</option>
-                <option value="lost">Lost</option>
-                <option value="found">Found</option>
               </select>
               {formErrors.category && (
                 <p className="mt-1 text-sm text-red-600">
@@ -272,8 +263,7 @@ const PostProduct = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-                  ৳
-                  Price *
+                  ৳ Price *
                 </label>
                 <input
                   type="number"
@@ -385,7 +375,7 @@ const PostProduct = () => {
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-300 ${
                   formErrors.location ? "border-red-500" : "border-gray-300"
                 }`}
-                placeholder="Where was this item lost/found?"
+                placeholder="Enter location"
               />
               {formErrors.location && (
                 <p className="mt-1 text-sm text-red-600">
@@ -398,8 +388,7 @@ const PostProduct = () => {
           {/* Image Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product Image{" "}
-              {!["lost", "found"].includes(formData.category) && "*"}
+              Product Image *
             </label>
             <div
               className={`border-2 border-dashed rounded-lg p-6 text-center transition ${

@@ -277,8 +277,7 @@ const AuthModal = ({ type, onClose }) => {
               Welcome Back!
             </h2>
             <p className="animation" style={{ "--D": 1, "--S": 21 }}>
-              Access your <b>CUET Trade & Lost-Found Portal</b> account to
-              continue.
+              Access your <b>CUET Trade Portal</b> account to continue.
             </p>
           </div>
 
@@ -392,8 +391,8 @@ const AuthModal = ({ type, onClose }) => {
               Join Our Portal!
             </h2>
             <p className="animation" style={{ "--li": 18, "--S": 1 }}>
-              Create your account to access the{" "}
-              <b>CUET Trade & Lost-Found Portal</b> services.
+              Create your account to access the <b>CUET Trade Portal</b>{" "}
+              services.
             </p>
           </div>
         </div>

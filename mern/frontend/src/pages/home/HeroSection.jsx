@@ -33,9 +33,9 @@ const cards = [
   },
   {
     id: 4,
-    icon: "🔍",
-    title: "Lost & Found",
-    description: "Report or retrieve lost items around campus.",
+    icon: "💳",
+    title: "Easy Payments",
+    description: "Secure checkout with multiple payment options.",
     glow: "shadow-[0_0_25px_rgba(168,85,247,0.3)]", // purple glow
     border: "border-purple-400",
     bg: "bg-purple-50",
@@ -63,7 +63,9 @@ function HeroSection() {
               >
                 {card.icon}
               </div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{card.title}</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {card.title}
+              </h3>
               <p className="text-gray-600 text-sm">{card.description}</p>
             </div>
           ))}

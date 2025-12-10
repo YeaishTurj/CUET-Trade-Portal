@@ -69,10 +69,14 @@ const AdminProductManagement = () => {
     <div className="p-6 md:p-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Product Management</h1>
-          <p className="text-gray-600 mt-1">Manage all products listed on the platform</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+            Product Management
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Manage all products listed on the platform
+          </p>
         </div>
-        
+
         <div className="relative w-full md:w-96">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <FiSearch className="text-gray-400" />
@@ -104,22 +108,40 @@ const AdminProductManagement = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     Product
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     Category
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     Seller
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     Date
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     Bids
                   </th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     Actions
                   </th>
                 </tr>
@@ -129,7 +151,9 @@ const AdminProductManagement = () => {
                   filtered.map((p) => (
                     <tr key={p._id} className="hover:bg-gray-50 transition">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="font-medium text-gray-900">{p.title}</div>
+                        <div className="font-medium text-gray-900">
+                          {p.title}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 capitalize">
@@ -143,14 +167,20 @@ const AdminProductManagement = () => {
                         {new Date(p.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-gray-500 text-center">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${p.bids?.length ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            p.bids?.length
+                              ? "bg-green-100 text-green-800"
+                              : "bg-gray-100 text-gray-800"
+                          }`}
+                        >
                           {p.bids?.length || 0}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end space-x-3">
-                          <Link 
-                            to={`/products/${p._id}`} 
+                          <Link
+                            to={`/products/${p._id}`}
                             className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 transition"
                             title="View Details"
                           >
@@ -169,7 +199,10 @@ const AdminProductManagement = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
+                    <td
+                      colSpan="6"
+                      className="px-6 py-4 text-center text-gray-500"
+                    >
                       No products found matching your search criteria
                     </td>
                   </tr>
@@ -184,9 +217,6 @@ const AdminProductManagement = () => {
 };
 
 export default AdminProductManagement;
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import { getBaseURL } from "../utils/baseURL";

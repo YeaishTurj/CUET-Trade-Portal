@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import ProductDetailsCard from "../components/ProductDetailsCard";
-import LostFoundSection from "../pages/home/LostFoundSection";
 import NewArrivalSection from "./home/NewArrivalSection";
 import PreOwnedSection from "./home/PreOwnedSection";
 import { useFetchProductByIdQuery } from "../redux/features/products/productsApi";
@@ -13,7 +12,6 @@ function ProductDetailsPage() {
     product &&
     ["fashion", "electronics", "digital", "others"].includes(product.category);
   const isPreOwned = product && product.category === "pre-owned";
-  const isLostFound = product && ["lost", "found"].includes(product.category);
 
   if (isLoading) {
     return (
@@ -32,7 +30,6 @@ function ProductDetailsPage() {
       </div>
     );
   }
-
 
   return (
     <>
@@ -61,17 +58,10 @@ function ProductDetailsPage() {
 
           {isNewArrival && <NewArrivalSection />}
           {isPreOwned && <PreOwnedSection />}
-          {isLostFound && <LostFoundSection />}
 
           <div className="mt-10 flex justify-center">
             <Link
-              to={
-                isNewArrival
-                  ? "/new-arrivals"
-                  : isPreOwned
-                  ? "/pre-owned-products"
-                  : "/lost-found-products"
-              }
+              to={isNewArrival ? "/new-arrivals" : "/pre-owned-products"}
               className="px-6 py-3 bg-white text-blue-700 border border-blue-700 rounded-full text-lg font-semibold transition-all duration-300 transform hover:bg-blue-700 hover:text-white hover:scale-105 shadow-md"
             >
               Show All Related Products

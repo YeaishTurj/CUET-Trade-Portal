@@ -150,44 +150,28 @@ const productSchema = new Schema(
     category: {
       type: String,
       required: true,
-      enum: [
-        "fashion",
-        "electronics",
-        "digital",
-        "others",
-        "pre-owned",
-        "lost",
-        "found",
-      ],
+      enum: ["fashion", "electronics", "digital", "others", "pre-owned"],
     },
     description: { type: String },
 
     imageURL: {
       type: String,
-      required: function () {
-        return !["lost", "found"].includes(this.category);
-      },
+      required: true,
     },
 
     price: {
       type: Number,
-      required: function () {
-        return !["lost", "found"].includes(this.category);
-      },
+      required: true,
     },
 
     perWhich: {
       type: String,
-      required: function () {
-        return !["lost", "found"].includes(this.category);
-      },
+      required: true,
     },
 
     features: {
       type: [String],
-      required: function () {
-        return !["lost", "found"].includes(this.category);
-      },
+      required: true,
     },
 
     availableSizes: {
@@ -226,9 +210,6 @@ const productSchema = new Schema(
 
     location: {
       type: String,
-      required: function () {
-        return ["lost", "found"].includes(this.category);
-      },
     },
 
     postedBy: {

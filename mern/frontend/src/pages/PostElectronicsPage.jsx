@@ -10,10 +10,7 @@ const PostElectronicsPage = () => {
           <h1 className="text-4xl font-extrabold text-blue-900 mb-4">
             Post a Electronics Item
           </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            🟢 Have you found something? Help others reclaim their belongings by
-            filling out the details below.
-          </p>
+
         </div>
 
         {/* PostProduct component for posting a found item */}

@@ -66,7 +66,7 @@ async function main() {
   await mongoose.connect(process.env.DB_URL);
 
   app.get("/", (req, res) => {
-    res.send("CUET Trade Lost & Found Portal Backend is running!");
+    res.send("CUET Trade Portal Backend is running!");
   });
 
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled

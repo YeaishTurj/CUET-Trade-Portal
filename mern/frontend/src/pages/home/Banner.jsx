@@ -26,9 +26,9 @@ const slides = [
     gradient: "from-orange-100 to-orange-50",
   },
   {
-    icon: "🔍",
-    title: "Lost & Found",
-    description: "Report or retrieve lost items around campus.",
+    icon: "💳",
+    title: "Easy Payments",
+    description: "Secure checkout with multiple payment options.",
     gradient: "from-purple-100 to-purple-50",
   },
 ];
@@ -52,7 +52,7 @@ export default function Banner() {
         {/* Left Text */}
         <div className="flex-1 flex flex-col justify-center text-center lg:text-left h-full">
           <p className="text-lg font-semibold text-blue-700 uppercase tracking-wider mb-4">
-            CUET Trade & Lost-Found Portal
+            CUET Trade Portal
           </p>
           <h1 className="text-6xl sm:text-7xl lg:text-7xl font-extrabold text-blue-900 mb-6 leading-tight">
             Buy, Sell & <br />
@@ -60,10 +60,7 @@ export default function Banner() {
               Discover
             </span>
           </h1>
-          <p className="text-gray-700 text-xl leading-relaxed italic mb-10">
-            🔍 From found wallets to for-sale tablets — it's all here. Explore,
-            trade, and reconnect with your campus community easily.
-          </p>
+
 
           <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
             <Link
@@ -71,12 +68,6 @@ export default function Banner() {
               className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg transition-transform transform hover:scale-105"
             >
               Explore Products
-            </Link>
-            <Link
-              to="/lost-found-products"
-              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg transition-transform transform hover:scale-105"
-            >
-              Report Lost/Found
             </Link>
           </div>
         </div>

@@ -36,8 +36,8 @@ const BecomeSellerPage = () => {
             Sell a Product
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Choose how you’d like to list your item on{" "}
-            <span className=""> CUET Trade & Lost-Found Portal </span>.
+            Choose how you'd like to list your item on{" "}
+            <span className=""> CUET Trade Portal </span>.
           </p>
         </div>
 

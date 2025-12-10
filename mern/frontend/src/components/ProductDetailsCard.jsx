@@ -207,7 +207,6 @@ const ProductDetailsCard = () => {
     category
   );
   const isPreOwned = category === "pre-owned";
-  const isLostFound = ["lost", "found"].includes(category);
 
   const getStatusBadge = (status) => {
     const statusStyles = {
@@ -414,23 +413,6 @@ const ProductDetailsCard = () => {
               </div>
             )}
 
-            {isLostFound && (
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                  Description
-                </h2>
-                <p className="text-gray-700 whitespace-pre-line">
-                  {product.description}
-                </p>
-                {product.location && (
-                  <div className="mt-4 flex items-center">
-                    <FiMapPin className="text-gray-400 mr-2" />
-                    <span className="text-gray-700">{product.location}</span>
-                  </div>
-                )}
-              </div>
-            )}
-
             {product.availableSizes?.length > 0 &&
               product.category === "fashion" && (
                 <div className="mb-6">
@@ -457,7 +439,7 @@ const ProductDetailsCard = () => {
 
             <div className="border-t pt-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                {isLostFound ? "Reporter" : "Seller"} Information
+                Seller Information
               </h2>
               <div className="space-y-4">
                 <div className="flex items-center">
@@ -528,7 +510,7 @@ const ProductDetailsCard = () => {
                     </div>
                     <div className="flex items-center">
                       <span className="font-semibold text-blue-600">
-                       ৳ {bid.biddingPrice?.toLocaleString()}
+                        ৳ {bid.biddingPrice?.toLocaleString()}
                       </span>
                     </div>
                   </div>

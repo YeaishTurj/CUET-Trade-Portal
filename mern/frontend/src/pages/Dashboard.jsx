@@ -93,12 +93,6 @@ const Dashboard = () => {
                 icon="💰"
                 color="from-green-500 to-emerald-500"
               />
-              <StatCard
-                label="Lost/Found Posts"
-                value={stats.lostFoundPosts}
-                icon="🔍"
-                color="from-amber-500 to-orange-500"
-              />
             </div>
           </div>
         )}

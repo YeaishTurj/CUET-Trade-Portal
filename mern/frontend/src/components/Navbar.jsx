@@ -24,7 +24,6 @@ const navLinks = [
   { to: "/", text: "Home" },
   { to: "/new-arrivals", text: "New Arrivals" },
   { to: "/pre-owned-products", text: "Pre-Owned" },
-  { to: "/lost-found-products", text: "Lost & Found" },
 ];
 
 const dropdownLinks = [
@@ -197,7 +196,7 @@ const Navbar = () => {
           <Link
             to="/"
             className="flex items-center space-x-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
-            aria-label="CUET Trade & Lost-Found Portal Home"
+            aria-label="CUET Trade Portal Home"
           >
             <div className="relative h-14 w-14 flex items-center justify-center bg-blue-50 rounded-full p-2 shadow-sm transition-transform duration-300 group-hover:scale-105">
               <div className="absolute inset-0 border-2 border-blue-700 rounded-full opacity-30"></div>
@@ -213,7 +212,7 @@ const Navbar = () => {
                 CUET Trade
               </span>
               <span className="text-sm md:text-base font-semibold text-gray-700 tracking-tight">
-                & Lost-Found Portal
+                Portal
               </span>
             </span>
           </Link>

@@ -4,6 +4,10 @@ const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
 const generateToken = async (userId) => {
   try {
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET_KEY not configured in environment variables");
+    }
+
     const user = await User.findById(userId);
 
     if (!user) {
@@ -20,8 +24,8 @@ const generateToken = async (userId) => {
     );
     return token;
   } catch (error) {
-    console.error("Error generating token:", error);
-    throw new Error("Token generation failed");
+    console.error("Error generating token:", error.message);
+    throw new Error("Token generation failed: " + error.message);
   }
 };
 

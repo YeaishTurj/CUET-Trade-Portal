@@ -1,6 +1,6 @@
-# CUET Trade & Lost-Found Portal
+# CUET Trade Portal
 
-CUET Trade & Lost-Found Portal is a full-featured MERN stack web application that serves as both an online marketplace and a lost & found portal. It enables users to post, browse, and bid on various products and lost/found items while providing administrative control and order management.
+CUET Trade Portal is a full-featured MERN stack web application that serves as an online marketplace. It enables users to post, browse, and bid on various products while providing administrative control and order management.
 
 ## Backend
 
@@ -9,7 +9,6 @@ CUET Trade & Lost-Found Portal is a full-featured MERN stack web application tha
 - **Functionality:**
   - RESTful API routes for user authentication and management (`/api/auth`)
   - Product management and listings with bidding functionality (`/api/products`)
-  - Lost & found item postings and management
   - Cart and order management (`/api/cart`, `/api/orders`)
   - File upload handling and cloud storage integration (`/api/upload`)
   - Middleware for token verification, admin authorization, and multipart data handling
@@ -21,7 +20,7 @@ CUET Trade & Lost-Found Portal is a full-featured MERN stack web application tha
 - **Features:**
   - User authentication with JWT token handling
   - Product browsing, categorized listings, and detailed product views
-  - Posting digital, electronics, fashion, pre-owned, lost & found, and miscellaneous items
+  - Posting digital, electronics, fashion, pre-owned, and miscellaneous items
   - Bidding system with bid management and winner selection
   - Shopping cart and order placement with order summaries and confirmations
   - Admin dashboards for managing users and products
@@ -31,7 +30,6 @@ CUET Trade & Lost-Found Portal is a full-featured MERN stack web application tha
 
 - User registration, login, profile management
 - Browse various product categories including new, pre-owned, electronics, digital, fashion items
-- Post lost and found items to aid community recovery efforts
 - Bid on auction-style product listings with bid management for sellers
 - Shopping cart and checkout integrated
 - Admin features for managing users, products, and orders

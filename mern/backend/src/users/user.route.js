@@ -11,7 +11,9 @@ router.post("/signup", async (req, res) => {
     const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
-      return res.status(400).send({ message: "All fields are required" });
+      return res
+        .status(400)
+        .json({ message: "All fields are required", success: false });
     }
 
     const cuetEmailRegex =
@@ -19,14 +21,17 @@ router.post("/signup", async (req, res) => {
 
     // 🔒 Check CUET email format
     if (!cuetEmailRegex.test(email)) {
-      return res
-        .status(400)
-        .send({ message: "Only CUET email addresses are allowed" });
+      return res.status(400).json({
+        message: "Only CUET email addresses are allowed",
+        success: false,
+      });
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).send({ message: "User already exists" });
+      return res
+        .status(409)
+        .json({ message: "User already exists", success: false });
     }
 
     const user = new User({ fullName, email, password });
@@ -40,8 +45,9 @@ router.post("/signup", async (req, res) => {
       sameSite: "None",
     });
 
-    res.status(201).send({
+    res.status(201).json({
       message: "User signed up successfully",
+      success: true,
       user: {
         id: user._id,
         fullName: user.fullName,
@@ -56,8 +62,11 @@ router.post("/signup", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error during registration:", error);
-    res.status(500).send({ message: "Internal server error" });
+    console.error("Error during registration:", error.message);
+    res.status(500).json({
+      message: "Internal server error: " + error.message,
+      success: false,
+    });
   }
 });
 
@@ -241,24 +250,17 @@ router.get("/stats", verifyToken, async (req, res) => {
 
   try {
     const totalUsers = await User.countDocuments();
-    const totalProducts = await Product.countDocuments({
-      category: { $nin: ["lost", "found"] }, // ✅ Exclude lost/found
-    });
+    const totalProducts = await Product.countDocuments();
 
     const totalBids = await Product.aggregate([
       { $unwind: "$bids" },
       { $count: "count" },
     ]);
 
-    const lostFoundPosts = await Product.countDocuments({
-      category: { $in: ["lost", "found"] },
-    });
-
     res.status(200).json({
       totalUsers,
       totalProducts,
       totalBids: totalBids[0]?.count || 0,
-      lostFoundPosts,
     });
   } catch (error) {
     console.log("error fetching stats:", error);
